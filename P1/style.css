@@ -38,6 +38,14 @@ header{
     right: 25px;
 
 }
+#notif{
+    max-width: 35px;
+    display: flex;
+    text-align: right justify;
+    align-items: right;
+    position: absolute;
+    right: 75px;
+}
 
 nav{
     display: flex;
