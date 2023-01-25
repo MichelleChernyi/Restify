@@ -12,14 +12,18 @@
 <body>
     <header> 
         <nav>
-            <a href="index.html"><img id="home" src="home.png" alt="Avatar"></a>
-            <a href="index.html" id="curr" class="header_links">Restify</a>
-            <div class="search">
-                <input type="text"  id="search" class="header_links" placeholder="Search..">
-                <button>Search</button>
+            <div class="horizontal center">
+                <a href="index.html"><img id="home" src="home.png" alt="Avatar"></a>
+                <a href="index.html" id="curr" class="header_links">Restify</a>
             </div>
-            <img id="notif" src="notif.png" alt="Avatar">
-            <img id="user" src="user.png" alt="Avatar">
+            <div class="horizontal">
+                <div class="search m-1">
+                    <input type="text"  id="search" class="header_links" placeholder="Search..">
+                    <button>Search</button>
+                </div>
+                <img id="notif" src="notif.png" alt="Avatar" class="m-1">
+                <img id="user" src="user.png" alt="Avatar" class="m-1">
+            </div>
         </nav>
     </header>
 </body>

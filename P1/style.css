@@ -34,7 +34,6 @@ header{
     display: flex;
     text-align: right justify;
     align-items: right;
-    position: absolute;
     right: 25px;
 
 }
@@ -43,14 +42,25 @@ header{
     display: flex;
     text-align: right justify;
     align-items: right;
-    position: absolute;
     right: 75px;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
 }
 
 nav{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    width: 100vw;
     
 }
 .search{
