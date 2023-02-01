@@ -5,22 +5,6 @@
  * Winter 2023
  *
  */
-header{
-    height: 65px;
-    text-align: left justify;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1px solid #096FD3;
-}
-
-.header_links{
-    color:#096FD3;
-    text-decoration: none;
-    font-size: 23px;
-    font-family: fantasy;
-    font-style: normal;
-} 
 #home{
     width: 90px;
     height: 90px;
@@ -29,65 +13,61 @@ header{
     margin-left: 50px;
 } 
 
-#user{
-    max-width: 35px;
-    display: flex;
-    text-align: right justify;
-    align-items: right;
-    right: 25px;
-
-}
-#notif{
-    max-width: 35px;
-    display: flex;
-    text-align: right justify;
-    align-items: right;
-    right: 75px;
+.dropdown-toggle::after {
+    content: none;
 }
 
-.horizontal {
-    display: flex;
-    flex-direction: row;
-
+.dropdown-toggle{
+    color:black;
+}
+html {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-.center {
+.container-fluid{
+    margin-right: 70px; 
+}
+
+.form-inline{
+    margin-right: 600px;
+}
+
+.dropdown-menu {
+   min-width:45px !important;
+}
+
+.card-img-top{
+    width: 200px;
+    height: 200px;
+    margin-left:auto ;
+    margin-right: auto;
+}
+
+/* .card{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    padding: 20px;
+    top: 50%;
+    left: 50%;
+    margin: -420px 0 0 -420px;
+} */
+
+.page {
+    display: flex;
     justify-content: center;
     align-items: center;
-}
 
-nav{
-    display: flex;
-    justify-content: space-between;
+}
+.card {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.card-body{
+    margin-left:auto ;
+    margin-right: auto;
     align-items: center;
-    width: 100vw;
-    
-}
-.search{
-    display: flex;
-    margin-top:-2px;
-    margin-left: 400px;
-}
-#search{
-    width:33vw;
-    height:30px;
-    font-size: 15px;
-    color: black;
-    border: 1px solid black;
-    font-family: sans-serif;
-} 
-::placeholder{
-    color: black;
-}
-
-button{
-    width: 58px;
-    height: 30px;
-    font-size: 15px;
-    border: none;
-    cursor: pointer;
-    background-color: #096FD3;
     text-align: center;
-    align-items: center;
-    color: black;
 }
