@@ -44,10 +44,6 @@ html {
     width: 50%;
 }
 
-.dropdown-menu {
-   min-width:45px !important;
-}
-
 .card-img-top{
     width: 200px;
     height: 200px;
