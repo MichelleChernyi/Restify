@@ -41,7 +41,11 @@ html {
 
 .search-filter {
     border-radius: 25px;
-    width: 50%;
+    width: 40%;
+}
+
+.search-filter .form-control {
+    width: 60% !important;
 }
 
 .card-img-top{
