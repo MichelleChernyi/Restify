@@ -27,7 +27,9 @@ html {
 
 .form-control {
     width: auto !important;
+    flex-basis: 100%;
 }
+
 
 .container-fluid{
     margin-right: 70px; 
@@ -35,6 +37,11 @@ html {
 
 .form-inline{
     margin-right: 400px;
+}
+
+.search-filter {
+    border-radius: 25px;
+    width: 50%;
 }
 
 .dropdown-menu {
