@@ -25,10 +25,10 @@ html {
     overflow-x: hidden;
 }
 
-.form-control {
+/* .form-control {
     width: auto !important;
     flex-basis: 100%;
-}
+} */
 
 
 .container-fluid{
