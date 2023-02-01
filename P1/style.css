@@ -25,6 +25,10 @@ html {
     overflow-x: hidden;
 }
 
+.form-control {
+    width: auto !important;
+}
+
 .container-fluid{
     margin-right: 70px; 
 }
