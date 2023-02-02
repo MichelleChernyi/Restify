@@ -59,12 +59,12 @@ html {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    position: relative;
 }
 .card {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
 }
 .card-body{
     margin-left:auto ;
