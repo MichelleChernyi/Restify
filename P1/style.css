@@ -75,3 +75,14 @@ html {
     align-items: center;
     text-align: center;
 }
+
+#me{
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    max-width: 100%;
+}
+
+#profile{
+    margin-top: 110px;
+}
