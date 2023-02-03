@@ -110,3 +110,23 @@ html {
 main {
     padding: 1.5em;
 }
+
+.grid-container {
+    display: grid;
+    gap: 1em;
+    grid-template-areas: 
+        'main main living'
+        'main main kitchen';
+}
+
+#main-img {
+    grid-area: main;
+}
+
+#kitchen-img {
+    grid-area: kitchen;
+}
+
+#living-img {
+    grid-area: living;
+}
