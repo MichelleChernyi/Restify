@@ -130,3 +130,14 @@ main {
 #living-img {
     grid-area: living;
 }
+
+.log-stuff{
+    margin-left: auto;
+    margin-right: auto;
+}
+.logs{
+    margin: auto;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
