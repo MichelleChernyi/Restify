@@ -193,7 +193,38 @@ main {
 .profile-reviews{
     margin-left: 10rem;
     margin-top:5rem;
+    display: flex;
+    flex-direction: column;
 
+}
+
+.profile-comment, .profile-comment-edit {
+    border: #bbbbbb solid 0.5px;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+.profile-comment p {
+    margin: 0;
+}
+
+.profile-comment-edit textarea {
+    width: 100%;
+    height: fit-content;
+}
+
+.profile-comment-edit .row {
+    margin: 0;
+    column-gap:  5px;
+}
+
+.profile-comment-edit button {
+    width: 120px;
+}
+
+.profile-comment .comment-date {
+    font-size: small;
 }
 
 @media (max-width: 480px) {
