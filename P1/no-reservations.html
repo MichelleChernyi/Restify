@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Restify</title>
+      <link id="head_image" rel="icon" type="images/x-icon" href="images/home.png" />
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+      <header> 
+          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+              <div class="d-flex justify-content-between w-100 align-items-center">
+                <div class="d-flex align-items-center">
+                  <a class="nav-link active" href="index.html" ><img id="home" src="images/home.png" alt="Logo"></a>
+                  <a class="navbar-brand" href="index.html">Restify</a>
+                </div>
+                <div class="shadow-sm search-filter bg-white d-flex align-items-center p-1">
+                  <input type="text" placeholder="Location" class="form-control shadow-none border-0">
+                  <input type="text" placeholder="Check In" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control shadow-none border-0">
+                  <input type="text" placeholder="Check Out" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control shadow-none border-0">
+                  <input type="number" step="1" placeholder="Add Guests" class="form-control shadow-none border-0">
+                  <div><a href="search.html" class="btn btn-primary m-1 rounded-circle" type="submit"><i class="bi bi-search"></i></a></div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-bell-fill m-1 w-150 fs-3"></i>
+                  <div class="dropdown">
+                  <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                    <i class="bi bi-person-fill m-4 w-150 fs-3"></i>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end me-1">
+                    <li><a class="dropdown-item" href="login.html">Log In</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="sign-up.html">Sign Up</a></li>
+                  </ul>
+                </div> 
+                </div>
+              </div>
+          </nav>
+      </header>
+      <main>
+        <h1 class="m-5">
+            Reservations
+        </h1>
+        <div class="no-reservations border container m-5">
+            <div class="row">
+                <div class="col margin-auto">
+                    <h3 class="mb-4">No reservations yet!</h3>
+                    <a class="btn btn-primary p-2" href="logged-in.html">
+                        Start searching
+                    </a>
+                </div>
+                <div class="col-9 p-0">
+                    <img src="images/trip.jpg" id="no-reservation-img" alt="car going on road trip">
+                </div>
+            </div>
+        </div>
+      </main>
+  </body>
+</html>
