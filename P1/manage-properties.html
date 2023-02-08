@@ -132,33 +132,49 @@
                 <hr class="hr" />
                 <div id="custom-rates">
                   <h5>Custom Rates & Availability</h5>
-                  <form action="#" method="PUT">
-                    <div class="row">
-                      <div class="form-group col-md-6">
-                        <input id="custom-start" type="text" placeholder="Start" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1">
+                  <div id="request-existing">
+                    <h6>Existing Changes</h6>
+                    <ul class="list-group ">
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-1 border-0" id="custom-existing-change">
+                        12-05-2022 to 12-09-2022, $200/night
+                        <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
+                      </li>
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-1 border-0" id="custom-existing-change">
+                        12-10-2022 to 12-11-2022, unavailable
+                        <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
+                      </li>
+                    </ul>
+                  </div>
+                  <div id="request-custom">
+                    <h6>Set Custom</h6>
+                    <form action="#" method="PUT">
+                      <div class="row">
+                        <div class="form-group col-md-6" id="req-custom-date-picker">
+                          <input id="custom-start" type="text" placeholder="Start" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1">
+                        </div>
+                        <div class="form-group col-md-6" id="req-custom-date-picker">
+                          <input id="custom-end" type="text" placeholder="End" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1">
+                        </div>
                       </div>
-                      <div class="form-group col-md-6">
-                        <input id="custom-end" type="text" placeholder="End" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1">
+                      <div class="form-check">
+                        <label class="form-check-label" for="unavailable">
+                          Unavailable
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="" id="unavailable">
+                      </div>  
+                      <div class="form-group col-md-6 form-small-grid-item">
+                        <label for="rate">Rate ($/night)</label>
+                        <input type="text" class="form-control short-input" id="rate">
                       </div>
-                    </div>
-                    <div class="form-check">
-                      <label class="form-check-label" for="unavailable">
-                        Unavailable
-                      </label>
-                      <input class="form-check-input" type="checkbox" value="" id="unavailable">
-                    </div>  
-                    <div class="form-group col-md-6 form-small-grid-item">
-                      <label for="rate">Rate ($/night)</label>
-                      <input type="text" class="form-control short-input" id="rate">
-                    </div>
-                    <button type="submit" class="btn btn-primary submit-btn">Update</button>
-                  </form>
+                      <button type="submit" class="btn btn-light submit-btn">Update</button>
+                    </form>
+                  </div>
                 </div>
                 <hr class="hr" />
                 <div id="requests-manager">
                   <h5>Requests</h5>
-                  <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <ol class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
                       <div class="request-card-info">
                         <div>User #1<span class="badge bg-success">Approved</span></div>
                         <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
@@ -175,7 +191,7 @@
                         </ul>
                       </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
                       <div class="request-card-info">
                         <div>User #2<span class="badge bg-warning">Pending</span></div>
                         <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
@@ -192,7 +208,7 @@
                         </ul>
                       </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
                       <div class="request-card-info">
                         <div>User #3<span class="badge bg-danger">Declined</span></div>
                         <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
@@ -209,7 +225,7 @@
                         </ul>
                       </div>
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
                       <div class="request-card-info">
                         <div>User #4<span class="badge bg-secondary">Expired</span></div>
                         <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
@@ -225,59 +241,59 @@
                           <li><a class="dropdown-item" href="#">Terminate</a></li>
                         </ul>
                       </div>
-                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="request-card-info">
-                          <div>User #5<span class="badge bg-dark">Terminated</span></div>
-                          <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
-                        </div>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-outline-secondary">Contact</button>
-                          <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Status
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Approve</a></li>
-                            <li><a class="dropdown-item" href="#">Decline</a></li>
-                            <li><a class="dropdown-item" href="#">Terminate</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="request-card-info">
-                          <div>User #6<span class="badge bg-success">Completed</span></div>
-                          <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
-                        </div>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-outline-secondary">Contact</button>
-                          <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Status
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Approve</a></li>
-                            <li><a class="dropdown-item" href="#">Decline</a></li>
-                            <li><a class="dropdown-item" href="#">Terminate</a></li>
-                          </ul>
-                        </div>
-                      </li>
-                      <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div class="request-card-info">
-                          <div>User #7<span class="badge bg-secondary">Cancelled</span></div>
-                          <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
-                        </div>
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-outline-secondary">Contact</button>
-                          <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Status
-                          </button>
-                          <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Approve</a></li>
-                            <li><a class="dropdown-item" href="#">Decline</a></li>
-                            <li><a class="dropdown-item" href="#">Terminate</a></li>
-                          </ul>
-                        </div>
-                      </li>
                     </li>
-                  </ul>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="request-card-info">
+                        <div>User #5<span class="badge bg-dark">Terminated</span></div>
+                        <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
+                      </div>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-outline-secondary">Contact</button>
+                        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          Status
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Approve</a></li>
+                          <li><a class="dropdown-item" href="#">Decline</a></li>
+                          <li><a class="dropdown-item" href="#">Terminate</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="request-card-info">
+                        <div>User #6<span class="badge bg-success">Completed</span></div>
+                        <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
+                      </div>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-outline-secondary">Contact</button>
+                        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          Status
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Approve</a></li>
+                          <li><a class="dropdown-item" href="#">Decline</a></li>
+                          <li><a class="dropdown-item" href="#">Terminate</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="request-card-info">
+                        <div>User #7<span class="badge bg-secondary">Cancelled</span></div>
+                        <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
+                      </div>
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-outline-secondary">Contact</button>
+                        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          Status
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">Approve</a></li>
+                          <li><a class="dropdown-item" href="#">Decline</a></li>
+                          <li><a class="dropdown-item" href="#">Terminate</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                  </ol>
                 </div>
               </div>
             </div>

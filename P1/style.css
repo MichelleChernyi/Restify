@@ -276,6 +276,19 @@ main {
     margin-top: 4px;
 }
 
+#request-custom {
+    margin-top: 5px;
+}
+
+#req-custom-date-picker {
+    width: 50%;
+}
+
+#custom-existing-change {
+    font-size: x-small;
+    height: 30px;
+}
+
 @media only screen and (max-width: 450px) {
     #property-info-wrapper .list-group li .request-card-info {
         height: 75px;
@@ -283,10 +296,6 @@ main {
 
     #property-info-wrapper .list-group li .request-card-info span {
         font-size: x-small;
-    }
-
-    #property-info-wrapper .list-group li .btn-group {
-        margin-bottom: 46px;
     }
 }
 
