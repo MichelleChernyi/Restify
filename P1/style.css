@@ -304,8 +304,14 @@ main {
 #photos {
     max-width: 800px;
     display: flex;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
+    
+}
+
+#photo-order {
+    width: 250px;
+    margin-right: 5px;
 }
 
 .carousel-inner img{
@@ -324,6 +330,14 @@ main {
 
     #property-info-wrapper .list-group li .request-card-info span {
         font-size: x-small;
+    }
+}
+
+@media only screen and (max-width: 580px) {
+    #photos {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 }
 

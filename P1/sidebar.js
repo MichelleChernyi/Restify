@@ -21,4 +21,4 @@ function collapseNav() {
             document.getElementById("full-collapse-list").style.height = "100%";
         }
     }
-  }
+}
