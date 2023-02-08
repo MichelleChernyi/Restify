@@ -314,6 +314,10 @@ main {
     margin-right: 5px;
 }
 
+#photo-order input[type="file"] {
+    display: none;
+}
+
 .carousel-inner img{
     width: 100%;
     height: 225px;
