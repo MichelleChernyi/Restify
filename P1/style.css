@@ -614,6 +614,15 @@ main {
     height: 30px;
 }
 
+.photo-name-display {
+    display: flex;
+    column-gap: 5px;
+}
+
+.photo-name-display .short-input{
+    width: 50px;
+}
+
 #photos {
     max-width: 800px;
     display: flex;
@@ -640,7 +649,7 @@ main {
     width: 285px;
 }
 
-#hide-me {
+#hide-me, #hide-me-2 {
     visibility: hidden;
 }
 
