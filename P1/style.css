@@ -242,8 +242,14 @@ main {
     display: flex;
     flex-direction: column;
     max-width:100%;
+    
+    
+}
+
+.profile-image{
     align-items: flex-end;
 }
+
 
 .profile-body{
     margin:0.5px;
@@ -310,6 +316,9 @@ main {
     .profile-card{
         width: 100%;
         max-width:390px;
+        align-items: center;
+    }
+    .profile-image{
         align-items: center;
     }
 
