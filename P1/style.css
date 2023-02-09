@@ -243,6 +243,7 @@ main {
     margin-top:5rem;
     display: flex;
     flex-direction: column;
+    width: 70%;
 
 }
 
@@ -381,6 +382,41 @@ main {
     border-radius: 0 0 10px 10px;
 }
 /* ============ RESERVATIONS CSS ~ Devan ============ */
+#collapse-sidebar {
+    max-width: 500px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.full-collapse-list {
+    max-width: 500px;
+    min-width: 400px;
+    padding-top: 5px;
+}
+
+#properties-mgr-title {
+    text-align: left;
+    align-self: center;
+    padding: 0px 0px 0px 7px;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+#sidebar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+#collapse-sidebar a {
+    text-align: center;
+    border-radius: 0;
+}
+
+#sidebar-header a {
+    border-radius: 7px;
+}
 
 #v-bar {
     margin-left: 0.5rem;
@@ -468,7 +504,7 @@ main {
 }
 
 .carousel {
-    max-width: 300px;
+    width: 285px;
 }
 
 #hide-me {
@@ -493,50 +529,12 @@ main {
     }
 }
 
-#collapse-sidebar {
-    max-width: 500px;
-    width: fit-content;
-    height: fit-content;
-}
-
-.full-collapse-list {
-    max-width: 500px;
-    min-width: 400px;
-    padding-top: 5px;
-}
-
-.properties-mgr-title {
-    text-align: left;
-    align-self: center;
-    padding: 0px 0px 0px 7px;
-    width: 100%;
-}
-
-#sidebar-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-}
-
-#collapse-sidebar a {
-    text-align: center;
-    border-radius: 0;
-}
-
-#sidebar-header a {
-    border-radius: 7px;
-}
-
 @media only screen and (max-width: 1030px) {
 
     #collapse-sidebar {
         max-width: 100%;
         width: 100%;
         height: 100%;
-    }
-
-    .full-collapse-list {
-        min-width: 0;
     }
 
     #v-bar {

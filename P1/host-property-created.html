@@ -56,16 +56,19 @@
             <div class="property-mgr-wrapper">
               <div id="collapse-sidebar">
                 <div id="sidebar-header">
-                  <button class="btn btn-primary" onclick="collapseNav()" id="collapsebtn"><i class="bi bi-list"></i></button>
+                  <a class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" 
+                  role="button" aria-expanded="false" aria-controls="collapseExample" onclick="collapseSidebarHeader()">
+                    <i class="bi bi-list"></i>
+                  </a>
                   <div id="properties-mgr-title"><h5>Properties</h5></div>
                 </div>
-                <div id="full-collapse-list">
+                <div class="collapse full-collapse-list" id="collapseExample">
                   <div class="list-group">
                       <a href="add-new-property.html" class="list-group-item list-group-item-action">
                         <i class="bi bi-plus"></i>
                       </a>
                       <a href="manage-properties.html" class="list-group-item list-group-item-action"  aria-current="true">Private Isolated Mansion</a>
-                      <a href="#" class="list-group-item list-group-item-action active"  aria-current="true">Vampire Mansion</a>
+                      <a href="host-property-created.html" class="list-group-item list-group-item-action active"  aria-current="true">Vampire Mansion</a>
                   </div>
                 </div>
               </div>
