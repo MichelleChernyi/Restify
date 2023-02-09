@@ -36,7 +36,7 @@
                   <i class="bi bi-person-fill m-4 w-150 fs-3"></i>
                 </a>
               <ul class="dropdown-menu dropdown-menu-end me-1">
-                <li><a class="dropdown-item" href="manage-properties.html">My Properties</a></li>
+                <li><a class="dropdown-item" href="add-new-property.html">My Properties</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="no-reservations.html">My Reservations</a></li>
                   <li><hr class="dropdown-divider"></li>
@@ -51,8 +51,70 @@
     </header>
     <div class="page">
       <main>
-          <div class="profile editable-profile">
-            <img src="images/edwards.png" id="me" class="img-fluid d-block" alt="Avatar"> 
+          <div class="profile">
+            <div class="card-group cards-profile">
+              <div class="card border-0 profile-card">
+                <div class="card-body profile-body">
+                  <img src="images/edwards.png" id="me" class="img-fluid d-block" alt="Avatar"> 
+                </div>
+              </div>
+              <div class="card border-0 profile-card">
+                <div class="card-body profile-body">
+                  <form action="profile.html">
+                    <div class="mb-3 row">
+                      <div class="col">
+                      <label class="form-label">First Name</label>
+                      <input type="text" value="Edward" class="form-control">
+                    </div>
+                    <div class="col">
+                      <label class="form-label">Last Name</label>
+                      <input type="text" value="Cullen" class="form-control">
+                    </div>
+                    </div>
+                    <div class="mb-3 row ">
+                      <div class="col">
+                      <label class="form-label">Email address</label>
+                      <input type="email" class="form-control" value="edward.cullen@gmail.com">
+                    </div>
+                    </div>
+                    <div class="mb-3 row">
+                      <div class="col">
+                      <label class="form-label">Phone Number</label>
+                      <input type="number" class="form-control" value=16477434232>
+                    </div>
+                    </div>
+                    <div class="mb-3 row">
+                      <div class="col">
+                      <label class="form-label">About</label>
+                      <textarea class="form-control" rows="3">I'm the world's most dangerous predator. Everything about me invites you in.</textarea>
+                      </div>
+                    </div>
+                    <div class="mb-3 row">
+                      <div class="col">
+                        <label class="form-label">Location</label>
+                        <input type="text" value="Toronto, ON" class="form-control">
+                      </div>
+                    </div>
+                    <div class="mb-3 row">
+                      <div class="col">
+                        <label class="form-label">Work</label>
+                        <input type="text" value="Software Engineer" class="form-control">
+                      </div>
+                    </div>
+                    <div> <input class="btn btn-outline-secondary" type="submit" value="Save Changes"/> </div>
+                    
+                  </form>
+                </div>
+              </div>
+              <div class="card border-0 profile-card">
+                
+                <div class="card-body profile-body">
+                  <p><i class="bi bi-star-half mb-2 rando"> 2 Ratings</i></p>
+                <h4 class="mb-3 rando">Reviews</h4>
+                </div>
+              </div>
+            </div>
+            <!-- <img src="images/edwards.png" id="me" class="img-fluid d-block" alt="Avatar"> 
             <div class="text-container">
             <form action="profile.html">
               <div class="mb-3 row">
@@ -98,7 +160,7 @@
               <div> <input class="btn btn-outline-secondary" type="submit" value="Save Changes"/> </div>
               
             </form>
-          </div>
+          </div> -->
 
 
 

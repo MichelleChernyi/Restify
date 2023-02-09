@@ -56,10 +56,13 @@
             <div class="property-mgr-wrapper">
               <div id="collapse-sidebar">
                 <div id="sidebar-header">
-                  <button class="btn btn-primary" onclick="collapseNav()" id="collapsebtn"><i class="bi bi-list"></i></button>
+                  <a class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" 
+                  role="button" aria-expanded="false" aria-controls="collapseExample" onclick="collapseSidebarHeader()">
+                    <i class="bi bi-list"></i>
+                  </a>
                   <div id="properties-mgr-title"><h5>Properties</h5></div>
                 </div>
-                <div id="full-collapse-list">
+                <div class="collapse full-collapse-list" id="collapseExample">
                   <div class="list-group">
                       <a href="add-new-property.html" class="list-group-item list-group-item-action">
                         <i class="bi bi-plus"></i>
@@ -152,15 +155,26 @@
                       </li>
                       <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
                         cabin.jpg
-                        <input class="short-input form-control" type="number" required value="1">
+                        <div class="photo-name-display">
+                          <input class="short-input form-control" type="number" required value="1">
+                          <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
+                        </div>
                       </li>
+                      
                       <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
                         kitchen.jpg
-                        <input class="short-input form-control" type="number" required value="2"/>
+                        <div class="photo-name-display">
+                          <input class="short-input form-control" type="number" required value="3">
+                          <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
+                        </div>
                       </li>
+                      
                       <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
                         living-room.jpg
-                        <input class="short-input form-control" type="number" required value="3"/>
+                        <div class="photo-name-display">
+                          <input class="short-input form-control" type="number" required value="3">
+                          <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
+                        </div>
                       </li>
                     </ul>
                   </div>
