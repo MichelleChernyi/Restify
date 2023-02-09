@@ -352,6 +352,11 @@ main {
 .contact-button {
     width: 20%;
 }
+
+.host-response {
+    background-color: rgb(231, 229, 229);
+    border-radius: 0 0 10px 10px;
+}
 /* ============ RESERVATIONS CSS ~ Devan ============ */
 
 #v-bar {
