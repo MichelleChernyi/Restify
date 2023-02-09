@@ -343,6 +343,10 @@ main {
 .thin-font {
     font-weight: 400;
 }
+
+.contact-button {
+    width: 20%;
+}
 /* ============ RESERVATIONS CSS ~ Devan ============ */
 
 #v-bar {
