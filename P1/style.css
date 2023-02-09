@@ -108,7 +108,7 @@ main {
     padding: 1.5em;
 }
 
-.grid-container {
+/* .grid-container {
     display: grid;
     gap: 1em;
     grid-auto-rows: 1fr;
@@ -134,6 +134,34 @@ main {
     grid-area: living;
     max-height: 225px;
     object-fit: cover;
+} */
+
+.property-main {
+    margin: auto;
+    width: 80vw;
+}
+
+/* .property-images-container {
+    max-height: 600px;
+    width: 100vw;
+    height: auto;
+} */
+
+.property-image {
+    object-fit: cover;
+    margin: 5px;
+    max-width: 100%;
+    height: auto;
+}
+
+.main-img {
+    width: 100%;
+    height: calc(100% + 10px);
+}
+
+.mini-img {
+    height: 50%;
+    width: 100%
 }
 
 .log-stuff{
@@ -172,6 +200,13 @@ main {
     margin-right:2em;
     margin-top: 4em;
     /* text-align: left; */
+}
+
+#host {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    margin-bottom: 0.5em;
 }
 
 /* #profile-title{
@@ -269,6 +304,36 @@ main {
     margin: auto;
 }
 
+#book-property {
+    border-radius: 15px;
+    margin: 5em 0 0 3em !important;
+    padding: 2em;
+    flex-direction: column;
+    height: auto;
+}
+
+/* .book-input {
+    border-radius: 0;
+    border-top: 0;
+
+} */
+
+#book-input-left {
+    border-radius: 10px 0 0 0;
+    border-right: 0;
+}
+#book-input-right {
+    border-radius: 0 10px 0 0;
+}
+#book-input-bottom {
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+}
+
+.bedroom {
+    border-radius: 10px;
+    width: 152px;
+}
 /* ============ RESERVATIONS CSS ~ Devan ============ */
 
 #v-bar {
