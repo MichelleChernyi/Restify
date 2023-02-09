@@ -326,22 +326,36 @@ main {
     height: 475px;
 }
 
+#reservation-details {
+    border-radius: 15px;
+    margin: 5em 0 0 3em !important;
+    padding: 2em;
+    flex-direction: column;
+    height: 250px;
+}
 /* .book-input {
     border-radius: 0;
     border-top: 0;
 
 } */
 
+.text-bg-danger {
+    background-color: #8e3838 !important;
+}
+
 #book-input-left {
     border-radius: 10px 0 0 0;
     border-right: 0;
+    background-color: white !important;
 }
 #book-input-right {
     border-radius: 0 10px 0 0;
+    background-color: white !important;
 }
 #book-input-bottom {
     border-top: 0;
     border-radius: 0 0 10px 10px;
+    background-color: white !important;
 }
 
 .bedroom {
