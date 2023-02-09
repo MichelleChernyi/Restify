@@ -217,6 +217,7 @@ main {
     display: block;
     align-items: center;
     margin-top:5rem;
+    width: 500px;
 }
 
 /* NOT RESPOSIVE YET */
@@ -224,8 +225,12 @@ main {
     display: flex;
     flex: wrap;
     margin-right: 10em;
-    margin:auto
+    margin-left: 10em;
+    margin-top: 15px;
     
+}
+.editable-profile{
+    margin-right:25em;
 }
 
 #about-profile{
