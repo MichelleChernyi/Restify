@@ -241,6 +241,8 @@ main {
     width: 30vw;
     display: flex;
     flex-direction: column;
+    max-width:100%;
+    align-items: flex-end;
 }
 
 .profile-body{
@@ -308,6 +310,7 @@ main {
     .profile-card{
         width: 100%;
         max-width:390px;
+        align-items: center;
     }
 
 }
