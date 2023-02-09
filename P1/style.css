@@ -199,8 +199,8 @@ main {
     width: 200px;
     height: 200px;
     max-width: 100%;
-    margin-right:2em;
     margin-top: 4em;
+    margin-bottom: 2rem!important;
     /* text-align: left; */
 }
 
@@ -222,7 +222,6 @@ main {
     width: 500px;
 }
 
-/* NOT RESPOSIVE YET */
 .profile {
     display: flex;
     flex: wrap;
@@ -250,17 +249,21 @@ main {
     align-items: flex-end;
 }
 
-
-.profile-body{
-    margin:0.5px;
+.profile-image-1{
+    text-align: center;
 }
-    
-/* .editable-profile{
-    margin-right:25em;
-} */
+
+#formFile{
+    max-width:200px;
+}
+
 
 .rando{
     color:white;
+}
+
+.bi-person-circle{
+    font-size: 200px !important;
 }
 
 #about-profile{
