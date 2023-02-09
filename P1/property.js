@@ -4,6 +4,7 @@ function showCarousel() {
     // Note this is just for presentation purposes for "adding an image"
     setTimeout(()=> {
         document.getElementById("hide-me").style.visibility = "visible";
+        document.getElementById("hide-me-2").style.visibility = "visible";
      }
      ,3500);
 }
