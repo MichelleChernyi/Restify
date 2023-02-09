@@ -294,7 +294,16 @@ main {
     border-radius: 15px;
     max-height: 300px;
     width: 100%;
-    border-color: darkgray !important;
+    /* border-color: darkgray !important; */
+}
+
+.text-bg-success {
+    background-color: #527141 !important;
+}
+
+.no-reservations-main {
+    width: 80vw;
+    margin: auto;
 }
 
 #no-reservation-img {
