@@ -420,7 +420,22 @@ main {
     margin-right: auto;
 }
 
-@media only screen and (min-width: 1031px) {
+.small-search:hover {
+    background-color: white;
+    color: #212529;
+}
+
+.small-search:focus {
+    background-color: white !important;
+    color: #212529 !important;
+}
+
+.small-search:after:active {
+    background-color: white;
+    color: #212529;
+}
+
+@media only screen and (min-width: 1201px) {
     .small-search {
         display: none;
     }
