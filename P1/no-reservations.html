@@ -24,7 +24,31 @@
                   <input type="text" placeholder="Check Out" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control shadow-none border-0 large-search">
                   <input type="number" step="1" placeholder="Add Guests" class="form-control shadow-none border-0 large-search">
 
-                  <input type="text" placeholder="Search..." class="form-control shadow-none border-0 small-search">
+                  <button type="button" class="btn btn-outline-secondary border-0 small-search" data-bs-toggle="modal" data-bs-target="#searchModal">
+                    Search...
+                  </button>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="searchModalLabel">Search Options</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <input type="text" placeholder="Location" class="form-control shadow-none ">
+                          <input type="text" placeholder="Check In" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control shadow-none ">
+                          <input type="text" placeholder="Check Out" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control shadow-none ">
+                        <input type="number" step="1" placeholder="Add Guests" class="form-control shadow-none ">
+                        </div>
+                        <div class="modal-footer">
+    
+                          <button type="button" class="btn btn-primary">Search</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
     
                   <div><a href="logged-in.html" class="btn btn-primary m-1 rounded-circle search-button" type="submit"><i class="bi bi-search"></i></a></div>
                 </div>
