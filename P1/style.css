@@ -294,7 +294,16 @@ main {
     border-radius: 15px;
     max-height: 300px;
     width: 100%;
-    border-color: darkgray !important;
+    /* border-color: darkgray !important; */
+}
+
+.text-bg-success {
+    background-color: #527141 !important;
+}
+
+.no-reservations-main {
+    width: 80vw;
+    margin: auto;
 }
 
 #no-reservation-img {
@@ -347,6 +356,15 @@ main {
 
 .thin-font {
     font-weight: 400;
+}
+
+.contact-button {
+    width: 20%;
+}
+
+.host-response {
+    background-color: rgb(231, 229, 229);
+    border-radius: 0 0 10px 10px;
 }
 /* ============ RESERVATIONS CSS ~ Devan ============ */
 
