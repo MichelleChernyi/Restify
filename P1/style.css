@@ -369,7 +369,7 @@ main {
 /* ============ RESERVATIONS CSS ~ Devan ============ */
 
 #v-bar {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
     visibility: visible;
 }
 
@@ -379,7 +379,7 @@ main {
 }
 
 #property-info-wrapper {
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     text-align: left;
     width: 100%;
 }
@@ -409,14 +409,15 @@ main {
 }
 
 #collapse-sidebar {
-    max-width: 250px;
-    width: 250px;
+    max-width: 500px;
+    width: 100%;
     height: fit-content;
     overflow: hidden;
     transition: all 0.5s ease;
 }
 
 #full-collapse-list {
+    max-width: 500px;
     width: 100%;
     height: fit-content;
     transition: all 0.5s ease;
@@ -508,7 +509,7 @@ main {
     }
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 1030px) {
     #collapse-sidebar {
         max-width: 100%;
         width: 100%;
