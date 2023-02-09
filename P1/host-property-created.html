@@ -48,48 +48,49 @@
                 </div>
                 <div id="full-collapse-list">
                   <div class="list-group">
-                      <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                      <a href="add-new-property.html" class="list-group-item list-group-item-action">
                         <i class="bi bi-plus"></i>
                       </a>
-                      <a href="manage-properties.html" class="list-group-item list-group-item-action">Private Isolated Island</a>
+                      <a href="manage-properties.html" class="list-group-item list-group-item-action"  aria-current="true">Private Isolated Mansion</a>
+                      <a href="#" class="list-group-item list-group-item-action active"  aria-current="true">Vampire Mansion</a>
                   </div>
                 </div>
               </div>
               <div class="vr" id="v-bar"></div>
               <div id="property-info-wrapper">
                 <div id="property-main-info">
-                  <h5>Add New Property</h5>
+                  <h5>Listing Information</h5>
                   <form action="#" method="PUT">
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="name">Property Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Property Name">
+                        <input type="text" class="form-control" id="name" placeholder="Listing Name" value="Vampire Mansion">
                       </div>
                       <div class="form-group col-md-6">
                         <label for="Address">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="(we won't share this)">
+                        <input type="text" class="form-control" id="address" placeholder="(we won't share this)" value="123 Vampire Lane">
                       </div>
                     </div>
                     <div class="form-group">
                       <label for="about">About</label>
-                      <textarea type="text" class="form-control" id="about" placeholder="Tell us about the place!"></textarea>
+                      <textarea type="text" class="form-control" id="about" placeholder="Tell us about the place!">Great neighbourhood, great people, totally do not suck blood.</textarea>
                     </div>
                     <div class="row form-small-grid">
                       <div class="form-group col-md-6 form-small-grid-item">
                         <label for="bedrooms">Bedrooms</label>
-                        <input type="text" class="form-control short-input" id="bedrooms">
+                        <input type="text" class="form-control short-input" id="bedrooms" value="4">
                       </div>
                       <div class="form-group col-md-6 form-small-grid-item">
                         <label for="bathrooms">Bathrooms</label>
-                        <input type="text" class="form-control short-input" id="bathrooms">
+                        <input type="text" class="form-control short-input" id="bathrooms" value="2">
                       </div>
                       <div class="form-group col-md-6 form-small-grid-item">
                         <label for="sleeps">Sleeps</label>
-                        <input type="text" class="form-control short-input" id="sleeps">
+                        <input type="text" class="form-control short-input" id="sleeps" value="0">
                       </div>
                       <div class="form-group col-md-6 form-small-grid-item">
                         <label for="guests">Guests</label>
-                        <input type="text" class="form-control short-input" id="guests">
+                        <input type="text" class="form-control short-input" id="guests" value="6">
                       </div>
                     </div>
                     <div class="row form-small-grid mb-2">
@@ -122,40 +123,77 @@
                         <label for="fireplace">Fireplace</label>
                       </div>
                     </div>
-                    <a href="host-property-created.html" type="submit" class="btn btn-success submit-btn">Create</a>
+                    <button type="submit" class="btn btn-primary submit-btn">Update</button>
                   </form>
                 </div>
                 <hr class="hr" /> 
                 <div id="photos">
-                  <div>
-                    <h5>Photos</h5>
+                    <div>
+                      <h5>Photos</h5>
+                      <ul class="list-group ">
+                        <li class="list-group-item d-flex justify-content-center align-items-center bg-light" id="photo-order">
+                          <label class="custom-file-upload">
+                            <input type="file" href="manage-properties.html"/>
+                            <i class="bi bi-plus"></i>
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5>Display</h5>
+                      <div id="carouselExampleFade" class="carousel slide carousel-fade ">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="images/cullen_kitchen.jpg" class="d-block w-100">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>    
+                <hr class="hr" />
+                <div id="custom-rates">
+                  <h5>Custom Rates & Availability</h5>
+                  <div id="request-existing">
+                    <h6>Existing Changes</h6>
                     <ul class="list-group ">
-                      <li class="list-group-item d-flex justify-content-center align-items-center bg-light" id="photo-order">
-                        <label class="custom-file-upload">
-                          <input type="file" href="manage-properties.html"/>
-                          <i class="bi bi-plus"></i>
-                        </label>
-                      </li>
                     </ul>
                   </div>
-                  <div>
-                    <h5>Display</h5>
-                    <div id="carouselExampleFade" class="carousel slide carousel-fade carousel-appears">
-                      <div class="carousel-inner">
-                        <div class="carousel-item active">
-                          <img src="images/cullen_kitchen.jpg" class="d-block w-100">
+                  <div id="request-custom">
+                    <h6>Set Custom</h6>
+                    <form action="#" method="PUT">
+                      <div class="row">
+                        <div class="form-group col-md-6" id="req-custom-date-picker">
+                          <input id="custom-start" type="text" placeholder="Start" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1">
+                        </div>
+                        <div class="form-group col-md-6" id="req-custom-date-picker">
+                          <input id="custom-end" type="text" placeholder="End" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1">
                         </div>
                       </div>
-                      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                      </button>
-                      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                      </button>
-                    </div>
+                      <div class="form-check">
+                        <label class="form-check-label" for="unavailable">
+                          Unavailable
+                        </label>
+                        <input class="form-check-input" type="checkbox" value="" id="unavailable">
+                      </div>  
+                      <div class="form-group col-md-6 form-small-grid-item">
+                        <label for="rate">Rate ($/night)</label>
+                        <input type="text" class="form-control short-input" id="rate">
+                      </div>
+                      <button type="submit" class="btn btn-light submit-btn">Update</button>
+                    </form>
                   </div>
+                </div>
+                <hr class="hr" />
+                <div id="requests-manager">
+                  <h5>Requests</h5>
                 </div>
               </div>
             </div>

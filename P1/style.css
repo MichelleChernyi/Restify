@@ -267,8 +267,8 @@ main {
     column-gap:  5px;
 }
 
-.profile-comment-edit button {
-    width: 120px;
+.profile-comment-edit a {
+    width: 80px;
 }
 
 .profile-comment .comment-date {

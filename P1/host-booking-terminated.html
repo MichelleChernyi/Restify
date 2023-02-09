@@ -64,11 +64,11 @@
                     <div class="row">
                       <div class="form-group col-md-6">
                         <label for="name">Property Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Listing Name" value="Private Isolated Mansion">
+                        <input type="text" class="form-control" id="name" placeholder="Listing Name" value="Edward Cullen's House">
                       </div>
                       <div class="form-group col-md-6">
                         <label for="Address">Address</label>
-                        <input type="text" class="form-control" id="address" placeholder="(we won't share this)" value="1234 Vampire Lane">
+                        <input type="text" class="form-control" id="address" placeholder="(we won't share this)" value="123 Vampire Lane">
                       </div>
                     </div>
                     <div class="form-group">
@@ -182,7 +182,10 @@
                   <div id="request-existing">
                     <h6>Existing Changes</h6>
                     <ul class="list-group ">
-                      
+                      <li class="list-group-item d-flex justify-content-between align-items-center p-1 border-0" id="custom-existing-change">
+                        12-05-2023 to 12-09-2023, unavailable
+                        <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
+                      </li>
                     </ul>
                   </div>
                   <div id="request-custom">
@@ -206,7 +209,7 @@
                         <label for="rate">Rate ($/night)</label>
                         <input type="text" class="form-control short-input" id="rate">
                       </div>
-                      <a href="host-property-1-custom-datetime.html" type="submit" class="btn btn-light submit-btn">Update</a>
+                      <button type="submit" class="btn btn-light submit-btn">Update</button>
                     </form>
                   </div>
                 </div>
@@ -216,7 +219,7 @@
                   <ol class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-start">
                       <div class="request-card-info">
-                        <div><a href="#">User #1</a><span class="badge bg-success">Approved</span></div>
+                        <div><a href="#">User #1</a><span class="badge bg-dark">Terminated</span></div>
                         <p>Details: 12-04-2022 to 12-05-2022, 5 guests</p>
                       </div>
                       <div class="btn-group">
@@ -227,7 +230,7 @@
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="#">Approve</a></li>
                           <li><a class="dropdown-item" href="#">Decline</a></li>
-                          <li><a class="dropdown-item" href="host-booking-terminated.html">Terminate</a></li>
+                          <li><a class="dropdown-item" href="host-booking-terminated">Terminate</a></li>
                         </ul>
                       </div>
                     </li>
