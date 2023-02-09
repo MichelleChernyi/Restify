@@ -309,7 +309,7 @@ main {
     margin: 5em 0 0 3em !important;
     padding: 2em;
     flex-direction: column;
-    height: auto;
+    height: 475px;
 }
 
 /* .book-input {
@@ -333,6 +333,15 @@ main {
 .bedroom {
     border-radius: 10px;
     width: 152px;
+}
+
+.property-amenity {
+    width: 50%;
+    margin-bottom: 0.5em;
+}
+
+.thin-font {
+    font-weight: 400;
 }
 /* ============ RESERVATIONS CSS ~ Devan ============ */
 
