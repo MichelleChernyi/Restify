@@ -505,6 +505,10 @@ main {
     max-width: 300px;
 }
 
+#hide-me {
+    visibility: hidden;
+}
+
 @media only screen and (max-width: 450px) {
     #property-info-wrapper .list-group li .request-card-info {
         height: 75px;
