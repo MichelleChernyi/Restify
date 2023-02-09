@@ -236,7 +236,7 @@ main {
 
 
 .profile-card{
-    max-width: 30vw;
+    width: 30vw;
     display: flex;
     flex-direction: column;
 }
@@ -245,8 +245,12 @@ main {
     margin:0.5px;
 }
     
-.editable-profile{
+/* .editable-profile{
     margin-right:25em;
+} */
+
+.rando{
+    color:white;
 }
 
 #about-profile{
