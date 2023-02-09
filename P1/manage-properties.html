@@ -43,10 +43,12 @@
             <div class="property-mgr-wrapper">
               <div id="collapse-sidebar">
                 <div id="sidebar-header">
-                  <button class="btn btn-primary" onclick="collapseNav()" id="collapsebtn"><i class="bi bi-list"></i></button>
-                  <div id="properties-mgr-title"><h5>Properties</h5></div>
+                  <a class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="bi bi-list"></i>
+                  </a>
+                  <div class="collapse properties-mgr-title" id="collapseExample"><h5>Properties</h5></div>
                 </div>
-                <div id="full-collapse-list">
+                <div class="collapse full-collapse-list" id="collapseExample">
                   <div class="list-group">
                       <a href="add-new-property.html" class="list-group-item list-group-item-action">
                         <i class="bi bi-plus"></i>

@@ -416,40 +416,6 @@ main {
     margin-left: 12px;
 }
 
-#sidebar-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-}
-
-#collapse-sidebar {
-    max-width: 500px;
-    width: 100%;
-    height: fit-content;
-    overflow: hidden;
-    transition: all 0.5s ease;
-}
-
-#full-collapse-list {
-    max-width: 500px;
-    width: 100%;
-    height: fit-content;
-    transition: all 0.5s ease;
-    overflow: hidden;
-    padding-top: 5px;
-}
-
-#properties-mgr-title {
-    text-align: center;
-    align-self: center;
-    padding: 0px 0px 0px 5px;
-}
-
-#collapse-sidebar a {
-    text-align: center;
-    border-radius: 0;
-}
-
 .form-small-grid {
     width: 300px;
 }
@@ -527,20 +493,54 @@ main {
     }
 }
 
+#collapse-sidebar {
+    max-width: 500px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.full-collapse-list {
+    max-width: 500px;
+    min-width: 400px;
+    padding-top: 5px;
+}
+
+.properties-mgr-title {
+    text-align: left;
+    align-self: center;
+    padding: 0px 0px 0px 7px;
+    width: 100%;
+}
+
+#sidebar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+#collapse-sidebar a {
+    text-align: center;
+    border-radius: 0;
+}
+
+#sidebar-header a {
+    border-radius: 7px;
+}
+
 @media only screen and (max-width: 1030px) {
+
     #collapse-sidebar {
         max-width: 100%;
         width: 100%;
         height: 100%;
     }
 
-    #v-bar {
-        visibility: hidden;
+    .full-collapse-list {
+        min-width: 0;
     }
 
-    #full-collapse-list {
-        width: 100%;
-        height: 100%;
+    #v-bar {
+        visibility: hidden;
     }
 
     .property-mgr-wrapper {
