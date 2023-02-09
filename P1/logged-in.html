@@ -40,22 +40,154 @@
               </ul>
             </div> 
             </div>
-                             
-              <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-                <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a> -->
-                    <!-- aria-current="page" -->
-                  <!-- </li> -->
-                  <!-- CHANGE THIS TO OTHER LINKS -->
-                  <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                </ul> -->
-                
-            <!-- </div> -->
           </div>
       </nav>
   </header>
+  <main id="search-screen">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#filter">
+      <i class="bi bi-filter"></i>
+      Filters
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="filter" tabindex="-1" aria-labelledby="filterlLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="filterLabel">Filters</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+          </div>
+          <div class="modal-body">
+            <h3 class="border-bottom mb-3 ms-3 me-3">
+              Price
+            </h3>
+            <form>
+              <div class="form-check ms-3 me-3">
+                <input class="form-check-input" type="radio" name="price" id="price-low-to-high">
+                <label class="form-check-label" for="price-low-to-high">
+                  Low to high
+                </label>
+              </div>
+              <div class="form-check ms-3 me-3">
+                <input class="form-check-input" type="radio" name="price" id="price-high-to-low">
+                <label class="form-check-label" for="price-high-to-low">
+                  High to low
+                </label>
+              </div>
+            </form>
+            <h3 class="border-bottom m-3">
+              Rating
+            </h3>
+            <form>
+              <div class="form-check ms-3 me-3">
+                <input class="form-check-input" type="radio" name="rating" id="rating-low-to-high">
+                <label class="form-check-label" for="rating-low-to-high">
+                  Low to high
+                </label>
+              </div>
+              <div class="form-check ms-3 me-3">
+                <input class="form-check-input" type="radio" name="rating" id="rating-high-to-low">
+                <label class="form-check-label" for="rating-high-to-low">
+                  High to low
+                </label>
+              </div>
+            </form>
+            <h3 class="border-bottom m-3">
+              Amenities
+            </h3>
+            <form class="d-flex flex-wrap justify-content-between ms-3 me-3">
+              <div class="form-check w-50">
+                <input class="form-check-input amenities-check" type="checkbox" value="" id="wifi">
+                <label class="form-check-label" for="wifi">
+                  Wifi
+                </label>
+              </div>
+              <div class="form-check w-50">
+                <input class="form-check-input amenities-check" type="checkbox" value="" id="pool">
+                <label class="form-check-label" for="pool">
+                  Pool
+                </label>
+              </div>
+              <div class="form-check w-50">
+                <input class="form-check-input amenities-check" type="checkbox" value="" id="gym">
+                <label class="form-check-label" for="gym">
+                  Gym
+                </label>
+              </div>
+              <div class="form-check w-50">
+                <input class="form-check-input amenities-check" type="checkbox" value="" id="hot-tub">
+                <label class="form-check-label" for="hot-tub">
+                  Hot tub
+                </label>
+              </div>
+              <div class="form-check w-50">
+                <input class="form-check-input" type="checkbox" value="" id="hot-tub">
+                <label class="form-check-label" for="hot-tub">
+                  Washer
+                </label>
+              </div>
+              <div class="form-check w-50">
+                <input class="form-check-input" type="checkbox" value="" id="hot-tub">
+                <label class="form-check-label" for="hot-tub">
+                  Dryer
+                </label>
+              </div>
+              <div class="form-check w-50">
+                <input class="form-check-input" type="checkbox" value="" id="hot-tub">
+                <label class="form-check-label" for="hot-tub">
+                  Fireplace
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="search-results d-flex flex-wrap">
+      <div class="card">
+        <img class="card-img-top" src="images/Edwards-House.jpg" alt="Edward's house">
+        <div class="card-body">
+            <h5 class="card-title">Forks, Washington, US</h5>
+            <p class="card-text">4347 km away</p>
+            <p class="card-text">Feb. 10-18</p>
+            <p class="card-text font-weight-bold">$400 CAD/night</p>
+            <a href="property-loggedin.html" class="btn btn-primary mt-1">View more</a>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="images/bellas-house.jpeg" alt="Bella's house">
+        <div class="card-body">
+            <h5 class="card-title">Forks, Washington, US</h5>
+            <p class="card-text">4347 km away</p>
+            <p class="card-text">Feb. 10-18</p>
+            <p class="card-text font-weight-bold">$200 CAD/night</p>
+            <a href="#" class="btn btn-primary mt-1">View more</a>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="images/cabin.jpg" alt="Wooden cabin">
+        <div class="card-body">
+            <h5 class="card-title">Forks, Washington, US</h5>
+            <p class="card-text">4347 km away</p>
+            <p class="card-text">Feb. 10-18</p>
+            <p class="card-text font-weight-bold">$400 CAD/night</p>
+            <a href="#" class="btn btn-primary mt-1">View more</a>
+        </div>
+      </div>
+      <div class="card">
+        <img class="card-img-top" src="images/cabin.jpg" alt="Wooden cabin">
+        <div class="card-body">
+          <h5 class="card-title">Forks, Washington, US</h5>
+          <p class="card-text">4347 km away</p>
+          <p class="card-text">Feb. 10-18</p>
+          <p class="card-text font-weight-bold">$400 CAD/night</p>
+          <a href="#" class="btn btn-primary mt-1">View more</a>
+      </div>
+    </div>
+  </main>
   </body>
 </html>
