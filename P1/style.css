@@ -224,11 +224,27 @@ main {
 .profile {
     display: flex;
     flex: wrap;
-    margin-right: 10em;
-    margin-left: 10em;
+    margin-right: 2em;
+    margin-left: 2em;
     margin-top: 15px;
     
 }
+
+.cards-profile{
+    margin-top: auto;
+}
+
+
+.profile-card{
+    max-width: 30vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-body{
+    margin:0.5px;
+}
+    
 .editable-profile{
     margin-right:25em;
 }
@@ -276,12 +292,20 @@ main {
     font-size: small;
 }
 
-@media (max-width: 480px) {
-    .profile{
-        margin-right: 0px;
-        margin-left:0px;
+
+@media (max-width: 750px) {
+
+    .cards-profile{
+        display: flex;
+        flex-direction: column;
     }
+    .profile-card{
+        width: 100%;
+        max-width:390px;
+    }
+
 }
+
 
 .amenities-check {
     transform: scale(120%);
