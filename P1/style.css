@@ -41,7 +41,7 @@ html {
 
 .search-filter {
     border-radius: 25px;
-    width: 40%;
+    width: 40vw;
 }
 
 .search-filter .form-control {
@@ -308,8 +308,9 @@ main {
 }
 
 #no-reservation-img {
-    height: 300px;
+    /* height: 300px; */
     width: 100%;
+    max-height: 300px;
     object-fit: cover;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
@@ -332,7 +333,7 @@ main {
     margin: 5em 0 0 3em !important;
     padding: 2em;
     flex-direction: column;
-    height: 250px;
+    height: 270px;
 }
 /* .book-input {
     border-radius: 0;
@@ -380,6 +381,110 @@ main {
 .host-response {
     background-color: rgb(231, 229, 229);
     border-radius: 0 0 10px 10px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .search-filter .form-control{
+        /* font-size: 0.5rem !important; */
+        display: None;
+    }
+
+    .property-details .row .col-8{
+        width: 100%;
+    }
+
+    #book-property {
+        width: 100%;
+        margin: 1em 0.5em 0.5em 0.5em !important;
+    }
+    .contact-button {
+        width: fit-content;
+    }
+
+    #reservation-details {
+        width: 100%;
+        margin: 1em 0.5em 0.5em 0.5em !important;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #reservation-details #checkin-checkout .d-flex{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #reservation-details #checkin-checkout #book-input-left {
+        width: 100%;
+        border: 1px solid #dee2e6;
+        border-radius: 10px 10px 0 0;
+    }
+
+    #reservation-details #checkin-checkout #book-input-right {
+        width: 100%;
+        border-top: 0;
+        border-radius: 0;
+    }
+}
+
+@media only screen and (max-width: 660px) {
+
+    .no-reservations-main {
+        width: 80vw;
+        margin-left: 0.5em;
+    }
+    .no-reservations-main h1 {
+        margin-left: 0 !important;
+    }
+
+    .no-reservations-main h3 {
+        margin-left: 0 !important;
+    }
+
+    .no-reservations-main .card {
+        margin-left: 0 !important;
+    }
+
+    .no-reservations {
+        width: 80vw;
+        margin-left: 0 !important;
+    }
+    /* .no-reservations .col-9 {
+        display: None;
+        
+    } */
+
+    /* /* .no-reservations {
+        width: fit-content;
+    } */
+    /* #no-reservation-img {
+        display: None;
+    }  */
+}
+@media only screen and (max-width: 480px) {
+
+    .no-reservations-main {
+        width: 80vw;
+        margin-left: 0.5em;
+    }
+    .no-reservations-main h1 {
+        margin-left: 0 !important;
+    }
+
+    .no-reservations {
+        width: 80vw;
+        margin-left: 0 !important;
+    }
+    .no-reservations .col-9 {
+        display: None;
+        
+    } 
+
+     .no-reservations {
+        padding: 0.5em !important;
+        width: fit-content;
+    }
+    /* #no-reservation-img {
+        display: None;
+    } */
 }
 /* ============ RESERVATIONS CSS ~ Devan ============ */
 #collapse-sidebar {
