@@ -111,21 +111,29 @@ main {
 .grid-container {
     display: grid;
     gap: 1em;
+    grid-auto-rows: 1fr;
     grid-template-areas: 
         'main main living'
         'main main kitchen';
+    
 }
 
 #main-img {
     grid-area: main;
+    max-height: 450px;
+    object-fit: cover;
 }
 
 #kitchen-img {
     grid-area: kitchen;
+    max-height: 225px;
+    object-fit: cover;
 }
 
 #living-img {
     grid-area: living;
+    max-height: 225px;
+    object-fit: cover;
 }
 
 .log-stuff{
@@ -232,6 +240,33 @@ main {
         margin-right: 0px;
         margin-left:0px;
     }
+}
+
+.amenities-check {
+    transform: scale(120%);
+}
+
+.filter-body {
+    max-height: 500px;
+}
+
+.no-reservations {
+    border-radius: 15px;
+    max-height: 300px;
+    width: 100%;
+    border-color: darkgray !important;
+}
+
+#no-reservation-img {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.margin-auto {
+    margin: auto;
 }
 
 /* ============ RESERVATIONS CSS ~ Devan ============ */
