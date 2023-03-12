@@ -1,8 +1,22 @@
-# from django.db import models
+from django.db import models
 # from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser
+from .managers import CustomUserManager
+from django.contrib.auth.models import PermissionsMixin
 # # Create your models here.
 
-# # class User (models.Model): #done for us
+#for profile
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(unique = True)
+    phone_num = models.PositiveIntegerField()
+    first_name = models.CharField( max_length=50)
+    last_name = models.CharField(max_length=50)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
+    objects = CustomUserManager()
 
 # class Notification(models.Model):
 #     # property = models.ForeignKey(Property, on_delete=models.SET_NULL)
