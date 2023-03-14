@@ -144,3 +144,9 @@ SIMPLE_JWT ={
 }
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+# Uploaded files
+
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"

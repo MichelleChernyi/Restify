@@ -13,4 +13,4 @@ urlpatterns = [
     path('profile/<int:pk>/', views.ProfileView.as_view(), name='profile'),
     # path('update/<int:pk>/', views.StoreGetSet.as_view(), name='update'),
     #path('delete/<int:pk>/', views.StoresDelete.as_view(), name='delete'),
-]
+] 

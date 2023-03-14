@@ -10,7 +10,7 @@ class SignupSerializer(ModelSerializer):
     password2 = CharField( write_only=True, required=True)
     class Meta:
         model = CustomUser
-        fields = ['email', 'password','password2','first_name', 'last_name', 'phone_num'] #'avatar'
+        fields = ['email', 'password','password2','first_name', 'last_name', 'phone_num', 'avatar'] #'avatar'
     def validate(self, data):
         if data['password'] != data['password2']:
             raise ValidationError({"password2": "Passwords didn't match."})
@@ -21,7 +21,17 @@ class SignupSerializer(ModelSerializer):
         # try: 
         # validate_password(validated_data['password'])
         password = make_password(validated_data['password'])  
-        user = CustomUser.objects.create(
+        if 'avatar' in validated_data:
+            user = CustomUser.objects.create(
+                first_name=validated_data['first_name'],
+                last_name=validated_data['last_name'],
+                email=validated_data['email'],
+                phone_num=validated_data['phone_num'],
+                password=password,
+                avatar=validated_data['avatar'],
+            ) 
+        else:
+            user = CustomUser.objects.create(
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
             email=validated_data['email'],
@@ -49,12 +59,13 @@ class LogoutSerializer(Serializer):
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['phone_num', 'first_name', 'last_name', 'email']   #TODO: AVATAR #TODO: fill in fields
+        fields = ['phone_num', 'first_name', 'last_name', 'email', 'avatar']   #TODO: AVATAR 
         extra_kwargs = {
             'first_name': {'required': False},
             'last_name': {'required': False},
             'phone_num': {'required': False},
             'email': {'required': False},
+            'avatar':{'required': False},
         }
 
 
@@ -71,6 +82,8 @@ class ProfileSerializer(ModelSerializer):
             instance.email = validated_data['email']
         if 'phone_num' in validated_data:
             instance.phone_num = validated_data['phone_num']
+        if 'avatar' in validated_data:
+            instance.avatar = validated_data['avatar']
 
         instance.save()
 

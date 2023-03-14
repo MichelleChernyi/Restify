@@ -81,13 +81,12 @@ class ProfileView(UpdateAPIView):
     queryset = CustomUser.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ProfileSerializer
-    def get(self, request, pk):
-        user = get_object_or_404(CustomUser, id=self.kwargs['pk'])
-        # user = CustomUser.objects.get(id=request.user.id)
-        print("user:", user)
-        # serializer = self.serializer_class(data=request.data)
-        # serializer.is_valid(raise_exception=True)
-        # serializer.save()
+    def get(self, request, pk, **kwargs):
+        actual_user = self.request.user
+        user = get_object_or_404(CustomUser, id=pk) 
+        if user.pk != actual_user.pk:
+            raise ValidationError({"authorize": "You dont have permission for this user."})
+        serializer = ProfileSerializer(user)
+        return Response(serializer.data)
 
-        # return Response(status=status.HTTP_204_NO_CONTENT)
     
