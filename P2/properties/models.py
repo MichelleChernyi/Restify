@@ -1,14 +1,5 @@
 from django.db import models
 from accounts.models import CustomUser
-from django.core.validators import int_list_validator
-
-AMENITIES = {
-    'gym': 0,
-    'pool': 1,
-    'fireplace': 2,
-    'num_bed': 3,
-    'num_bath': 4,
-}
 
 # Create your models here.
 class Property(models.Model):
@@ -16,9 +7,15 @@ class Property(models.Model):
     description = models.CharField(max_length=400)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     location = models.CharField(max_length=200)
+    num_bed = models.IntegerField()
+    num_bath = models.IntegerField()
 
     # amenities
-    amenities = models.CharField(validators=int_list_validator)  
+    amenities = models.ManyToManyField('Amenities')
+
+class Amenities(models.Model):
+    name = models.CharField(max_length=100)
+
 
 class Availability(models.Model):
     start_date = models.DateField()
