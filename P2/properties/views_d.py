@@ -145,6 +145,9 @@ class ListReservationView(ListAPIView):
 
     def get(self, request, *args, **kwargs):
         prop_pk = self.request.query_params.get('property')
+        state = self.request.query_params.get('state')
+        if state is not None and state not in ['pending', 'denied', 'expired', 'approved', 'canceled', 'terminated','completed']:
+            return Response(data={'state': 'state value not found'}, status=404)
         if prop_pk is not None:
             try:
                 p = Property.objects.get(pk=prop_pk)
