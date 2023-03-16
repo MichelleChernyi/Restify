@@ -8,9 +8,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, \
-    ListAPIView, DestroyAPIView, UpdateAPIView
-from rest_framework.permissions import IsAuthenticated
-from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer, NotificationSerializer, NotificationSerializerOne, GuestCommentSerializer
+    ListCreateAPIView, DestroyAPIView, UpdateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer, NotificationSerializer, NotificationSerializerOne, GuestCommentSerializer, GuestCommentCreateSerializer
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer, CharField, IntegerField, ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -20,15 +20,38 @@ from rest_framework.decorators import permission_classes
 from .models import CustomUser, GuestComment, Notification
 from rest_framework.pagination import PageNumberPagination
 
-@permission_classes((AllowAny, ))
-class GuestCommentView(ListAPIView):
+# @permission_classes((AllowAny, ))
+class GuestCommentView(ListCreateAPIView):
     serializer_class = GuestCommentSerializer
     # pagination_class = PropertiesList
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return GuestCommentCreateSerializer
+        return GuestCommentSerializer
 
     def get_queryset(self):
         queryset = GuestComment.objects.all().filter(guest=self.kwargs['pk'])
         queryset = queryset.filter(reply_to=None)
         return queryset
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        if request.user.id == self.kwargs['pk']:
+            return Response({'Cannot leave a review on yourself'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        comment = GuestComment.objects.create(
+            from_user=request.user,
+            content=serializer.data['content'], 
+            guest=CustomUser.objects.get(id=self.kwargs['pk']))
+        result = GuestCommentSerializer(comment)
+        return Response(result.data, status=status.HTTP_201_CREATED)
 
 class SignupView(CreateAPIView):
     permission_classes = []

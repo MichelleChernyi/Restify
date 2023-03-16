@@ -7,6 +7,11 @@ from .models import CustomUser, GuestComment, Notification
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
+class GuestCommentCreateSerializer(ModelSerializer):
+    class Meta:
+        model = GuestComment
+        fields = ['content']
+
 class GuestCommentSerializer(ModelSerializer):
     reply = SerializerMethodField()
     class Meta:
