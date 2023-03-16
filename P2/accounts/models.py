@@ -8,9 +8,9 @@ from django.contrib.auth.models import PermissionsMixin
 #for profile
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique = True)
-    phone_num = models.PositiveIntegerField()
-    first_name = models.CharField( max_length=50)
-    last_name = models.CharField(max_length=50)
+    phone_num = models.PositiveIntegerField(null=True, blank=True)
+    first_name = models.CharField( max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -26,11 +26,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 # class Comment(models.Model):
-#     from_user =  models.ForeignKey(User, on_delete=models.SET_NULL)
-#     to_user = models.ForeignKey(User, on_delete=models.SET_NULL)
+#     from_user =  models.ForeignKey(CustomUser, on_delete=models.SET_NULL)
+#     to_user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL)
 #     # property = models.ForeignKey(Property, on_delete=models.SET_NULL)
 #     content = models.TextField()
 #     is_reply = models.BooleanField(default=False)
+#     rating = models.PositiveIntegerField()
 
 
 
