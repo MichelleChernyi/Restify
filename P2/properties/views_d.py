@@ -102,10 +102,10 @@ class ChangeStatusReservationView(UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()
-        if request.user != instance.property.owner:
-            return Response(data={'authentication': 'You are not authorized.'}, status=403)
-        return super().patch(request, *args, **kwargs)
-        
+        if request.user == instance.property.owner:
+            return super().patch(request, *args, **kwargs)
+        return Response(data={'authentication': 'You are not authorized.'}, status=403)
+    
 class DeleteReservationView(DestroyAPIView):
     serializer_class = ReservationSerializer
     permission_classes = (IsAuthenticated,)

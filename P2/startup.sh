@@ -16,5 +16,3 @@ pip install djangorestframework-simplejwt
 # run migrations and data population
 python3 manage.py makemigrations
 python3 manage.py migrate
-
-# populate with data?
