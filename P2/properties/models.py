@@ -10,6 +10,7 @@ class Property(models.Model):
     num_bed = models.IntegerField()
     num_bath = models.IntegerField()
     num_guests = models.IntegerField()
+    price = models.FloatField()
 
     # amenities
     amenities = models.ManyToManyField('Amenities', null=True, blank=True)
@@ -25,7 +26,6 @@ class Amenities(models.Model):
 class Availability(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
-    price = models.FloatField()
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
 class Image(models.Model):
