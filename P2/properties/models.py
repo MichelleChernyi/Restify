@@ -32,6 +32,7 @@ class Availability(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to='property_images/')
+    my_property = models.ForeignKey(Property, on_delete=models.CASCADE, null=True)
 
 RES_STATUS = (
     ('pending', 'PENDING'),
