@@ -2,7 +2,8 @@ from rest_framework import exceptions
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, ValidationError, SerializerMethodField
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from .models import CustomUser, GuestComment
+
+from .models import CustomUser, GuestComment, Notification
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 
@@ -114,3 +115,20 @@ class ProfileSerializer(ModelSerializer):
         instance.save()
 
         return instance
+
+
+
+
+class NotificationSerializerOne(ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['content', 'belongs_to', 'cleared']  
+    def save(self, instance):
+        instance.save()
+
+
+
+class NotificationSerializer(ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['content', 'belongs_to', 'cleared']  

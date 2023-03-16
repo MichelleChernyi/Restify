@@ -19,10 +19,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     objects = CustomUserManager()
 
-# class Notification(models.Model):
-#     # property = models.ForeignKey(Property, on_delete=models.SET_NULL)
-#     content = models.TextField()
-#     belongs_to = models.ForeignKey(User, on_delete=models.SET_NULL)
+class Notification(models.Model):
+    # property = models.ForeignKey(Property, on_delete=models.SET_NULL)
+    content = models.TextField()
+    belongs_to = models.ForeignKey(CustomUser, on_delete=models.CASCADE, db_constraint=False)
+    cleared = models.BooleanField(default=False)
 
 
 class Comment(models.Model):
