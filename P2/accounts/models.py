@@ -3,6 +3,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from .managers import CustomUserManager
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 # # Create your models here.
 
 #for profile
@@ -18,6 +21,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     objects = CustomUserManager()
+    comments = GenericRelation('Comment', related_query_name='User')
 
 # class Notification(models.Model):
 #     # property = models.ForeignKey(Property, on_delete=models.SET_NULL)
@@ -25,13 +29,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 #     belongs_to = models.ForeignKey(User, on_delete=models.SET_NULL)
 
 
-# class Comment(models.Model):
-#     from_user =  models.ForeignKey(CustomUser, on_delete=models.SET_NULL)
-#     to_user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL)
-#     # property = models.ForeignKey(Property, on_delete=models.SET_NULL)
-#     content = models.TextField()
-#     is_reply = models.BooleanField(default=False)
-#     rating = models.PositiveIntegerField()
+class Comment(models.Model):
+    from_user =  models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    # to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    content = models.TextField()
+    reply_to = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(null=True)
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
 
 
 
