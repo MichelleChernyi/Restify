@@ -21,21 +21,33 @@ class SignupSerializer(ModelSerializer):
         # try: 
         # validate_password(validated_data['password'])
         password = make_password(validated_data['password'])  
+        if 'first_name' in validated_data:
+            first_name=validated_data['first_name']
+        else:
+            first_name=None
+        if 'last_name' in validated_data:
+            last_name=validated_data['last_name']
+        else:
+            last_name=None
+        if 'phone_num'in validated_data:
+            phone_num=validated_data['phone_num']
+        else:
+            phone_num=None
         if 'avatar' in validated_data:
             user = CustomUser.objects.create(
-                first_name=validated_data['first_name'],
-                last_name=validated_data['last_name'],
+                first_name=first_name,
+                last_name=last_name,
                 email=validated_data['email'],
-                phone_num=validated_data['phone_num'],
+                phone_num=phone_num,
                 password=password,
                 avatar=validated_data['avatar'],
             ) 
         else:
             user = CustomUser.objects.create(
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
+            first_name=first_name,
+            last_name=last_name,
             email=validated_data['email'],
-            phone_num=validated_data['phone_num'],
+            phone_num=phone_num,
             password=password
         ) 
         return user
