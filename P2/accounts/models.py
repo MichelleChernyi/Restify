@@ -29,10 +29,13 @@ class Comment(models.Model):
     from_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     # to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.TextField()
-    reply_to = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    reply_to = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name="replies")
 
     class Meta:
         abstract = True
+    
+    def reply(self):
+        return Comment.objects.filter(reply_to=self)
 
 class GuestComment(Comment):
     guest = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='guest')

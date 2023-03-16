@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-
+from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,38 +10,25 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, \
     ListAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
-from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer
+from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer, GuestCommentSerializer
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer, CharField, IntegerField, ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CustomUser
+from rest_framework.decorators import permission_classes
+from .models import CustomUser, GuestComment
+# from ..properties.paginations import PropertiesList
 
+@permission_classes((AllowAny, ))
+class GuestCommentView(ListAPIView):
+    serializer_class = GuestCommentSerializer
+    # pagination_class = PropertiesList
 
-# function-based view
-# @api_view(['GET'])
-# def stores_list(request):
-#     stores = Store.objects.filter(is_active=True)
-#     return Response([{
-#         'name' : store.name,
-#         'url' : store.url,
-#         'is_active' : store.is_active,
-#     } for store in stores ])
-
-# class-based view
-# class StoresManage(APIView):
-#     permission_classes = [IsAuthenticated]
-#     def get(self, request):
-#         stores = Store.objects.all()
-#         serializer = StoreSerializer(stores, many=True)
-#         return Response(serializer.data)
-
-# class StoresOwned(ListAPIView):
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = StoreSerializer
-#     def get_queryset(self):
-#         return Store.objects.filter(owner=self.request.user)
+    def get_queryset(self):
+        queryset = GuestComment.objects.all().filter(guest=self.kwargs['pk'])
+        queryset = queryset.filter(reply_to=None)
+        return queryset
 
 class SignupView(CreateAPIView):
     permission_classes = []
