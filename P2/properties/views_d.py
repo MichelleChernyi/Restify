@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .paginations import PropertiesList
 from django.shortcuts import get_object_or_404
+from accounts.models import Notification
 
 # CRUD PROPERTIES
 class CreatePropertyView(CreateAPIView):
@@ -93,19 +94,39 @@ class CreateReservationView(CreateAPIView):
         serializer.context['property'] = prop
         serializer.is_valid(raise_exception=True)
         instance = serializer.save()
+        #     content = models.TextField()
+    #     belongs_to = models.ForeignKey(CustomUser, on_delete=models.CASCADE, db_constraint=False)
+    # c   leared = models.BooleanField(default=False)
+        notif = Notification.objects.create(
+        belongs_to=prop.owner,
+        content=f'User {request.user} reserved Property with id:{kwargs["pk"]}')
+
         return Response({'id': instance.pk, 'data': serializer.data})
     
 class ChangeStatusReservationView(UpdateAPIView):
+    
     serializer_class = ReservationSerializer
     permission_classes = (IsAuthenticated,)
     queryset = Reservation.objects.all()
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()
-        if request.user == instance.property.owner:
-            return super().patch(request, *args, **kwargs)
-        return Response(data={'authentication': 'You are not authorized.'}, status=403)
-    
+        if request.user != instance.property.owner:
+            return Response(data={'authentication': 'You are not authorized.'}, status=403)
+        if instance.status == 'approved':
+            notif = Notification.objects.create(
+            belongs_to=instance.user,
+            content=f'User {instance.property.owner} approved reservation for Property with id:{instance.property.id}')
+        if instance.status == 'canceled':
+            notif = Notification.objects.create(
+            belongs_to=instance.property.owner,
+            content=f'User {instance.user} cancelled reservation for Property with id:{instance.property.id}')
+        if instance.status == 'terminated':
+            notif = Notification.objects.create(
+            belongs_to=instance.user,
+            content=f'User {instance.property.owner} terminated reservation for Property with id:{instance.property.id}')
+        return super().patch(request, *args, **kwargs)
+        
 class DeleteReservationView(DestroyAPIView):
     serializer_class = ReservationSerializer
     permission_classes = (IsAuthenticated,)
