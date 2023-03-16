@@ -19,12 +19,13 @@ from rest_framework import status
 from rest_framework.decorators import permission_classes
 from .models import CustomUser, GuestComment, Notification
 from properties.models import Property
+from properties.paginations import PropertiesList
 from rest_framework.pagination import PageNumberPagination
 
 # @permission_classes((AllowAny, ))
 class GuestCommentView(ListCreateAPIView):
     serializer_class = GuestCommentSerializer
-    # pagination_class = PropertiesList
+    pagination_class = PropertiesList
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     def get_serializer_class(self):
@@ -77,33 +78,15 @@ class ReplyView(CreateAPIView):
         if not serializer.is_valid():
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-        # if request.user.id == self.kwargs['pk']:
-        #     return Response({'Cannot leave a review on yourself'}, status=status.HTTP_401_UNAUTHORIZED)
 
         original_comment = GuestComment.objects.get(id=self.kwargs['pk'])
-        # print(self.request.user == original_comment.from_user)
-        # print(self.request.user.id == original_comment.guest.id)
-        # print(self.request.user)
-        # print(original_comment.from_user)
-        # print(self.request.user.id)
+
         print(original_comment.guest)
         if (original_comment.guest == original_comment.from_user):
             if (original_comment.reply_to.from_user != self.request.user):
                 return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
         elif self.request.user == original_comment.from_user and self.request.user != original_comment.guest:
             return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
-        
-        # try:
-        #     users_properties = Property.objects.get(owner=request.user.id)
-        # except:
-        #     return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
-
-        # reservations = users_properties.reservation_set.all()
-        # guests = reservations.filter(user=self.kwargs['pk'])
-        # if not guests:
-        #     print('here')
-        #     return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
         
         comment = GuestComment.objects.create(
             from_user=request.user,
