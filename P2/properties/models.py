@@ -1,6 +1,5 @@
 from django.db import models
 from accounts.models import CustomUser, Comment
-from django.contrib.contenttypes.fields import GenericRelation
 
 # Create your models here.
 class Property(models.Model):
@@ -12,13 +11,14 @@ class Property(models.Model):
     num_bath = models.IntegerField()
     num_guests = models.IntegerField()
     price = models.FloatField()
-    comments = GenericRelation(Comment, related_query_name='property')
-
     # amenities
     amenities = models.ManyToManyField('Amenities', null=True, blank=True)
 
     def __str__(self):
          return self.title
+
+class PropertyComment(Comment):
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
 class Amenities(models.Model):
     name = models.CharField(max_length=100, unique=True)

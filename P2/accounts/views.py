@@ -1,66 +1,105 @@
 from django.shortcuts import render
 
 # Create your views here.
-
+from rest_framework.permissions import AllowAny
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, \
-    ListAPIView, DestroyAPIView, UpdateAPIView
-from rest_framework.permissions import IsAuthenticated
-from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer
+    ListCreateAPIView, DestroyAPIView, UpdateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer, NotificationSerializer, NotificationSerializerOne, GuestCommentSerializer, GuestCommentCreateSerializer
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer, CharField, IntegerField, ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CustomUser
+from rest_framework.decorators import permission_classes
+from .models import CustomUser, GuestComment, Notification
+from properties.models import Property
+from properties.paginations import PropertiesList
+from rest_framework.pagination import PageNumberPagination
 
+# @permission_classes((AllowAny, ))
+class GuestCommentView(ListCreateAPIView):
+    serializer_class = GuestCommentSerializer
+    pagination_class = PropertiesList
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
-# function-based view
-# @api_view(['GET'])
-# def stores_list(request):
-#     stores = Store.objects.filter(is_active=True)
-#     return Response([{
-#         'name' : store.name,
-#         'url' : store.url,
-#         'is_active' : store.is_active,
-#     } for store in stores ])
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return GuestCommentCreateSerializer
+        return GuestCommentSerializer
 
-# class-based view
-# class StoresManage(APIView):
-#     permission_classes = [IsAuthenticated]
-#     def get(self, request):
-#         stores = Store.objects.all()
-#         serializer = StoreSerializer(stores, many=True)
-#         return Response(serializer.data)
+    def get_queryset(self):
+        queryset = GuestComment.objects.all().filter(guest=self.kwargs['pk'])
+        queryset = queryset.filter(reply_to=None)
+        return queryset
+    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        if request.user.id == self.kwargs['pk']:
+            return Response({'Cannot leave a review on yourself'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        try:
+            users_properties = Property.objects.get(owner=request.user.id)
+        except:
+            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
 
-# class StoresOwned(ListAPIView):
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = StoreSerializer
-#     def get_queryset(self):
-#         return Store.objects.filter(owner=self.request.user)
+        reservations = users_properties.reservation_set.all()
+        guests = reservations.filter(user=self.kwargs['pk'])
+        if not guests:
+            print('here')
+            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        guests = guests.filter(status='completed')
+        if not guests:
+            return Response({"Cannot leave a review until reservation is complete"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        comment = GuestComment.objects.create(
+            from_user=request.user,
+            content=serializer.data['content'], 
+            guest=CustomUser.objects.get(id=self.kwargs['pk']))
+        result = GuestCommentSerializer(comment)
+        return Response(result.data, status=status.HTTP_201_CREATED)
+
+class ReplyView(CreateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = GuestCommentCreateSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        original_comment = GuestComment.objects.get(id=self.kwargs['pk'])
+
+        print(original_comment.guest)
+        if (original_comment.guest == original_comment.from_user):
+            if (original_comment.reply_to.from_user != self.request.user):
+                return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
+        elif self.request.user == original_comment.from_user and self.request.user != original_comment.guest:
+            return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        comment = GuestComment.objects.create(
+            from_user=request.user,
+            content=serializer.data['content'], 
+            guest=original_comment.guest,
+            reply_to=original_comment)
+        result = GuestCommentSerializer(comment)
+        return Response(result.data, status=status.HTTP_201_CREATED)
 
 class SignupView(CreateAPIView):
     permission_classes = []
     serializer_class = SignupSerializer
 
-
-# class LogoutView(APIView):
-#     permission_classes = (IsAuthenticated,)
-
-#     def post(self, request):
-#         try:
-#             refresh_token = request.data["token_refresh"]
-#             token = RefreshToken(refresh_token)
-#             token.blacklist()
-
-#             return Response(status=status.HTTP_205_RESET_CONTENT)
-#         except Exception as e:
-#             print("exception: ", e)
-#             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
@@ -89,4 +128,32 @@ class ProfileView(UpdateAPIView):
         serializer = ProfileSerializer(user)
         return Response(serializer.data)
 
-    
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 4
+
+class NotificationsListView(ListAPIView):
+    permission_classes = [IsAuthenticated]    
+    serializer_class = NotificationSerializer
+    pagination_class = StandardResultsSetPagination
+    def get_queryset(self):
+        notifs = Notification.objects.filter(belongs_to=self.request.user, cleared=False)
+        return notifs
+
+class NotificationsViewCreate(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = NotificationSerializer
+
+
+class NotificationView(RetrieveAPIView, UpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = NotificationSerializerOne
+    def get_object(self):
+        actual_user = self.request.user
+        notif = get_object_or_404(Notification, id=self.kwargs['pk']) 
+        if notif.belongs_to.pk != actual_user.pk:
+            raise ValidationError({"authorize": "You dont have permission for this user."})
+        notif.cleared =True
+        notif.save()
+        return notif

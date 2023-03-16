@@ -1,10 +1,30 @@
 from rest_framework import exceptions
-from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, ValidationError
+from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, ValidationError, SerializerMethodField
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from .models import CustomUser
+
+from .models import CustomUser, GuestComment, Notification
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken, TokenError
+
+class GuestCommentCreateSerializer(ModelSerializer):
+    class Meta:
+        model = GuestComment
+        fields = ['content']
+
+class GuestCommentSerializer(ModelSerializer):
+    reply = SerializerMethodField()
+    class Meta:
+        model = GuestComment
+        fields = ['from_user', 'content', 'reply']
+    
+    def get_reply(self, obj):
+        replies = obj.replies.all()
+        if replies:
+            return GuestCommentSerializer(replies[0]).data
+        else:
+            return None
+
     
 class SignupSerializer(ModelSerializer):
     password2 = CharField( write_only=True, required=True)
@@ -100,3 +120,20 @@ class ProfileSerializer(ModelSerializer):
         instance.save()
 
         return instance
+
+
+
+
+class NotificationSerializerOne(ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['content', 'belongs_to', 'cleared']  
+    def save(self, instance):
+        instance.save()
+
+
+
+class NotificationSerializer(ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['content', 'belongs_to', 'cleared']  
