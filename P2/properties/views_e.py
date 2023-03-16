@@ -54,7 +54,7 @@ class PropertyCommentView(ListCreateAPIView):
         comment = PropertyComment.objects.create(
             from_user=request.user,
             content=serializer.data['content'], 
-            guest=CustomUser.objects.get(id=self.kwargs['pk']))
+            property=Property.objects.get(id=self.kwargs['pk']))
         result = PropertyCommentSerializer(comment)
         return Response(result.data, status=status.HTTP_201_CREATED)
 
@@ -111,10 +111,4 @@ class PropertyListView(ListAPIView):
         elif price_low_to_high:
             if price_low_to_high.lower() == 'true':
                 queryset = queryset.order_by('price')
-        # if price_high_to_low.lower() == 'true' and price_low_to_high.lower() == 'true':
-        #     pass
-        # else:
-            
-        #     else:
-        #         queryset = queryset.order_by('-price')
         return queryset

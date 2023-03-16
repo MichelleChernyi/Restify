@@ -55,12 +55,13 @@ class GuestCommentView(ListCreateAPIView):
         reservations = users_properties.reservation_set.all()
         guests = reservations.filter(user=self.kwargs['pk'])
         if not guests:
-            print('here')
             return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
         
         guests = guests.filter(status='completed')
         if not guests:
             return Response({"Cannot leave a review until reservation is complete"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+
         
         comment = GuestComment.objects.create(
             from_user=request.user,
@@ -81,7 +82,10 @@ class ReplyView(CreateAPIView):
 
         original_comment = GuestComment.objects.get(id=self.kwargs['pk'])
 
-        print(original_comment.guest)
+        print(original_comment.replies.all())
+        
+        if original_comment.replies.all():
+            return Response({"This comment already has a reply"}, status=status.HTTP_400_BAD_REQUEST)
         if (original_comment.guest == original_comment.from_user):
             if (original_comment.reply_to.from_user != self.request.user):
                 return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
