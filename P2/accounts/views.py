@@ -10,57 +10,19 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, \
     ListAPIView, DestroyAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
-from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer
+from .serializers import SignupSerializer, LogoutSerializer, ProfileSerializer, NotificationSerializer, NotificationSerializerOne
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer, CharField, IntegerField, ValidationError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CustomUser
-
-
-# function-based view
-# @api_view(['GET'])
-# def stores_list(request):
-#     stores = Store.objects.filter(is_active=True)
-#     return Response([{
-#         'name' : store.name,
-#         'url' : store.url,
-#         'is_active' : store.is_active,
-#     } for store in stores ])
-
-# class-based view
-# class StoresManage(APIView):
-#     permission_classes = [IsAuthenticated]
-#     def get(self, request):
-#         stores = Store.objects.all()
-#         serializer = StoreSerializer(stores, many=True)
-#         return Response(serializer.data)
-
-# class StoresOwned(ListAPIView):
-#     permission_classes = [IsAuthenticated]
-#     serializer_class = StoreSerializer
-#     def get_queryset(self):
-#         return Store.objects.filter(owner=self.request.user)
+from .models import CustomUser, Notification
+from rest_framework.pagination import PageNumberPagination
 
 class SignupView(CreateAPIView):
     permission_classes = []
     serializer_class = SignupSerializer
 
-
-# class LogoutView(APIView):
-#     permission_classes = (IsAuthenticated,)
-
-#     def post(self, request):
-#         try:
-#             refresh_token = request.data["token_refresh"]
-#             token = RefreshToken(refresh_token)
-#             token.blacklist()
-
-#             return Response(status=status.HTTP_205_RESET_CONTENT)
-#         except Exception as e:
-#             print("exception: ", e)
-#             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class LogoutView(APIView):
@@ -89,4 +51,32 @@ class ProfileView(UpdateAPIView):
         serializer = ProfileSerializer(user)
         return Response(serializer.data)
 
-    
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size = 4
+    page_size_query_param = 'page_size'
+    max_page_size = 4
+
+class NotificationsListView(ListAPIView):
+    permission_classes = [IsAuthenticated]    
+    serializer_class = NotificationSerializer
+    pagination_class = StandardResultsSetPagination
+    def get_queryset(self):
+        notifs = Notification.objects.filter(belongs_to=self.request.user, cleared=False)
+        return notifs
+
+class NotificationsViewCreate(CreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = NotificationSerializer
+
+
+class NotificationView(RetrieveAPIView, UpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = NotificationSerializerOne
+    def get_object(self):
+        actual_user = self.request.user
+        notif = get_object_or_404(Notification, id=self.kwargs['pk']) 
+        if notif.belongs_to.pk != actual_user.pk:
+            raise ValidationError({"authorize": "You dont have permission for this user."})
+        notif.cleared =True
+        notif.save()
+        return notif
