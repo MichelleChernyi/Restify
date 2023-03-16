@@ -13,14 +13,19 @@ class Property(models.Model):
     # amenities
     amenities = models.ManyToManyField('Amenities', null=True, blank=True)
 
+    def __str__(self):
+         return self.title
+
 class Amenities(models.Model):
     name = models.CharField(max_length=100)
+    def __str__(self):
+         return self.name
 
 class Availability(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     price = models.FloatField()
-    property = models.ForeignKey(Property, on_delete=models.CASCADE, null=True, blank=True)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
 class Image(models.Model):
     image = models.ImageField(upload_to='property_images/')
