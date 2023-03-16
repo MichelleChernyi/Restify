@@ -4,12 +4,12 @@ from rest_framework.decorators import permission_classes
 # from rest_framework import filters
 from .models import Property
 from .serializers import PropertyListSerializer
+from .paginations import PropertiesList
 
 @permission_classes((AllowAny, ))
 class PropertyListView(ListAPIView):
     serializer_class = PropertyListSerializer
-    # filter_backends = (filters.SearchFilter,)
-    # search_fields = ['location', '']
+    pagination_class = PropertiesList
     def get_queryset(self):
         queryset = Property.objects.all()
         num_guests = self.request.query_params.get('num_guests')
