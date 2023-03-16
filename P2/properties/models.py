@@ -16,7 +16,6 @@ class Property(models.Model):
 class Amenities(models.Model):
     name = models.CharField(max_length=100)
 
-
 class Availability(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
