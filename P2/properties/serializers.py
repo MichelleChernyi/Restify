@@ -24,7 +24,7 @@ class PropertyCommentSerializer(ModelSerializer):
     def get_reply(self, obj):
         replies = obj.replies.all()
         if replies:
-            return PropertyComment(replies[0]).data
+            return PropertyCommentSerializer(replies[0]).data
         else:
             return None
 class PropertySerializer(ModelSerializer):
