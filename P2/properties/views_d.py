@@ -65,6 +65,17 @@ class DeletePropertyView(DestroyAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Property.objects.all()
 
+    def delete(self, request, *args, **kwargs):
+        try:
+            r = Property.objects.get(pk=kwargs['pk'])
+        except:
+            return Response(data={'property': 'This property does not exist.'}, status=404)
+        if request.user == r.owner:
+            super().delete(request, *args, **kwargs)
+            return Response(data={'property': 'Successfully Deleted'}, status=200)
+        else:
+            return Response(data={'authorization': 'You are not authorized.'}, status=403)
+
 # CRUD RESERVATIONS
 class CreateReservationView(CreateAPIView):
     serializer_class = ReservationSerializer
@@ -91,7 +102,7 @@ class ChangeStatusReservationView(UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         instance = self.get_object()
-        if request.user != instance.property.owner and request.user != instance.user:
+        if request.user != instance.property.owner:
             return Response(data={'authentication': 'You are not authorized.'}, status=403)
         return super().patch(request, *args, **kwargs)
         
@@ -106,11 +117,12 @@ class DeleteReservationView(DestroyAPIView):
         except:
             return Response(data={'reservation': 'This reservation does not exist.'}, status=404)
         if request.user == r.user:
-            return super().delete(request, *args, **kwargs)
-        elif request.user == r.property.owner:
-            r.staus = 'terminated'
-            r.save()
-            return Response({'reservation': f'Reservation {r.pk} has been terminated'})
+            super().delete(request, *args, **kwargs)
+            return Response(data={'reservation': 'Successfully Deleted'}, status=200)
+        # elif request.user == r.property.owner:
+        #     r.staus = 'terminated'
+        #     r.save()
+        #     return Response({'reservation': f'Reservation {r.pk} has been terminated'}, status=200)
         else:
             return Response(data={'authorization': 'You are not authorized.'}, status=403)
         
@@ -121,7 +133,7 @@ class ListReservationView(ListAPIView):
 
     def get_queryset(self):
         prop_pk = self.request.query_params.get('property')
-        state = self.request.query_params.get('property')
+        state = self.request.query_params.get('state')
         if prop_pk is not None:
             prop = Property.objects.get(pk=prop_pk)
             qset = Reservation.objects.filter(property=prop)
@@ -140,4 +152,4 @@ class ListReservationView(ListAPIView):
                 return Response(data={'property': 'not found'}, status=404)
             if p.owner != request.user:
                 return Response(data={'authorization': 'You are not authorized.'}, status=403)
-        return self.get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
