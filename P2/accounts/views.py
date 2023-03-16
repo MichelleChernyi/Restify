@@ -82,7 +82,6 @@ class ReplyView(CreateAPIView):
 
         original_comment = GuestComment.objects.get(id=self.kwargs['pk'])
 
-        print(original_comment.replies.all())
         
         if original_comment.replies.all():
             return Response({"This comment already has a reply"}, status=status.HTTP_400_BAD_REQUEST)

@@ -69,17 +69,18 @@ class ReplyView(CreateAPIView):
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         original_comment = PropertyComment.objects.get(id=self.kwargs['pk'])
-
-        if (original_comment.guest == original_comment.from_user):
+        if original_comment.replies.all():
+            return Response({"This comment already has a reply"}, status=status.HTTP_400_BAD_REQUEST)
+        if (original_comment.property.owner == original_comment.from_user):
             if (original_comment.reply_to.from_user != self.request.user):
                 return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
-        elif self.request.user == original_comment.from_user and self.request.user != original_comment.guest:
+        elif self.request.user == original_comment.from_user and self.request.user != original_comment.property.owner:
             return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
         
         comment = PropertyComment.objects.create(
             from_user=request.user,
             content=serializer.data['content'], 
-            guest=original_comment.guest,
+            property=original_comment.property,
             reply_to=original_comment)
         result = PropertyCommentSerializer(comment)
         return Response(result.data, status=status.HTTP_201_CREATED)
