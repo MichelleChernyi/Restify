@@ -9,6 +9,7 @@ class Property(models.Model):
     location = models.CharField(max_length=200)
     num_bed = models.IntegerField()
     num_bath = models.IntegerField()
+    num_guests = models.IntegerField()
 
     # amenities
     amenities = models.ManyToManyField('Amenities', null=True, blank=True)
