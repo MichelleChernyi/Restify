@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from .models import CustomUser, GuestComment, Notification
+from properties.models import Property
 from rest_framework.pagination import PageNumberPagination
 
 # @permission_classes((AllowAny, ))
@@ -42,9 +43,23 @@ class GuestCommentView(ListCreateAPIView):
         if not serializer.is_valid():
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        
 
         if request.user.id == self.kwargs['pk']:
             return Response({'Cannot leave a review on yourself'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        try:
+            users_properties = Property.objects.get(owner=request.user.id)
+        except:
+            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
+
+        
+        reservations = users_properties.reservation_set.all()
+        guests = reservations.filter(user=self.kwargs['pk'])
+        if not guests:
+            print('here')
+            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
 
         comment = GuestComment.objects.create(
             from_user=request.user,
