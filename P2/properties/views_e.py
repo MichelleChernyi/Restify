@@ -26,7 +26,7 @@ class PropertyListView(ListAPIView):
             for i in amenities:
                 queryset = queryset.filter(amenities__name = i)
         if price_less_than:
-            queryset = queryset.filter(price__lt=price_less_than)
+            queryset = queryset.filter(price__lte=price_less_than)
         if price_high_to_low:
             if price_high_to_low.lower() == 'true':
                 queryset = queryset.order_by('-price')
