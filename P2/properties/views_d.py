@@ -105,6 +105,7 @@ class CreateReservationView(CreateAPIView):
         return Response({'id': instance.pk, 'data': serializer.data})
     
 class ChangeStatusReservationView(UpdateAPIView):
+    
     serializer_class = ReservationSerializer
     permission_classes = (IsAuthenticated,)
     queryset = Reservation.objects.all()
