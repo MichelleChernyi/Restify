@@ -30,3 +30,19 @@ class Availability(models.Model):
 
 class Image(models.Model):
     image = models.ImageField(upload_to='property_images/')
+
+RES_STATUS = (
+    ('pending', 'PENDING'),
+    ('denied', 'DENIED'),
+    ('expired', 'EXPIRED'),
+    ('approved', 'APPROVED'),
+    ('canceled', 'CANCELED'),
+    ('terminated', 'TERMINATED'),
+    ('completed', 'COMPLETED')
+)
+class Reservation(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    status = models.CharField(max_length=7, choices=RES_STATUS, default='pending')
+    start_date = models.DateField()
+    end_date = models.DateField()
