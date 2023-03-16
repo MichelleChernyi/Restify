@@ -57,6 +57,10 @@ class GuestCommentView(ListCreateAPIView):
             print('here')
             return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
         
+        guests = guests.filter(status='completed')
+        if not guests:
+            return Response({"Cannot leave a review until reservation is complete"}, status=status.HTTP_401_UNAUTHORIZED)
+        
         comment = GuestComment.objects.create(
             from_user=request.user,
             content=serializer.data['content'], 
