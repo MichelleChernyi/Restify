@@ -31,22 +31,25 @@ class PropertyCommentView(ListCreateAPIView):
             return Response(
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-        if request.user.id == self.kwargs['pk']:
-            return Response({'Cannot leave a review on yourself'}, status=status.HTTP_401_UNAUTHORIZED)
+        # if request.user.id == self.kwargs['pk']:
+        #     return Response({'Cannot leave a review on yourself'}, status=status.HTTP_401_UNAUTHORIZED)
+        property = Property.objects.get(id=self.kwargs['pk'])
+        if property.owner == self.request.user:
+            return Response({"Cannot leave a review on your own property"}, status=status.HTTP_401_UNAUTHORIZED)
         
-        try:
-            users_properties = Property.objects.get(owner=request.user.id)
-        except:
-            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
+        # try:
+        #     users_properties = Property.objects.get(owner=request.user.id)
+        # except:
+        #     return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        reservations = users_properties.reservation_set.all()
-        guests = reservations.filter(user=self.kwargs['pk'])
+        reservations = property.reservation_set.all()
+        guests = reservations.filter(user=self.request.user)
         if not guests:
-            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"Cannot leave a review if you haven't stayed on this property"}, status=status.HTTP_401_UNAUTHORIZED)
         
-        guests = guests.filter(status='completed')
+        guests = guests.filter(status__in=['completed', 'terminated'])
         if not guests:
-            return Response({"Cannot leave a review until reservation is complete"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"Cannot leave a review until reservation is complete or reservation has been terminated"}, status=status.HTTP_401_UNAUTHORIZED)
         
         comment = PropertyComment.objects.create(
             from_user=request.user,
@@ -67,7 +70,6 @@ class ReplyView(CreateAPIView):
 
         original_comment = PropertyComment.objects.get(id=self.kwargs['pk'])
 
-        print(original_comment.guest)
         if (original_comment.guest == original_comment.from_user):
             if (original_comment.reply_to.from_user != self.request.user):
                 return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
