@@ -1,11 +1,14 @@
 import './App.css';
-import Login from './components/Login'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HostIndex from './components/Host'
 
 function App() {
   return (
-    <main>
-      <Login />
-    </main>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/host" element={<HostIndex />} />
+    </Routes>
+  </BrowserRouter>
    
   );
 }
