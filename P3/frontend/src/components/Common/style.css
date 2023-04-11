@@ -49,3 +49,22 @@ html {
         display: None;
     }
 }
+
+.small-search {
+    margin-right: auto;
+}
+
+.small-search:hover {
+    background-color: white;
+    color: #212529;
+}
+
+.small-search:focus {
+    background-color: white !important;
+    color: #212529 !important;
+}
+
+.small-search:after:active {
+    background-color: white;
+    color: #212529;
+}

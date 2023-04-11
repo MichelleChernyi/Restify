@@ -12,8 +12,8 @@ function Header(props) {
                 </div>
                 <div className="shadow-sm search-filter bg-white d-flex align-items-center p-1">
                   <input type="text" placeholder="Location" className="form-control shadow-none border-0 large-search"/>
-                  <input type="text" placeholder="Check In" onBlur={() => this.type = 'text'} onFocus={() => this.type = 'date'} className="form-control shadow-none border-0 large-search"/>
-                  <input type="text" placeholder="Check Out" onBlur={() => this.type = 'text'} onFocus={() => this.type = 'date'} className="form-control shadow-none border-0 large-search"/>
+                  <input type="text" placeholder="Check In" onBlur={(e) => e.target.type = 'text'} onFocus={(e) => e.target.type = 'date'} className="form-control shadow-none border-0 large-search"/>
+                  <input type="text" placeholder="Check Out" onBlur={(e) => e.target.type = 'text'} onFocus={(e) => e.target.type = 'date'} className="form-control shadow-none border-0 large-search"/>
                   <input type="number" step="1" placeholder="Add Guests" className="form-control shadow-none border-0 large-search"/>
 
                   <button type="button" className="btn btn-outline-secondary border-0 small-search" data-bs-toggle="modal" data-bs-target="#searchModal">
