@@ -34,7 +34,6 @@ class Reservations extends React.Component {
                     <div class="card-body">
                     <span class="badge text-bg-warning">{item.status}</span>
                         <h5 class="card-title">{item.location}</h5>
-                        <p class="card-text">4347 km away</p>
                         <p class="card-text">{item.checkin} to {item.checkout}</p>
                         <p class="card-text font-weight-bold">Hosted by {item.host}</p>
                         <button class="btn btn-danger mt-1" onClick={() => {
