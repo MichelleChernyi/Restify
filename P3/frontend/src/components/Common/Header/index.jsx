@@ -19,6 +19,7 @@ function Header(props) {
       setIsLoggedIn(true);
     }
   }, []);
+  
   const search = () => {
     let state = {}
     if (location !== '') {
