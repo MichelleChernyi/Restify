@@ -13,6 +13,7 @@ pip install Django
 pip install Pillow
 pip install djangorestframework
 pip install djangorestframework-simplejwt
+pip install django-cors-headers
 
 # run migrations and data population
 python3 manage.py makemigrations
