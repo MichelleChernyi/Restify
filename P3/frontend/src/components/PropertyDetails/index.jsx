@@ -14,10 +14,10 @@ function PropertyDetails(props) {
     const [tax, setTax] = useState()
     const [total, setTotal] = useState()
     const [numDays, setNumDays] = useState()
-    const [comments, setComments] = useState()
+    const [comments, setComments] = useState([])
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     
     useEffect(()=>{
-        console.log(id)
         fetch(`http://localhost:8000/properties/search/?id=${id}`)
           .then(response => response.json())
           .then(body => {
@@ -35,6 +35,14 @@ function PropertyDetails(props) {
           })
       console.log(comments)
       }, [])
+    
+    useEffect(() => {
+      const loggedInUser = localStorage.getItem("token");
+      if (loggedInUser) {
+        // const foundUser = JSON.parse(loggedInUser);
+        setIsLoggedIn(true);
+      }
+    }, []);
 
     useEffect(() => {
         setPrice(0)
@@ -103,19 +111,18 @@ function PropertyDetails(props) {
                   </p>
                   </div>
                 </div>
-                {comments !== undefined && <div className="row mt-3 border-bottom">
-                  
+                {comments.length > 0 && <div className="row mt-3 border-bottom">
                   <h4>Comments</h4>
                   {/* <Comment comment={comments[0]} /> */}
                   {comments.map((comment, index) =>
                     <Comment comment={comment} key={index}/>
                   )}
                 </div>}
-                
+                {isLoggedIn && <button className="btn btn-primary">Leave a Comment</button>}
                 <div className="row mt-3 ">
                   <div className="d-flex align-items-center mb-2">
                     <h4 className="mb-0">
-                      Hosted by Edward
+                      Hosted by {property.owner_details[0]}
                     </h4>
                     <p className="mb-0 ms-4 mt-0"><i className="bi bi-star-fill"> 2.2</i></p>
                   </div>
