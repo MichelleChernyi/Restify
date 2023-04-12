@@ -412,6 +412,17 @@ class HostIndex extends React.Component {
                             <hr class="hr" />
                             <div id="requests-manager">
                             <h5>Requests</h5>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Filter
+                                </button>
+                                <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" onClick={() => this.setState({filter: ''})}>None</a></li>
+                                <li><a class="dropdown-item" onClick={() => this.setState({filter: 'approved'})}>Approve</a></li>
+                                <li><a class="dropdown-item" onClick={() => this.setState({filter: 'denied'})}>Denied</a></li>
+                                <li><a class="dropdown-item" onClick={() => this.setState({filter: 'terminated'})}>Terminate</a></li>
+                                </ul>
+                            </div>
                             <ol class="list-group">
                                 {
                                     prop_res
