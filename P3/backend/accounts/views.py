@@ -123,14 +123,19 @@ class ProfileView(UpdateAPIView):
     queryset = CustomUser.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ProfileSerializer
-    def get(self, request, pk, **kwargs):
+    lookup_field = 'email'
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, id=self.request.user.pk)
+        return obj
+    def get(self, request, **kwargs):
         actual_user = self.request.user
-        user = get_object_or_404(CustomUser, id=pk) 
-        if user.pk != actual_user.pk:
-            raise ValidationError({"authorize": "You dont have permission for this user."})
+        user = get_object_or_404(CustomUser, id=self.request.user.pk) 
+        # if user.pk != actual_user.pk:
+        #     raise ValidationError({"authorize": "You dont have permission for this user."})
         serializer = ProfileSerializer(user)
         return Response(serializer.data)
-
+ 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 4
     page_size_query_param = 'page_size'

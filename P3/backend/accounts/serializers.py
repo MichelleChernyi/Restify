@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import exceptions
 from rest_framework.serializers import ModelSerializer, Serializer, CharField, IntegerField, ValidationError, SerializerMethodField
 from django.contrib.auth.models import User
@@ -92,6 +93,7 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['phone_num', 'first_name', 'last_name', 'email', 'avatar']   #TODO: AVATAR 
+        lookup_field = 'email'
         extra_kwargs = {
             'first_name': {'required': False},
             'last_name': {'required': False},
@@ -100,11 +102,14 @@ class ProfileSerializer(ModelSerializer):
             'avatar':{'required': False},
         }
 
-
+    def get_object(self):
+        queryset = self.get_queryset()
+        obj = get_object_or_404(queryset, user=self.request.user)
+        return obj
     def update(self, instance, validated_data):
         user = self.context['request'].user
-        if user.pk != instance.pk:
-            raise ValidationError({"authorize": "You dont have permission for this user."})
+        # if user.pk != instance.pk:
+        #     raise ValidationError({"authorize": "You dont have permission for this user."})
         print("validated_data: ", validated_data)
         if 'first_name' in validated_data:
             instance.first_name = validated_data['first_name']

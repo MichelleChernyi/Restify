@@ -84,33 +84,10 @@ class Signup extends Component {
 
 
       
-        // this.setState({ error: err.response.data });
+
     });
     };
 
-//     signUp = e => {
-//     e.preventDefault();
-//     const requestOptions = {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({email: this.state.email, password: this.state.password ,password2 :this.state.password2,first_name: this.state.first_name, last_name: this.state.last_name, phone_num: this.state.phone_num})
-//   };
-//  fetch('http://127.0.0.1:8000/accounts/signup/', requestOptions)
-//       .then(response => response.json())
-//       .then(text => {
-//         console.log(text)
-//         console.log
-//         console.log(text.detail)
-//         for (var key in text) {
-//           console.log("Key:" + key);
-//           console.log("Value:" + text[key]);
-//         }
-//       })
-//       .catch(error=>{console.log(error)});
-        
-  
-
-//   };
     render() {
       return (
         <>
@@ -199,42 +176,3 @@ class Signup extends Component {
 
 
 export default Signup
-
-{/* <>
-<div className="card w-500 log-stuff register">
-<img src="images/home.png" className="card-img-top sign-up-image">
-<div className="card-body logs">
-  <h5 className="card-title">Welcome to Restify</h5>
-  <form action="signed-up.html">
-    <div className="mb-3">
-        <label className="form-label">First name</label>
-        <input className="form-control" type="text" required/>
-      </div>
-      <div className="mb-3">
-        <label className="form-label">Last name</label>
-        <input className="form-control" type="text" required/>
-      </div>
-    <div className="mb-3">
-      <label className="form-label">Email address</label>
-      <input type="email" className="form-control" aria-describedby="emailHelp" required/>
-    </div>
-    <div className="mb-3">
-      <label className="form-label">Phone number</label>
-      <input type="number" className="form-control" required/>
-    </div>
-    <div className="mb-3">
-      <label className="form-label">Password</label>
-      <input type="password" className="form-control" required/>
-      <div className="form-text">Your password must be 8-20 characters long</div>
-    </div>
-    <div className="mb-3">
-        <label className="form-label">Confirm password</label>
-        <input type="password" className="form-control" required/>
-    </div>
-    <input className="btn btn-primary" type="submit" value="Sign Up" />
-  </form>
-<a href="login.html">Already have an account? Log in.</a>
-</div>
-</div>
-
-</> */}

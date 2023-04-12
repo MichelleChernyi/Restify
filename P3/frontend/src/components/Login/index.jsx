@@ -45,6 +45,8 @@ class Login extends Component {
         localStorage.setItem('token',  token);
         const refresh_token  = res.data.refresh;
         localStorage.setItem('refresh_token',  refresh_token);
+        const user  = res.data;
+        localStorage.setItem('user',   JSON.stringify(user));
 
         window.location.assign("http://localhost:3000/");
       })

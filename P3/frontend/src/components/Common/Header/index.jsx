@@ -69,6 +69,11 @@ function Header(props) {
     window.location.assign("http://localhost:3000/register/");
     
   }
+
+  const profile = () => {
+    window.location.assign("http://localhost:3000/profile/");
+    
+  }
   
   return (
         <>
@@ -122,7 +127,7 @@ function Header(props) {
                   <li><hr className="dropdown-divider"/></li>
                   <li><a className="dropdown-item" href="no-reservations.html">My Reservations</a></li>
                   <li><hr className="dropdown-divider"/></li>
-                  <li><a className="dropdown-item" href="profile.html">My Profile</a></li>
+                  <li><a className="dropdown-item" onClick={profile}>My Profile</a></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><a className="dropdown-item" onClick={logOut}>Log Out</a></li> 
                   {/* href="signed-out.html"  */}
