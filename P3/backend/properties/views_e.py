@@ -1,14 +1,30 @@
 from rest_framework.permissions import AllowAny
-from rest_framework.generics import ListAPIView, ListCreateAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, ListCreateAPIView, CreateAPIView, RetrieveAPIView
 from rest_framework.decorators import permission_classes
+from django.views.generic.detail import DetailView
+
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 # from rest_framework import filters
 from accounts.models import CustomUser
 from .models import Property, PropertyComment, Image
-from .serializers import PropertyListSerializer, PropertyCommentSerializer, PropertyCommentCreateSerializer
+from .serializers import PropertyListSerializer, PropertyCommentSerializer, PropertyCommentCreateSerializer, AllPropertySerializer
 from .paginations import PropertiesList
 from rest_framework.response import Response
 from rest_framework import status
+
+@permission_classes((AllowAny, ))
+class PropertyView(RetrieveAPIView):
+    model = Property
+    serializer_class = AllPropertySerializer
+    queryset = Property.objects.all()
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        property = Property.objects.get(id=self.kwargs['pk'])
+        images = Image.objects.filter(my_property=property)
+        context['images'] = []
+        for image in images:
+            context['images'].append(self.request.build_absolute_uri(image.image.url))
+        return context
 
 class PropertyCommentView(ListCreateAPIView):
     serializer_class = PropertyCommentSerializer
@@ -98,6 +114,7 @@ class PropertyListView(ListAPIView):
         price_high_to_low = self.request.query_params.get('price_high_to_low')
         price_less_than = self.request.query_params.get('price_less_than')
         num_baths = self.request.query_params.get('num_baths')
+        id = self.request.query_params.get('id')
         if num_guests is not None:
             queryset = queryset.filter(num_guests=num_guests)
         if num_baths is not None:
@@ -115,6 +132,8 @@ class PropertyListView(ListAPIView):
         elif price_low_to_high:
             if price_low_to_high.lower() == 'true':
                 queryset = queryset.order_by('price')
+        if id is not None:
+            queryset = queryset.filter(id=id)
 
         for property in queryset:
             images = Image.objects.filter(my_property=property)
