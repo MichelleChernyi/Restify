@@ -1,9 +1,10 @@
-
+import { createRef } from 'react';
 import {useEffect, useState} from 'react';
 function Comment(props) {
     const [threads, setThreads] = useState([])
     const [reply, setReply] = useState()
     const [replyID, setReplyID] = useState()
+    let textInput = createRef();
     useEffect(()=>{
         getThreads()
         }, [props])
@@ -38,7 +39,27 @@ function Comment(props) {
         </h6>
         <p>{curr.content}</p>
         <p className="comment-date">{curr.date}</p>
-        {(canReply) && <button class='btn btn-primary' data-bs-toggle="modal" data-bs-target="#commentModal" id={curr.id} onClick={(e) => setReplyID(e.target.id)}>Reply</button>}
+        {(canReply) && <div>
+            <button class='btn btn-primary' data-bs-toggle="modal" data-bs-target={"#commentModal" + curr.id} id={curr.id} >Reply</button>
+            <div className="modal fade" id={'commentModal' + curr.id} tabIndex="-1" aria-labelledby={"commentModalLabel"+curr.id} aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id={"commentModalLabel"+curr.id}>Comment</h1>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                          <textarea type="text" ref={textInput}placeholder="Comment..." className="form-control shadow-none mb-1" onChange={(e) => setReply(e.target.value)}></textarea>
+
+                        </div>
+                        <div className="modal-footer">
+                            {console.log(replyID)}
+                          <button type="button"  className="btn btn-primary " data-bs-dismiss="modal" onClick={() => props.onReply({content: textInput.current.value, id: curr.id})}>Comment</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>}
       </div>)
       console.log(canReply)
       setThreads(thread)
@@ -48,7 +69,7 @@ function Comment(props) {
             <div className="profile-comment mb-3 p-0 mt-2">
             <div className="border-bottom">
                 {threads != [] && threads.map((thread)=> thread)}
-                <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+                {/* <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
@@ -61,11 +82,11 @@ function Comment(props) {
                         </div>
                         <div className="modal-footer">
                             {console.log(replyID)}
-                          <button type="button"  className="btn btn-primary " data-bs-dismiss="modal" onClick={() => props.onReply(reply, replyID)}>Comment</button>
+                          <button type="button"  className="btn btn-primary " data-bs-dismiss="modal" onClick={() => props.onReply({content: reply, id: replyID})}>Comment</button>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
             </div>
             </div>
         </>

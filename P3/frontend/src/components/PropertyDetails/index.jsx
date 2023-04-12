@@ -118,23 +118,23 @@ function PropertyDetails(props) {
         });
     }
 
-    const postReply = (reply, id) => {
+    const postReply = (reply) => {
+      console.log(reply['content'])
       console.log(reply)
-      console.log(id)
-      // var bodyd = new FormData();
-      //             bodyd.append("content", reply);
-      // axios({
-      //   method: "POST",
-      //   url: `http://localhost:8000/properties/comments/${id}/reply/`,
-      //   headers: { 
-      //     'Content-type': 'multipart/form-data',
-      //     'Authorization': `Bearer ${localStorage.getItem('token')}`
-      //   },
-      //   data: bodyd,
-      //   }).then((response) => {
-      //     let temp = trigger
-      //       setTrigger(temp + 1)
-      //   });
+      var bodyd = new FormData();
+                  bodyd.append("content", reply['content']);
+      axios({
+        method: "POST",
+        url: `http://localhost:8000/properties/comments/${reply['id']}/reply/`,
+        headers: { 
+          'Content-type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        data: bodyd,
+        }).then((response) => {
+          let temp = trigger
+            setTrigger(temp + 1)
+        });
     }
 
     return (
