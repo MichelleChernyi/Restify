@@ -98,7 +98,7 @@ class Login extends Component {
               onChange={this.onChange}
               value={this.state.email}
             />
-             <p>{this.state.email_error}</p>
+             <p className="warnings">{this.state.email_error}</p>
           </FormGroup>
           <FormGroup>
             <Label for="password">Password</Label>
@@ -108,7 +108,7 @@ class Login extends Component {
               onChange={this.onChange}
               value={this.state.password}
             />
-             <p>{this.state.password_error}</p>
+             <p className="warnings">{this.state.password_error}</p>
           </FormGroup>
           <Button className="btn btn-primary sign-btn" >Sign In</Button>
         </Form>

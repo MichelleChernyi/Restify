@@ -106,7 +106,7 @@ class Signup extends Component {
               onChange={this.onChange}
               value={this.state.first_name}
             />
-            <p>{this.state.first_name_error[0]}</p>
+            <p className="warnings">{this.state.first_name_error[0]}</p>
           </FormGroup>
           
           <FormGroup>
@@ -117,7 +117,7 @@ class Signup extends Component {
               onChange={this.onChange}
               value={this.state.last_name}
             />
-             <p>{this.state.last_name_error[0]}</p>
+             <p className="warnings">{this.state.last_name_error[0]}</p>
           </FormGroup>
           <FormGroup>
             <Label for="email">Email:</Label>
@@ -127,7 +127,7 @@ class Signup extends Component {
               onChange={this.onChange}
               value={this.state.email}
             />
-             <p>{this.state.email_error[0]}</p>
+             <p className="warnings">{this.state.email_error[0]}</p>
           </FormGroup>
           <FormGroup>
             <Label for="password">Password</Label>
@@ -137,7 +137,7 @@ class Signup extends Component {
               onChange={this.onChange}
               value={this.state.password}
             />
-             <p>{this.state.password_error[0]}</p>
+             <p className="warnings">{this.state.password_error[0]}</p>
           </FormGroup>
           <FormGroup>
             <Label for="password">Repeat password:</Label>
@@ -147,7 +147,7 @@ class Signup extends Component {
               onChange={this.onChange}
               value={this.state.password2}
             />
-             <p>{this.state.password2_error[0]}</p>
+             <p className="warnings">{this.state.password2_error[0]}</p>
           </FormGroup>
           
           <FormGroup>
@@ -158,7 +158,7 @@ class Signup extends Component {
               onChange={this.onChange}
               value={this.state.phone_num}
             />
-             <p>{this.state.phone_num_error[0]}</p>
+             <p className="warnings">{this.state.phone_num_error[0]}</p>
           </FormGroup>
           <Button className="btn btn-primary sign-btn" >Sign Up</Button>
         </Form>
