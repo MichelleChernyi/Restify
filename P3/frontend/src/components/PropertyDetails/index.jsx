@@ -27,11 +27,11 @@ function PropertyDetails(props) {
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                <img src={property.images[0]} class="d-block w-100" alt="..."/>
+                <img src={property.images[0]} class="d-block carousel-img w-100" alt="..."/>
                 </div>
                 {property.images.slice(1).map((item, index) => (
                     <div class="carousel-item">
-                    <img class="d-block w-100" src={item} key={index}/>
+                    <img class="d-block carousel-img w-100" src={item} key={index}/>
                     </div>
                 ))}
             </div>
@@ -44,51 +44,6 @@ function PropertyDetails(props) {
                 <span class="visually-hidden">Next</span>
             </button>
             </div>
-        {/* <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img class="d-block w-100" src={property.images[0]}/>
-                </div>
-                {property.images.map((item, index) => (
-                    <div class="carousel-item">
-                    <img class="d-block w-100" src={item} key={index}/>
-                    </div>
-                ))}
-                <div class="carousel-item active">
-                <img class="d-block w-100" src="..." alt="First slide"/>
-                </div>
-                <div class="carousel-item">
-                <img class="d-block w-100" src="..." alt="Second slide"/>
-                </div>
-                <div class="carousel-item">
-                <img class="d-block w-100" src="..." alt="Third slide"/>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-            </div> */}
-        {/* <div class="container m-0 property-images-container p-0">
-            <img class="property-image main-img" id="main-img" src={property.images[0]}/> */}
-          {/* <div class="row">
-            <div class="col-6 p-1">
-              <img class="property-image main-img" id="main-img" src={property.images[0]}/>
-            </div>
-            <div class="col-3 p-1">
-              <img class="property-image mini-img" id="kitchen-img" src="images/cullen_kitchen.jpg" alt="Kitchen"/>
-              <img class="property-image mini-img" id="living-img" src="images/cullen_living_room.jpg" alt="Living room"/>
-            </div>
-            <div class="col-3 p-1">
-              <img class="property-image mini-img" id="kitchen-img" src="images/cullen-side-house-view.jpg" alt="Interior of house"/>
-              <img class="property-image mini-img" id="living-img" src="images/cullen-bedroom.jpg" alt="Bedroom"/>
-            </div>
-          </div> */}
-        {/* </div> */}
         <div class="container ms-0 mt-5 p-0 property-details">
           <div class="row">
             <div class="col-8 p-0">
@@ -97,13 +52,13 @@ function PropertyDetails(props) {
                   <div class="col d-flex ">
                     <div class="d-flex flex-column">
                       <h3 class="">
-                        Entire house hosted by Edward
+                        Entire house hosted by {property.owner_details[0]}
                       </h3>
                       <p class=" mb-0">
                         {property.num_guests} guests • {property.num_bed} bedrooms • {property.num_bath} bathrooms
                       </p>
                     </div>
-                    <img src="images/edwards.png" id="host" class="img-fluid ms-auto" alt="Avatar"/> 
+                    <img src={property.owner_details[2]} id="host" class="img-fluid ms-auto" alt="Avatar"/> 
                   </div>
                 
                 </div>
@@ -144,14 +99,14 @@ function PropertyDetails(props) {
                   
                   <p class="mb-1">Resonse rate: 97%</p>
                   <p>Response time: 1-2 business days</p>
-                  <a href="mailto:edward.cullen@gmail.com" class="btn btn-primary contact-button ms-2">Contact host</a>
+                  <a href={'mailto:' + property.owner_details[1]} class="btn btn-primary contact-button ms-2">Contact host</a>
                 </div>
               </div>
             </div>
             <div class="col border m-1 shadow d-flex " id="book-property">
               <div class="d-flex justify-content-between align-items-center mb-2">
                 <h3>
-                  $1000/night
+                    ${property.price}/night
                 </h3>
                 <p><i class="bi bi-star-fill"> 4.3</i></p>
               </div>

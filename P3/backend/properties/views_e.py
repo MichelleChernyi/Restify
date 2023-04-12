@@ -137,6 +137,8 @@ class PropertyListView(ListAPIView):
 
         for property in queryset:
             images = Image.objects.filter(my_property=property)
+            owner = CustomUser.objects.get(email=property.owner)
+            property.owner_details = [owner.first_name, owner.email, self.request.build_absolute_uri(owner.avatar.url)]
             property.images = []
             for image in images:
                 property.images.append(self.request.build_absolute_uri(image.image.url))

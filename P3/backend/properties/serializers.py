@@ -20,9 +20,10 @@ class AllPropertySerializer(ModelSerializer):
 
 class PropertyListSerializer(ModelSerializer):
     images = ListField()
+    owner_details = ListField()
     class Meta:
         model = Property
-        fields = ['id', 'title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images', 'owner', 'amenities']
+        fields = ['id', 'title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images', 'owner', 'amenities', 'owner_details']
 
 class PropertyCommentCreateSerializer(ModelSerializer):
     class Meta:

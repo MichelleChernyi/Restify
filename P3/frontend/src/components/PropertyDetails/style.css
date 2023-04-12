@@ -26,3 +26,23 @@
     margin: auto;
     width: 80vw;
 }
+
+.carousel-img {
+    width: auto;
+    height: 600px;
+}
+
+#book-property {
+    border-radius: 15px;
+    margin: 5em 0 0 3em !important;
+    padding: 2em;
+    flex-direction: column;
+    height: 475px;
+}
+
+#host {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    margin-bottom: 0.5em;
+}
