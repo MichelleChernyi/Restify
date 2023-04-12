@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-
+import Header from '../Common/Header';
+import './style.css'
 class Reservations extends React.Component {
     constructor(props) {
         super(props);
@@ -29,9 +30,9 @@ class Reservations extends React.Component {
     render() {
         const resv = this.state.user_reservations.map((item, i) => {
             return (
-                <div class="card m-5" key={i}>
-                    <img style={{width: '100px'}} class="card-img-top" src={item.image} alt="Edward's house"></img>
-                    <div class="card-body">
+                <div class="card m-5 e-card" key={i}>
+                    <img style={{width: '100px'}} class="card-img-top e-card-img-top" src={item.image} alt="Edward's house"></img>
+                    <div class="card-body e-card-body">
                     <span class="badge text-bg-warning">{item.status}</span>
                         <h5 class="card-title">{item.location}</h5>
                         <p class="card-text">{item.checkin} to {item.checkout}</p>
@@ -52,12 +53,14 @@ class Reservations extends React.Component {
             )
             })
         return (
+            <>
+            <Header />
             <main>
                 <h1 class="m-5">
                     Reservations
                 </h1>
                 {resv}
-            </main>
+            </main></>
         );
     }
 }
