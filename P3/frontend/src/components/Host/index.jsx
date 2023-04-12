@@ -19,7 +19,7 @@ class HostIndex extends React.Component {
                 num_guests: '',
                 price: '',
             }],
-            reservations: [Array(0)],
+            reservations: [],
             update_name: -1,
             update_location: -1,
             update_description: -1,
@@ -28,16 +28,18 @@ class HostIndex extends React.Component {
             update_num_guests: -1,
             update_price: -1,
             error: '',
-            rloaded: 0,
+            add_image: -1,
         };
         this.setCreate = this.setCreate.bind(this);
         this.refresh = this.refresh.bind(this);
         this.submitCreateForm = this.submitCreateForm.bind(this);
         this.submitUpdateForm = this.submitUpdateForm.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleFileChange = this.handleFileChange.bind(this);
         this.deleteProperty = this.deleteProperty.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
-        this.refresh();
+        this.refresh_reservations = this.refresh_reservations.bind(this);
+        this.refresh(0);
     } 
 
     handleInputChange(event) {
@@ -59,6 +61,10 @@ class HostIndex extends React.Component {
         bodyd.append('num_bath', this.state.add_num_bath);
         bodyd.append('num_guests', this.state.add_num_guests);
         bodyd.append('price', this.state.add_price);
+        if (this.state.add_image !== -1) {
+            bodyd.append('image', this.state.add_image);
+            this.state.add_image = -1;
+        };
         axios({
             method: "POST",
             url: "http://127.0.0.1:8000/properties/create/",
@@ -68,7 +74,7 @@ class HostIndex extends React.Component {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         })
-        .then(() => this.setState({create: false}))
+        .then(() => this.setState({create: false}, () => this.refresh(this.state.curr_prop_id)))
         .catch((err) => {
             console.log(err.response.statusText);
             this.setState({error: err.response.statusText});
@@ -85,6 +91,10 @@ class HostIndex extends React.Component {
         if (this.state.update_num_bath !== -1) bodyd.append('num_bath', this.state.update_num_bath);
         if (this.state.update_num_guests !== -1) bodyd.append('num_guests', this.state.update_num_guests);
         if (this.state.update_price !== -1) bodyd.append('price', this.state.update_price);
+        if (this.state.add_image !== -1) {
+            bodyd.append('image', this.state.add_image);
+            this.state.add_image = -1;
+        };
         axios({
             method: "PATCH",
             url: `http://127.0.0.1:8000/properties/update/${this.state.properties[this.state.curr_prop_id].id}/`,
@@ -93,7 +103,10 @@ class HostIndex extends React.Component {
                 "Content-Type": "multipart/form-data", 
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
-        }).catch((err) => {
+        }).then((response) => {
+            this.refresh(this.state.curr_prop_id);
+        })
+        .catch((err) => {
             console.log(err.response.statusText);
             this.setState({error: err.response.statusText});
         });
@@ -107,10 +120,34 @@ class HostIndex extends React.Component {
                 "Content-Type": "multipart/form-data", 
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
-        }).then(() => this.refresh())
+        }).then(() => this.refresh(0))
     }
 
-    refresh() {
+    refresh_reservations() {
+        axios({
+            method: "GET",
+            url: `http://127.0.0.1:8000/properties/reservations/list/`,
+            headers: { 
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        }).then((response) => {
+            var x = Array(this.state.properties.length);
+            for (let i = 0; i < x.length; i++) {
+                x[i] = Array(0);
+            }
+            var mapping = {}
+            for (let i = 0; i < x.length; i++) {
+                mapping[this.state.properties[i].id] = i;
+            }
+            console.log(response.data.results);
+            for (let i = 0; i < response.data.results.length; i++){
+                x[mapping[response.data.results[i].prop]].push(response.data.results[i]);
+            }
+            this.setState({reservations: x});
+        });
+    }
+
+    refresh(prop_id) {
         // pulls all info
         axios({
             method: "GET",
@@ -119,22 +156,23 @@ class HostIndex extends React.Component {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }).then((response) => {
-            this.setState({properties: Object.values(response.data)[0]});
-            this.setState({curr_prop_id: 0})
-            this.setState({reservations: Array(this.state.properties.length)});
-            this.setState({rloaded: 0})
-            for (let i = 0; i < this.state.properties.length; i++) {
-                axios({
-                    method: "GET",
-                    url: `http://127.0.0.1:8000/properties/reservations/list/?property=${this.state.properties[i].id}`,
-                    headers: { 
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`
-                    }
-                }).then((response) => {
-                    this.state.reservations[i] = response.data.results;
-                    this.state.rloaded++;
-                })
+            var x = Array(Object.values(response.data)[0].length);
+            for (let i = 0; i < x.length; i++) {
+                x[i] = Array(0);
             }
+            console.log(response.data);
+            var imgs = Array(this.state.properties.length);
+            for (let i = 0; i < x.length; i++) {
+                imgs[i] = response.data.properties[i].images;
+            }
+            console.log('switching to: ' + prop_id);
+            this.setState({
+                properties: Object.values(response.data)[0], 
+                curr_prop_id: prop_id, 
+                reservations: x,    // be careful of deepcopy shallow copy shit
+                images: imgs,
+            }, this.refresh_reservations 
+            );
         });
         
     }
@@ -153,7 +191,13 @@ class HostIndex extends React.Component {
             headers: { 
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
-        }).then(() => this.refresh());
+        }).then(() => this.refresh(this.state.curr_prop_id));
+    }
+
+    handleFileChange(e) {
+        if (e.target.files) {
+          this.setState({add_image: e.target.files[0]});
+        }
     }
 
     render() {
@@ -161,13 +205,15 @@ class HostIndex extends React.Component {
                 <a key={i} href="#" class="list-group-item list-group-item-action"  aria-current="true" onClick={() => {this.setState({curr_prop_id: i}); this.setState({create: false})}}>{item.title}</a>)
         
         var prop_res = <></>;
+        var prop_images = <></>;
+        var prop_image_elements = <></>;
         if (!this.state.create) {
-            if (this.state.rloaded == this.state.properties.length) {
+            if (this.state.reservations.length == this.state.properties.length) {
                 console.log('doing it');
-                 prop_res = this.state.reservations[this.state.curr_prop_id].map((item, i) => {
+                prop_res = this.state.reservations[this.state.curr_prop_id].map((item, i) => {
                     return (
                         <>
-                            <li key={i} class="list-group-item d-flex justify-content-between align-items-start">
+                            <li key={`${this.state.curr_prop_id},${i}`} class="list-group-item d-flex justify-content-between align-items-start">
             
                                 <div class="request-card-info">
                                     <div><a href="#">User {item.pk}</a><span class="badge bg-dark">{item.status}</span></div>
@@ -187,8 +233,20 @@ class HostIndex extends React.Component {
                         </>
                     )
                 })
+                prop_images = this.state.images[this.state.curr_prop_id].map((item, i) => {
+                    return <li key={i} class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
+                    {item.split('/').slice(-1)[0]} </li>
+                })
+
+                prop_image_elements = this.state.images[this.state.curr_prop_id].map((item, i) => {
+                    return <div class="carousel-item active">
+                            <img src={item} class="d-block w-100"></img>
+                            </div>
+                })
             } else {
                  prop_res = <></>;
+                 prop_images = <></>;
+                 prop_image_elements = <></>;
             }
             return (
                 <div class="content">
@@ -204,9 +262,9 @@ class HostIndex extends React.Component {
                                 </div>
                                 <div class="collapse full-collapse-list" id="collapseExample">
                                 <div class="list-group">
-                                <button onClick={this.refresh}>
+                                {/* <button onClick={this.refresh}>
                                 <i class="bi bi-arrow-clockwise"></i>
-                                    </button>
+                                    </button> */}
                                 <button onClick={this.setCreate}>
                                     <i class="bi bi-plus"></i>
                                 </button>
@@ -267,11 +325,14 @@ class HostIndex extends React.Component {
                                 <ul class="list-group ">
                                 <li class="list-group-item d-flex justify-content-center align-items-center bg-light" id="photo-order">
                                     <label class="custom-file-upload">
-                                    <input type="file"/>
+                                    <input type="file" onChange={this.handleFileChange}/>
                                     <i class="bi bi-plus"></i>
                                     </label>
                                 </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
+                                {
+                                    prop_images
+                                }
+                                {/* <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
                                     cabin.jpg
                                     <div class="photo-name-display">
                                     <input class="short-input form-control" type="number" required value="1"></input>
@@ -291,12 +352,24 @@ class HostIndex extends React.Component {
                                     <input class="short-input form-control" type="number" required value="3"></input>
                                     <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
                                     </div>
-                                </li>
+                                </li> */}
                                 </ul>
                             </div>
                             <div>
                                 <h5>Display</h5>
-                                
+                                <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                                <div class="carousel-inner">
+                                    {prop_image_elements}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                                </div>
                             </div>
                             </div>
                             <hr class="hr" />
@@ -363,9 +436,9 @@ class HostIndex extends React.Component {
                                 </div>
                                 <div class="collapse full-collapse-list" id="collapseExample">
                                 <div class="list-group">
-                                <button onClick={this.refresh}>
+                                {/* <button onClick={this.refresh}>
                                 <i class="bi bi-arrow-clockwise"></i>
-                                    </button>
+                                    </button> */}
                                 <button onClick={this.setCreate}>
                                     <i class="bi bi-plus"></i>
                                 </button>
@@ -425,26 +498,29 @@ class HostIndex extends React.Component {
                                 <ul class="list-group ">
                                 <li class="list-group-item d-flex justify-content-center align-items-center bg-light" id="photo-order">
                                     <label class="custom-file-upload">
-                                    <input type="file" href="manage-properties.html"
-                                    onclick="showCarousel()"/>
+                                    <input type="file" onChange={this.handleFileChange}/>
                                     <i class="bi bi-plus"></i>
                                     </label>
                                 </li>
-                                <div id="hide-me-2">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
-                                    interior.jpg
-                                    <div class="photo-name-display">
-                                        <input class="short-input form-control" type="number" required value="1"></input>
-                                        <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                    </li>
-                                </div>
+                                <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
+                                {
+                                    this.state.add_image !== -1 ?
+                                        <h5>{this.state.add_image.name}</h5>
+                                    :
+                                    <h6>add an image</h6>
+                                    
+                                }
+                                {/* <div class="photo-name-display">
+                                    <input class="short-input form-control" type="number" required value="1"></input>
+                                    <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
+                                </div> */}
+                                </li>
                                 </ul>
                             </div>
-                            <div>
+                            {/* <div>
                                 <h5>Display</h5>
                                 
-                            </div>
+                            </div> */}
                             </div>
                         </div>
                         </div>

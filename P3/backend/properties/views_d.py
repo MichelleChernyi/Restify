@@ -18,6 +18,8 @@ def get_user_properties(request):
     properties = Property.objects.all().filter(owner=request.user)
     data = []
     for p in properties:
+        allimages = Image.objects.all().filter(my_property=p)
+        images = [request.build_absolute_uri(image.image.url) for image in allimages]
         data.append({
             'id': p.pk,
             'title': p.title,
@@ -27,6 +29,7 @@ def get_user_properties(request):
             'num_bath': p.num_bath,
             'num_guests': p.num_guests,
             'price': p.price,
+            'images': images,
         })
     return Response({'properties': data})
 
