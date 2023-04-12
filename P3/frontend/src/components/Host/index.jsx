@@ -234,11 +234,11 @@ class HostIndex extends React.Component {
     }
 
     collapseSidebarHeader() {
-        if (this.state.sidebar_header_width == '0%') {
+        if (this.state.sidebar_width == '40px') {
             this.setState({
                 sidebar_header_width: '100%',
-                sidebar_width: 'fit-content'})
-        } else {
+                sidebar_width: '400px'})
+        } else if (this.state.sidebar_width == '400px'){
             this.setState({
                 sidebar_header_width: '0%',
                 sidebar_width: '40px'})
@@ -260,12 +260,10 @@ class HostIndex extends React.Component {
         var prop_images = <></>;
         var prop_image_elements = <></>;
         if (!this.state.create) {
-            if (this.state.reservations.length == this.state.properties.length) {
-                console.log(this.state);
+            if (this.state.reservations.length == this.state.properties.length && this.state.properties.length > 0) {
                 prop_res = this.state.reservations[this.state.curr_prop_id].map((item, i) => {
                     if (this.state.filter.length == 0 || (this.state.filter.length > 0 && item.status == this.state.filter)) {
                         return (
-                            
                             <>
                                 <li key={`${this.state.curr_prop_id},${i}`} class="list-group-item d-flex justify-content-between align-items-start">
                 
@@ -307,189 +305,221 @@ class HostIndex extends React.Component {
                 prop_images = <></>;
                 prop_image_elements = <></>;
             }
-            return (
-                <>
-                <Header />  
-                <div class="content">
-                    <main>
-                        <div class="property-mgr-wrapper">
-                            <div id="collapse-sidebar">
-                                <div id="sidebar-header" style={{width: this.state.sidebar_width}}>
-                                <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" 
-                                role="button" aria-expanded="false" aria-controls="collapseExample"  onClick={this.collapseSidebarHeader}>
-                                    <i class="bi bi-list"></i>
-                                </button>
-                                <div id="properties-mgr-title" style={{width: this.state.sidebar_header_width}}><h5>Properties</h5></div>
-                                </div>
-                                <div class="collapse full-collapse-list" id="collapseExample">
-                                <div class="list-group">
-                                {/* <button onClick={this.refresh}>
-                                <i class="bi bi-arrow-clockwise"></i>
-                                    </button> */}
-                                <button onClick={this.setCreate}>
-                                    <i class="bi bi-plus"></i>
-                                </button>
-                                {
-                                    sidebarvals
-                                }
-                                </div>
-                                </div>
-                            </div>
-                        <div class="vr" id="v-bar"></div>
-                        <div id="property-info-wrapper">
-                            <div id="property-main-info">
-                            <h5>Listing Information</h5>
-                            <h6 id="property-crud-errors">{this.state.error}</h6>
-                            <form onSubmit = {this.afterSubmission}>
-                                <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label for="name">Property Name</label>
-                                    <input type="text" class="form-control" id="name" value={this.state.update_name} onChange={this.handleInputChange} name="update_name"></input>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="Address">Address</label>
-                                    <input type="text" class="form-control" id="address" value={this.state.update_location} onChange={this.handleInputChange} name="update_location"></input>
-                                </div>
-                                </div>
-                                <div class="form-group">
-                                <label for="about">About</label>
-                                <textarea type="text" class="form-control" id="about" value={this.state.update_description} onChange={this.handleInputChange} name="update_description"></textarea>
-                                </div>
-                                <div class="row form-small-grid">
-                                <div class="form-group col-md-6 form-small-grid-item">
-                                    <label for="bedrooms">Bedrooms</label>
-                                    <input type="text" class="form-control short-input" id="bedrooms" value={this.state.update_num_bed} onChange={this.handleInputChange} name="update_num_bed"></input>
-                                </div>
-                                <div class="form-group col-md-6 form-small-grid-item">
-                                    <label for="bathrooms">Bathrooms</label>
-                                    <input type="text" class="form-control short-input" id="bathrooms" value={this.state.update_num_bath} onChange={this.handleInputChange} name="update_num_bath"></input>
-                                </div>
-                                <div class="form-group col-md-6 form-small-grid-item">
-                                    <label for="guests">Guests</label>
-                                    <input type="text" class="form-control short-input" id="guests" value={this.state.update_num_guests} onChange={this.handleInputChange} name="update_num_guests"></input>
-                                </div>
-                                <div class="form-group col-md-6 form-small-grid-item">
-                                    <label for="price">Price</label>
-                                    <input type="text" class="form-control short-input" id="price" value={this.state.update_price} onChange={this.handleInputChange} name="update_price"></input>
-                                </div>
-                                </div>
-                                <button type="submit" class="btn btn-success submit-btn" onClick={this.submitUpdateForm}>Update</button>
-                            </form>
-                            <button type="submit" class="btn btn-danger submit-btn" onClick={this.deleteProperty}>Delete</button> <h6>Warning this is permanent!</h6>
-                            </div>
-                            <hr class="hr" /> 
-                            <div id="photos">
-                            <div>
-                                <h5>Photos</h5>
-                                <ul class="list-group ">
-                                <li class="list-group-item d-flex justify-content-center align-items-center bg-light" id="photo-order">
-                                    <label class="custom-file-upload">
-                                    <input type="file" onChange={this.handleFileChange}/>
-                                    <i class="bi bi-plus"></i>
-                                    </label>
-                                </li>
-                                {
-                                    prop_images
-                                }
-                                </ul>
-                            </div>
-                            <div>
-                                <h5>Display</h5>
-                                <div id="carouselExampleFade" class="carousel slide carousel-fade">
-                                <div class="carousel-inner">
-                                    {prop_image_elements}
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
-                                </div>
-                            </div>
-                            </div>
-                            <hr class="hr" />
-                            <div id="custom-rates">
-                            <h5>Custom Rates & Availability</h5>
-                            <div id="request-existing">
-                                <h6>Existing Changes</h6>
-                                <ul class="list-group ">
-                                    {this.state.existing_changes.map((item, i) => {
-                                        if (item.prop == this.state.properties[this.state.curr_prop_id].id) {
-                                            return <li class="custom-li" key={i}>{item.start} to {item.end}, unavailable: {item.una}, price: {item.price}</li>
-                                        }
-                                    })}
-                                </ul>
-                            </div>
-                            <div id="request-custom">
-                                <h6>Set Custom</h6>
-                                <form onSubmit = {this.afterSubmission}>
-                                <div class="row">
-                                    <div class="form-group col-md-6" id="req-custom-date-picker">
-                                    <input onChange={this.handleInputChange} defaultValue="" id="custom-start" type="text" placeholder="Start" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1" name="ex_start"></input>
+            if (this.state.properties.length > 0) {
+                return (
+                    <>
+                    <Header />  
+                    <div class="content">
+                        <main>
+                            <div class="property-mgr-wrapper">
+                                <div id="collapse-sidebar">
+                                    <div id="sidebar-header" style={{width: this.state.sidebar_width}}>
+                                    <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" 
+                                    role="button" aria-expanded="false" aria-controls="collapseExample"  onClick={this.collapseSidebarHeader}>
+                                        <i class="bi bi-list"></i>
+                                    </button>
+                                    <div id="properties-mgr-title" style={{width: this.state.sidebar_header_width}}><h5>Properties</h5></div>
                                     </div>
-                                    <div class="form-group col-md-6" id="req-custom-date-picker">
-                                    <input onChange={this.handleInputChange} defaultValue=""id="custom-end" type="text" placeholder="End" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1" name="ex_end"></input>
-                                    </div>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label" for="unavailable">
-                                    Unavailable
-                                    </label>
-                                    <input onChange={this.handleInputChange} defaultValue="" class="form-check-input" type="checkbox" value="" id="unavailable" name="ex_una"></input>
-                                </div>  
-                                <div class="form-group col-md-6 form-small-grid-item">
-                                    <label for="rate">Rate ($/night)</label>
-                                    <input onChange={this.handleInputChange} defaultValue="" type="text" class="form-control short-input" id="rate" name="ex_price"></input>
-                                </div>
-                                <button onClick={() => {
-                                    var items = this.state.existing_changes;
-                                    if (this.state.ex_end !== -1 && this.state.ex_start !== -1 && (this.state.ex_una !== -1 || this.state.ex_price !== -1)) {
-                                        items.push({
-                                            start: this.state.ex_start,
-                                            end: this.state.ex_end,
-                                            una: this.state.ex_una,
-                                            price: this.state.ex_price,
-                                            prop: this.state.properties[this.state.curr_prop_id].id,
-                                        })
+                                    <div class="collapse full-collapse-list" id="collapseExample">
+                                    <div class="list-group">
+                                    <button onClick={this.setCreate}>
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                    {
+                                        sidebarvals
                                     }
-                                    this.setState({existing_changes: items});
-                                }} type="submit" class="btn btn-light submit-btn">Update</button>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="vr" id="v-bar"></div>
+                                <div id="property-info-wrapper">
+                                <div id="property-main-info">
+                                <h5>Listing Information</h5>
+                                <h6 id="property-crud-errors">{this.state.error}</h6>
+                                <form onSubmit = {this.afterSubmission}>
+                                    <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="name">Property Name</label>
+                                        <input type="text" class="form-control" id="name" value={this.state.update_name} onChange={this.handleInputChange} name="update_name"></input>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="Address">Address</label>
+                                        <input type="text" class="form-control" id="address" value={this.state.update_location} onChange={this.handleInputChange} name="update_location"></input>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="about">About</label>
+                                    <textarea type="text" class="form-control" id="about" value={this.state.update_description} onChange={this.handleInputChange} name="update_description"></textarea>
+                                    </div>
+                                    <div class="row form-small-grid">
+                                    <div class="form-group col-md-6 form-small-grid-item">
+                                        <label for="bedrooms">Bedrooms</label>
+                                        <input type="text" class="form-control short-input" id="bedrooms" value={this.state.update_num_bed} onChange={this.handleInputChange} name="update_num_bed"></input>
+                                    </div>
+                                    <div class="form-group col-md-6 form-small-grid-item">
+                                        <label for="bathrooms">Bathrooms</label>
+                                        <input type="text" class="form-control short-input" id="bathrooms" value={this.state.update_num_bath} onChange={this.handleInputChange} name="update_num_bath"></input>
+                                    </div>
+                                    <div class="form-group col-md-6 form-small-grid-item">
+                                        <label for="guests">Guests</label>
+                                        <input type="text" class="form-control short-input" id="guests" value={this.state.update_num_guests} onChange={this.handleInputChange} name="update_num_guests"></input>
+                                    </div>
+                                    <div class="form-group col-md-6 form-small-grid-item">
+                                        <label for="price">Price</label>
+                                        <input type="text" class="form-control short-input" id="price" value={this.state.update_price} onChange={this.handleInputChange} name="update_price"></input>
+                                    </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-success submit-btn" onClick={this.submitUpdateForm}>Update</button>
                                 </form>
+                                <button type="submit" class="btn btn-danger submit-btn" onClick={this.deleteProperty}>Delete</button> <h6>Warning this is permanent!</h6>
+                                </div>
+                                <hr class="hr" /> 
+                                <div id="photos">
+                                <div>
+                                    <h5>Photos</h5>
+                                    <ul class="list-group ">
+                                    <li class="list-group-item d-flex justify-content-center align-items-center bg-light" id="photo-order">
+                                        <label class="custom-file-upload">
+                                        <input type="file" onChange={this.handleFileChange}/>
+                                        <i class="bi bi-plus"></i>
+                                        </label>
+                                    </li>
+                                    {
+                                        prop_images
+                                    }
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Display</h5>
+                                    <div id="carouselExampleFade" class="carousel slide carousel-fade">
+                                    <div class="carousel-inner">
+                                        {prop_image_elements}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                    </div>
+                                </div>
+                                </div>
+                                <hr class="hr" />
+                                <div id="custom-rates">
+                                <h5>Custom Rates & Availability</h5>
+                                <div id="request-existing">
+                                    <h6>Existing Changes</h6>
+                                    <ul class="list-group ">
+                                        {this.state.existing_changes.map((item, i) => {
+                                            if (item.prop == this.state.properties[this.state.curr_prop_id].id) {
+                                                return <li class="custom-li" key={i}>{item.start} to {item.end}, unavailable: {item.una}, price: {item.price}</li>
+                                            }
+                                        })}
+                                    </ul>
+                                </div>
+                                <div id="request-custom">
+                                    <h6>Set Custom</h6>
+                                    <form onSubmit = {this.afterSubmission}>
+                                    <div class="row">
+                                        <div class="form-group col-md-6" id="req-custom-date-picker">
+                                        <input onChange={this.handleInputChange} defaultValue="" id="custom-start" type="text" placeholder="Start" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1" name="ex_start"></input>
+                                        </div>
+                                        <div class="form-group col-md-6" id="req-custom-date-picker">
+                                        <input onChange={this.handleInputChange} defaultValue=""id="custom-end" type="text" placeholder="End" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1" name="ex_end"></input>
+                                        </div>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="unavailable">
+                                        Unavailable
+                                        </label>
+                                        <input onChange={this.handleInputChange} defaultValue="" class="form-check-input" type="checkbox" value="" id="unavailable" name="ex_una"></input>
+                                    </div>  
+                                    <div class="form-group col-md-6 form-small-grid-item">
+                                        <label for="rate">Rate ($/night)</label>
+                                        <input onChange={this.handleInputChange} defaultValue="" type="text" class="form-control short-input" id="rate" name="ex_price"></input>
+                                    </div>
+                                    <button onClick={() => {
+                                        var items = this.state.existing_changes;
+                                        if (this.state.ex_end !== -1 && this.state.ex_start !== -1 && (this.state.ex_una !== -1 || this.state.ex_price !== -1)) {
+                                            items.push({
+                                                start: this.state.ex_start,
+                                                end: this.state.ex_end,
+                                                una: this.state.ex_una,
+                                                price: this.state.ex_price,
+                                                prop: this.state.properties[this.state.curr_prop_id].id,
+                                            })
+                                        }
+                                        this.setState({existing_changes: items});
+                                    }} type="submit" class="btn btn-light submit-btn">Update</button>
+                                    </form>
+                                </div>
+                                </div>
+                                <hr class="hr" />
+                                <div id="requests-manager">
+                                <h5>Requests</h5>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Filter
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" onClick={() => this.setState({filter: ''})}>None</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({filter: 'approved'})}>Approve</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({filter: 'denied'})}>Denied</a></li>
+                                    <li><a class="dropdown-item" onClick={() => this.setState({filter: 'terminated'})}>Terminate</a></li>
+                                    </ul>
+                                </div>
+                                <ol class="list-group">
+                                    {
+                                        prop_res
+                                    }
+                                    
+                                </ol>
+                                </div>
                             </div>
                             </div>
-                            <hr class="hr" />
-                            <div id="requests-manager">
-                            <h5>Requests</h5>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Filter
-                                </button>
-                                <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onClick={() => this.setState({filter: ''})}>None</a></li>
-                                <li><a class="dropdown-item" onClick={() => this.setState({filter: 'approved'})}>Approve</a></li>
-                                <li><a class="dropdown-item" onClick={() => this.setState({filter: 'denied'})}>Denied</a></li>
-                                <li><a class="dropdown-item" onClick={() => this.setState({filter: 'terminated'})}>Terminate</a></li>
-                                </ul>
+                        </main>
+                    </div>
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                    <Header />  
+                    <div class="content">
+                        <main>
+                            <div class="property-mgr-wrapper">
+                                <div id="collapse-sidebar">
+                                    <div id="sidebar-header" style={{width: this.state.sidebar_width}}>
+                                    <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" 
+                                    role="button" aria-expanded="false" aria-controls="collapseExample"  onClick={this.collapseSidebarHeader}>
+                                        <i class="bi bi-list"></i>
+                                    </button>
+                                    <div id="properties-mgr-title" style={{width: this.state.sidebar_header_width}}><h5>Properties</h5></div>
+                                    </div>
+                                    <div class="collapse full-collapse-list" id="collapseExample">
+                                    <div class="list-group">
+                                    <button onClick={this.setCreate}>
+                                        <i class="bi bi-plus"></i>
+                                    </button>
+                                    {
+                                        sidebarvals
+                                    }
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="vr" id="v-bar"></div>
                             </div>
-                            <ol class="list-group">
-                                {
-                                    prop_res
-                                }
-                                
-                            </ol>
-                            </div>
-                        </div>
-                        </div>
-                    </main>
-                </div>
-                </>
-            );
+                        </main>
+                    </div>
+                    </>
+                );
+            }
         } else {
             return (
                 <>
+                <Header />  
                 <div class="content">
                     <main>
                         <div class="property-mgr-wrapper">
@@ -577,17 +607,9 @@ class HostIndex extends React.Component {
                                     <h6>add an image</h6>
                                     
                                 }
-                                {/* <div class="photo-name-display">
-                                    <input class="short-input form-control" type="number" required value="1"></input>
-                                    <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
-                                </div> */}
                                 </li>
                                 </ul>
                             </div>
-                            {/* <div>
-                                <h5>Display</h5>
-                                
-                            </div> */}
                             </div>
                         </div>
                         </div>
