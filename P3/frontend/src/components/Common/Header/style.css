@@ -37,13 +37,13 @@ html {
     width: 60% !important;
 }
 
-@media only screen and (min-width: 951px) {
+@media only screen and (min-width: 1041px) {
     .small-search {
         display: none;
     }
 }
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1040px) {
     .large-search{
         /* font-size: 0.5rem !important; */
         display: None;

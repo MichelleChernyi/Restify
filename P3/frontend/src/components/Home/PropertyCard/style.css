@@ -1,3 +1,32 @@
+.card-img-top{
+    width: 200px;
+    height: 200px;
+    margin-left:auto ;
+    margin-right: auto;
+    margin-bottom: -30px;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.card {
+    position: absolute;
+    top: 50%;
+    /* transform: translateY(-50%); */
+}
+.card-body{
+    margin-top:auto;
+    margin-bottom: auto;
+    margin-left:auto ;
+    margin-right: auto;
+    align-items: center;
+    text-align: center;
+}
+
+
 .card-img-top {
     margin: 0;
     width: 100%;

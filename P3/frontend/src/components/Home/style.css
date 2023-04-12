@@ -1,0 +1,23 @@
+main {
+    padding: 1.5em;
+}
+
+.search-filter {
+    border-radius: 25px;
+    width: 40vw;
+}
+
+
+
+.search-filter .form-control {
+    width: 60% !important;
+}
+
+.submit {
+    margin-left: auto;
+}
+
+.dropdown-title {
+    color: white;
+    margin: 1em;
+}

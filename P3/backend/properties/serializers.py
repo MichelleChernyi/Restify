@@ -9,12 +9,7 @@ class PropertyListSerializer(ModelSerializer):
     images = ListField()
     class Meta:
         model = Property
-        fields = ['title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images']
-    
-    # def get_image_url(self, image):
-    #     request = self.context.get('request')
-    #     photo_url = car.photo.url
-    #     return request.build_absolute_uri(photo_url)
+        fields = ['id', 'title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images']
 
 class PropertyCommentCreateSerializer(ModelSerializer):
     class Meta:
