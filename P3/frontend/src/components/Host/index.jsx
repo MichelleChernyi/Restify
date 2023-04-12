@@ -211,27 +211,32 @@ class HostIndex extends React.Component {
             if (this.state.reservations.length == this.state.properties.length) {
                 console.log('doing it');
                 prop_res = this.state.reservations[this.state.curr_prop_id].map((item, i) => {
-                    return (
-                        <>
-                            <li key={`${this.state.curr_prop_id},${i}`} class="list-group-item d-flex justify-content-between align-items-start">
-            
-                                <div class="request-card-info">
-                                    <div><a href="#">User {item.pk}</a><span class="badge bg-dark">{item.status}</span></div>
-                                    <p>Details: {item.start_data} to {item.end_date}</p>
-                                </div>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Status
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "approved")}>Approve</a></li>
-                                    <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "denied")}>Decline</a></li>
-                                    <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "terminated")}>Terminate</a></li>
-                                    </ul>
-                                </div>
-                            </li>           
-                        </>
-                    )
+                    if (this.state.filter.length == 0 || (this.state.filter.length > 0 && item.status == this.state.filter)) {
+                        return (
+                            <>
+                                <li key={`${this.state.curr_prop_id},${i}`} class="list-group-item d-flex justify-content-between align-items-start">
+                
+                                    <div class="request-card-info">
+                                        <div><a href="#">User {item.pk}</a><span class="badge bg-dark">{item.status}</span></div>
+                                        <p>Details: {item.start_data} to {item.end_date}</p>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Status
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "approved")}>Approve</a></li>
+                                        <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "denied")}>Decline</a></li>
+                                        <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "terminated")}>Terminate</a></li>
+                                        </ul>
+                                    </div>
+                                </li>           
+                            </>
+                        )
+                    } else {
+                        return <></>
+                    }
+                    
                 })
                 prop_images = this.state.images[this.state.curr_prop_id].map((item, i) => {
                     return <li key={i} class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
@@ -244,9 +249,9 @@ class HostIndex extends React.Component {
                             </div>
                 })
             } else {
-                 prop_res = <></>;
-                 prop_images = <></>;
-                 prop_image_elements = <></>;
+                prop_res = <></>;
+                prop_images = <></>;
+                prop_image_elements = <></>;
             }
             return (
                 <div class="content">
@@ -271,8 +276,6 @@ class HostIndex extends React.Component {
                                 {
                                     sidebarvals
                                 }
-                                    {/* <a href="#" class="list-group-item list-group-item-action active"  aria-current="true">Private Isolated Mansion</a>
-                                    <a href="host-property-created.html" class="list-group-item list-group-item-action"  aria-current="true">Vampire Mansion</a> */}
                                 </div>
                                 </div>
                             </div>
