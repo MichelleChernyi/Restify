@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import Header from "../Common/Header";
 import Comment from "./Comment";
 import './style.css'
+import axios from 'axios';
 
 function PropertyDetails(props) {
     const {id} = useParams()
@@ -157,8 +158,24 @@ function PropertyDetails(props) {
                 </h4>
                 <p className="text-center">${total}</p>
               </div>
-              
-              <a href="log-in-to-reserve.html" className="btn btn-primary mt-3">
+              {/* sorry i ruined your beautiful code emily :( */}
+              <a onClick={() => {
+                  var bodyd = new FormData();
+                  bodyd.append("start_date", checkIn);
+                  bodyd.append("end_date", checkOut);
+                  axios({
+                    method: "POST",
+                    url: `http://127.0.0.1:8000/properties/reservations/create/${id}/`,
+                    data: bodyd,
+                    headers: { 
+                        'Content-type': 'multipart/form-data',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                  }).then((response) => {
+                      console.log(response);
+                  })
+                }} 
+              className="btn btn-primary mt-3">
                 Reserve
               </a>
             </div>
