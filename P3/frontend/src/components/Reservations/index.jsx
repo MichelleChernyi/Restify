@@ -59,7 +59,9 @@ class Reservations extends React.Component {
                 <h1 class="m-5">  
                     Reservations  
                 </h1>  
-                {resv}  
+                <div class="d-flex flex-wrap">
+                    {resv} 
+                </div>
             </main></>  
         );  
     }  

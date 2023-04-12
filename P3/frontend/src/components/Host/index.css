@@ -43,6 +43,8 @@
 .property-mgr-wrapper {
     display: flex;
     flex-direction: row;
+    margin-left: 5px;
+    margin-top: 5px;
 }
 
 #property-info-wrapper {
@@ -176,8 +178,6 @@
 
     .property-mgr-wrapper {
         flex-direction: column;
-        margin-left: 5px;
-        margin-top: 5px;
     }
 
     #property-info-wrapper {
