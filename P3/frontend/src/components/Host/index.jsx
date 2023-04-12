@@ -188,6 +188,7 @@ class HostIndex extends React.Component {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
         }).then((response) => {
+            console.log(response);
             var x = Array(Object.values(response.data)[0].length);
             for (let i = 0; i < x.length; i++) {
                 x[i] = Array(0);
@@ -260,7 +261,7 @@ class HostIndex extends React.Component {
         var prop_image_elements = <></>;
         if (!this.state.create) {
             if (this.state.reservations.length == this.state.properties.length) {
-                console.log('doing it');
+                console.log(this.state);
                 prop_res = this.state.reservations[this.state.curr_prop_id].map((item, i) => {
                     if (this.state.filter.length == 0 || (this.state.filter.length > 0 && item.status == this.state.filter)) {
                         return (
@@ -280,6 +281,7 @@ class HostIndex extends React.Component {
                                         <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "approved")}>Approve</a></li>
                                         <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "denied")}>Decline</a></li>
                                         <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "terminated")}>Terminate</a></li>
+                                        <li><a class="dropdown-item" onClick={() => this.changeStatus(item.pk, "completed")}>Completed</a></li>
                                         </ul>
                                     </div>
                                 </li>           
