@@ -31,6 +31,11 @@ class HostIndex extends React.Component {
             add_image: -1,
             sidebar_header_width: '0%',
             sidebar_width: '40px',
+            existing_changes: [],
+            ex_start: -1,
+            ex_end: -1,
+            ex_una: -1,
+            ex_price: -1,
         };
         this.setCreate = this.setCreate.bind(this);
         this.refresh = this.refresh.bind(this);
@@ -42,6 +47,7 @@ class HostIndex extends React.Component {
         this.changeStatus = this.changeStatus.bind(this);
         this.refresh_reservations = this.refresh_reservations.bind(this);
         this.collapseSidebarHeader = this.collapseSidebarHeader.bind(this);
+        this.afterSubmission = this.afterSubmission.bind(this);
         this.refresh(0);
     } 
 
@@ -49,7 +55,6 @@ class HostIndex extends React.Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
-    
         this.setState({
           [name]: value
         });
@@ -215,6 +220,10 @@ class HostIndex extends React.Component {
         }
     }
 
+    afterSubmission(event) {
+        event.preventDefault();
+    }
+
     render() {
         const sidebarvals = this.state.properties.map((item, i) =>
                 <a key={i} href="#" class="list-group-item list-group-item-action"  aria-current="true" onClick={() => {this.setState({curr_prop_id: i}); this.setState({create: false})}}>{item.title}</a>)
@@ -299,11 +308,11 @@ class HostIndex extends React.Component {
                             <div id="property-main-info">
                             <h5>Listing Information</h5>
                             <h6 id="property-crud-errors">{this.state.error}</h6>
-                            <form action="#" method="PUT">
+                            <form onSubmit = {this.afterSubmission}>
                                 <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Property Name</label>
-                                    <input type="text" class="form-control" id="name" defaultValue={this.state.properties[this.state.curr_prop_id].title} onChange={this.handleInputChange} name="update_name"></input>
+                                    <input type="text" class="form-control" id="name" value={this.state.properties[this.state.curr_prop_id].title} onChange={this.handleInputChange} name="update_name"></input>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="Address">Address</label>
@@ -375,31 +384,47 @@ class HostIndex extends React.Component {
                             <div id="request-existing">
                                 <h6>Existing Changes</h6>
                                 <ul class="list-group ">
-                                
+                                    {this.state.existing_changes.map((item, i) => {
+                                        if (item.prop == this.state.properties[this.state.curr_prop_id].id) {
+                                            return <li class="custom-li" key={i}>{item.start} to {item.end}, unavailable: {item.una}, price: {item.price}</li>
+                                        }
+                                    })}
                                 </ul>
                             </div>
                             <div id="request-custom">
                                 <h6>Set Custom</h6>
-                                <form action="#" method="PUT">
+                                <form onSubmit = {this.afterSubmission}>
                                 <div class="row">
                                     <div class="form-group col-md-6" id="req-custom-date-picker">
-                                    <input id="custom-start" type="text" placeholder="Start" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1"></input>
+                                    <input onChange={this.handleInputChange} defaultValue="" id="custom-start" type="text" placeholder="Start" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1" name="ex_start"></input>
                                     </div>
                                     <div class="form-group col-md-6" id="req-custom-date-picker">
-                                    <input id="custom-end" type="text" placeholder="End" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1"></input>
+                                    <input onChange={this.handleInputChange} defaultValue=""id="custom-end" type="text" placeholder="End" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control border-1" name="ex_end"></input>
                                     </div>
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label" for="unavailable">
                                     Unavailable
                                     </label>
-                                    <input class="form-check-input" type="checkbox" value="" id="unavailable"></input>
+                                    <input onChange={this.handleInputChange} defaultValue="" class="form-check-input" type="checkbox" value="" id="unavailable" name="ex_una"></input>
                                 </div>  
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="rate">Rate ($/night)</label>
-                                    <input type="text" class="form-control short-input" id="rate"></input>
+                                    <input onChange={this.handleInputChange} defaultValue="" type="text" class="form-control short-input" id="rate" name="ex_price"></input>
                                 </div>
-                                <a href="host-property-1-custom-datetime.html" type="submit" class="btn btn-light submit-btn">Update</a>
+                                <button onClick={() => {
+                                    var items = this.state.existing_changes;
+                                    if (this.state.ex_end !== -1 && this.state.ex_start !== -1 && (this.state.ex_una !== -1 || this.state.ex_price !== -1)) {
+                                        items.push({
+                                            start: this.state.ex_start,
+                                            end: this.state.ex_end,
+                                            una: this.state.ex_una,
+                                            price: this.state.ex_price,
+                                            prop: this.state.properties[this.state.curr_prop_id].id,
+                                        })
+                                    }
+                                    this.setState({existing_changes: items});
+                                }} type="submit" class="btn btn-light submit-btn">Update</button>
                                 </form>
                             </div>
                             </div>
@@ -463,7 +488,7 @@ class HostIndex extends React.Component {
                             <div id="property-main-info">
                             <h5>Add New Property</h5>
                             <h6 id="property-crud-errors">{this.state.error}</h6>
-                            <form action="#" method="PUT">
+                            <form onSubmit = {this.afterSubmission}>
                                 <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Property Name</label>

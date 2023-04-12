@@ -137,6 +137,10 @@
     visibility: hidden;
 }
 
+.custom-li {
+    list-style-type: none;
+}
+
 
 
 @media only screen and (max-width: 450px) {

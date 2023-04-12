@@ -30,7 +30,7 @@ class Reservations extends React.Component {
         const resv = this.state.user_reservations.map((item, i) => {
             return (
                 <div class="card m-5" key={i}>
-                    <img style={{width: '100px'}} class="card-img-top" src={item.image} alt="Edward's house"></img>
+                    <img style={{width: '100px'}} class="card-img-top" src={item.image} alt="image not available"></img>
                     <div class="card-body">
                     <span class="badge text-bg-warning">{item.status}</span>
                         <h5 class="card-title">{item.location}</h5>
