@@ -88,7 +88,7 @@ function PropertyList(props) {
 
     return (
         <>
-        <Header isLoggedIn='true'/>
+        <Header/>
         <main class="e-main">
         {/* <button class="dropdown-title" onClick={() => filterLowToHigh()}>Price Low to High</button> */}
         {/* <button class="dropdown-title" onClick={() => filterHighToLow()}>Price High to Low</button> */}

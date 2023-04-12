@@ -12,16 +12,17 @@ class Logout extends Component {
    
     onClick = e => {
         window.location.assign("http://localhost:3000/login/");
+
       };
     render() {
       return (
         <>
-        < Header isLoggedIn='true'/>
+        < Header/>
         <div class="page">
         <main>
         <div class="card log-stuff">
             <div class="card-body logs">
-              <h5 class="card-title">You have been logged out </h5>
+              <h5 class="card-title card-t">You have been logged out </h5>
               <Button className="btn btn-primary sign-btn" onClick={this.onClick}>Sign In</Button>
             </div>
           </div>
