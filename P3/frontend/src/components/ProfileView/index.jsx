@@ -13,6 +13,7 @@ function ProfileView(props) {
     const [lastName, setlastName] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState()
+    const [img, setImg] = useState()
     const [comments, setComments] = useState([])
     const [canComment, setCanComment] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -33,6 +34,7 @@ function ProfileView(props) {
             setlastName(body.last_name)
             setEmail(body.email)
             setPhone(body.phone_num)
+            setImg(body.avatar)
 
             
             })
@@ -106,6 +108,7 @@ function ProfileView(props) {
               </div>
               <div className="card profile-card">
                 <div className="card-body profile-body">
+                <img className="abcd"src= {"http://127.0.0.1:8000" + img}/>
                   <h1 id="profile-title"> Hi, I'm {firstName} {lastName}</h1>
                   
                   <p> {email}</p>
