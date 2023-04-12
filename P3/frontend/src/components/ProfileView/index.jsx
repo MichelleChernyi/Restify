@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import {useEffect, useState} from 'react';
 import Header from "../Common/Header";
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import ProfileComment from "./Comment";
 
 import './style.css'
 import axios from 'axios';
@@ -12,6 +13,7 @@ function ProfileView(props) {
     const [lastName, setlastName] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState()
+    const [comments, setComments] = useState([])
     // const [avatar, setAvatar] = useState() 
  
     
@@ -31,6 +33,15 @@ function ProfileView(props) {
             })
         }, [])
 
+    useEffect(()=>{
+      fetch(`http://localhost:8000/accounts/guest/1/comments/`, {headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+      .then(response => response.json())
+      .then(body => {
+        // console.log(body)
+        setComments([...body.results])
+        })
+      }, [])
+
 
     return (
         <>
@@ -47,10 +58,24 @@ function ProfileView(props) {
                   <p> {email}</p>
                   <p>{phone}</p>
                   
-
+                  <div>
+                {comments.length > 0 && <div className="row mt-3 border-bottom">
+                  <h4>Comments</h4>
+                  {/* <Comment comment={comments[0]} /> */}
+            
+                  {comments.map((comment, index) =>
+                 
+                    <ProfileComment comment={comment} key={index}/>
+                  )}
+                 
+              </div>}
+              </div>
                 </div>
+
               </div>
+              
               </div>
+
         </>
       );
 }

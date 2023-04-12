@@ -1,9 +1,12 @@
 import { useParams } from "react-router-dom";
 import {useEffect, useState} from 'react';
 import Header from "../Common/Header";
-import Comment from "./Comment";
+
 import './style.css'
+
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom';
+import Comment from "./Comment";
 
 function PropertyDetails(props) {
     const {id} = useParams()
@@ -21,7 +24,8 @@ function PropertyDetails(props) {
     const [trigger, setTrigger] = useState(0)
     const [loggedInUser, setLoggedInUser] = useState(-1)
     const [isHost, setIsHost] = useState(false)
-    
+    const navigate = useNavigate()
+
     useEffect(()=>{
       if (isLoggedIn == true) {
         axios({
@@ -178,7 +182,7 @@ function PropertyDetails(props) {
                         {property.num_guests} guests • {property.num_bed} bedrooms • {property.num_bath} bathrooms
                       </p>
                     </div>
-                    <img src={property.owner_details[2]} id="host" className="img-fluid ms-auto" alt="Avatar"/> 
+                    <img src={property.owner_details[2]} id="host" className="img-fluid ms-auto" alt="Avatar" onClick={() => navigate(`/profile/${property.owner}`)}/> 
                   </div>
                 
                 </div>

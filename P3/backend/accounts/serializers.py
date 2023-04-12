@@ -16,9 +16,10 @@ class GuestCommentCreateSerializer(ModelSerializer):
 class GuestCommentSerializer(ModelSerializer):
     reply = SerializerMethodField()
     date = CharField(source='data')
+    user_name = CharField(source='from_user.first_name')
     class Meta:
         model = GuestComment
-        fields = ['from_user', 'content', 'reply', 'date']
+        fields = ['from_user', 'content', 'reply', 'date', 'user_name']
     
     def get_reply(self, obj):
         replies = obj.replies.all()
