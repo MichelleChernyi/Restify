@@ -93,7 +93,7 @@ class LogoutSerializer(Serializer):
 class ProfileSerializer(ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['phone_num', 'first_name', 'last_name', 'email', 'avatar']   #TODO: AVATAR 
+        fields = ['phone_num', 'first_name', 'last_name', 'email', 'avatar', 'id']   #TODO: AVATAR 
         lookup_field = 'email'
         extra_kwargs = {
             'first_name': {'required': False},

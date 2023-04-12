@@ -36,7 +36,7 @@ class PropertyCommentSerializer(ModelSerializer):
     date = CharField(source='data')
     class Meta:
         model = PropertyComment
-        fields = ['from_user', 'content', 'reply', 'user_name', 'date']
+        fields = ['from_user', 'content', 'reply', 'user_name', 'date', 'id']
     
     def get_reply(self, obj):
         replies = obj.replies.all()

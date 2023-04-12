@@ -16,7 +16,33 @@ function PropertyDetails(props) {
     const [numDays, setNumDays] = useState()
     const [comments, setComments] = useState([])
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [canComment, setCanComment] = useState(false)
+    const [comment, setComment] = useState()
+    const [trigger, setTrigger] = useState(0)
+    const [loggedInUser, setLoggedInUser] = useState(-1)
+    const [isHost, setIsHost] = useState(false)
     
+    useEffect(()=>{
+      if (isLoggedIn == true) {
+        axios({
+          method: "GET",
+          url: "http://127.0.0.1:8000/properties/reservations/list/",
+          headers: { 
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+          }).then((response) => {
+              if (response.data.results.length > 0) {
+                for (var reservation of response.data.results) {
+                  if (reservation.property == id && (reservation.status == 'terminated' || reservation.status == 'completed')) {
+                      setCanComment(true)
+                  }
+                }
+              }
+          });
+      }
+      
+      }, [property])
+
     useEffect(()=>{
         fetch(`http://localhost:8000/properties/search/?id=${id}`)
           .then(response => response.json())
@@ -33,14 +59,15 @@ function PropertyDetails(props) {
           // console.log(body)
           setComments([...body.results])
           })
-      console.log(comments)
-      }, [])
+      // console.log(comments)
+      }, [trigger])
     
     useEffect(() => {
       const loggedInUser = localStorage.getItem("token");
       if (loggedInUser) {
         // const foundUser = JSON.parse(loggedInUser);
         setIsLoggedIn(true);
+        
       }
     }, []);
 
@@ -58,6 +85,57 @@ function PropertyDetails(props) {
         }
 
     }, [checkIn, checkOut])
+
+    useEffect(() => {
+      if (isLoggedIn == true) {
+        axios.get("http://127.0.0.1:8000/accounts/profile/",{headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        .then(res => {
+          setLoggedInUser(res.data.id)
+          
+          if (property.owner == res.data.id) {
+            setIsHost(true)
+          }
+         
+        })
+      }
+    }, [property])
+
+    const postComment = () => {
+      
+      var bodyd = new FormData();
+                  bodyd.append("content", comment);
+      axios({
+        method: "POST",
+        url: "http://localhost:8000/properties/2/comments/",
+        headers: { 
+          'Content-type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        data: bodyd,
+        }).then((response) => {
+          let temp = trigger
+            setTrigger(temp + 1)
+        });
+    }
+
+    const postReply = (reply, id) => {
+      console.log(reply)
+      console.log(id)
+      // var bodyd = new FormData();
+      //             bodyd.append("content", reply);
+      // axios({
+      //   method: "POST",
+      //   url: `http://localhost:8000/properties/comments/${id}/reply/`,
+      //   headers: { 
+      //     'Content-type': 'multipart/form-data',
+      //     'Authorization': `Bearer ${localStorage.getItem('token')}`
+      //   },
+      //   data: bodyd,
+      //   }).then((response) => {
+      //     let temp = trigger
+      //       setTrigger(temp + 1)
+      //   });
+    }
 
     return (
         <>
@@ -114,17 +192,37 @@ function PropertyDetails(props) {
                 {comments.length > 0 && <div className="row mt-3 border-bottom">
                   <h4>Comments</h4>
                   {/* <Comment comment={comments[0]} /> */}
+            
                   {comments.map((comment, index) =>
-                    <Comment comment={comment} key={index}/>
+                 
+                    <Comment comment={comment} key={index} me={loggedInUser} isHost={isHost} onReply={postReply}/>
                   )}
+                  {canComment && <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">Leave a Comment</button>}
                 </div>}
-                {isLoggedIn && <button className="btn btn-primary">Leave a Comment</button>}
+                {(canComment && comments.length == 0) &&<div> <h4>Comments</h4> <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">Leave a Comment</button></div>}
+                  
+                  <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id="commentModalLabel">Comment</h1>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                          <textarea type="text" placeholder="Comment..." className="form-control shadow-none mb-1" onChange={(e) => setComment(e.target.value)}></textarea>
+
+                        </div>
+                        <div className="modal-footer">
+                          <button type="button"  className="btn btn-primary " data-bs-dismiss="modal" onClick={() => postComment()}>Comment</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 <div className="row mt-3 ">
                   <div className="d-flex align-items-center mb-2">
                     <h4 className="mb-0">
                       Hosted by {property.owner_details[0]}
                     </h4>
-                    <p className="mb-0 ms-4 mt-0"><i className="bi bi-star-fill"> 2.2</i></p>
                   </div>
                   
                   <p className="mb-1">Resonse rate: 97%</p>
@@ -138,7 +236,7 @@ function PropertyDetails(props) {
                 <h3>
                     ${property.price}/night
                 </h3>
-                <p><i className="bi bi-star-fill"> 4.3</i></p>
+
               </div>
               <div className=""  id="checkin-checkout">
                 <div className="d-flex">
