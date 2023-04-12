@@ -29,6 +29,8 @@ class HostIndex extends React.Component {
             update_price: -1,
             error: '',
             add_image: -1,
+            sidebar_header_width: '0%',
+            sidebar_width: '40px',
         };
         this.setCreate = this.setCreate.bind(this);
         this.refresh = this.refresh.bind(this);
@@ -39,6 +41,7 @@ class HostIndex extends React.Component {
         this.deleteProperty = this.deleteProperty.bind(this);
         this.changeStatus = this.changeStatus.bind(this);
         this.refresh_reservations = this.refresh_reservations.bind(this);
+        this.collapseSidebarHeader = this.collapseSidebarHeader.bind(this);
         this.refresh(0);
     } 
 
@@ -200,6 +203,18 @@ class HostIndex extends React.Component {
         }
     }
 
+    collapseSidebarHeader() {
+        if (this.state.sidebar_header_width == '0%') {
+            this.setState({
+                sidebar_header_width: '100%',
+                sidebar_width: 'fit-content'})
+        } else {
+            this.setState({
+                sidebar_header_width: '0%',
+                sidebar_width: '40px'})
+        }
+    }
+
     render() {
         const sidebarvals = this.state.properties.map((item, i) =>
                 <a key={i} href="#" class="list-group-item list-group-item-action"  aria-current="true" onClick={() => {this.setState({curr_prop_id: i}); this.setState({create: false})}}>{item.title}</a>)
@@ -258,12 +273,12 @@ class HostIndex extends React.Component {
                     <main>
                         <div class="property-mgr-wrapper">
                             <div id="collapse-sidebar">
-                                <div id="sidebar-header">
+                                <div id="sidebar-header" style={{width: this.state.sidebar_width}}>
                                 <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" 
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                role="button" aria-expanded="false" aria-controls="collapseExample"  onClick={this.collapseSidebarHeader}>
                                     <i class="bi bi-list"></i>
                                 </button>
-                                <div id="properties-mgr-title"><h5>Properties</h5></div>
+                                <div id="properties-mgr-title" style={{width: this.state.sidebar_header_width}}><h5>Properties</h5></div>
                                 </div>
                                 <div class="collapse full-collapse-list" id="collapseExample">
                                 <div class="list-group">
@@ -441,12 +456,12 @@ class HostIndex extends React.Component {
                     <main>
                         <div class="property-mgr-wrapper">
                         <div id="collapse-sidebar">
-                                <div id="sidebar-header">
+                                <div id="sidebar-header" style={{width: this.state.sidebar_width}}>
                                 <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" 
-                                role="button" aria-expanded="false" aria-controls="collapseExample">
+                                role="button" aria-expanded="false" aria-controls="collapseExample" onClick={this.collapseSidebarHeader}>
                                     <i class="bi bi-list"></i>
                                 </button>
-                                <div id="properties-mgr-title"><h5>Properties</h5></div>
+                                <div id="properties-mgr-title" style={{width: this.state.sidebar_header_width}}><h5>Properties</h5></div>
                                 </div>
                                 <div class="collapse full-collapse-list" id="collapseExample">
                                 <div class="list-group">
