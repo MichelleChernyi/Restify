@@ -33,7 +33,7 @@ function PropertyDetails(props) {
           }).then((response) => {
               if (response.data.results.length > 0) {
                 for (var reservation of response.data.results) {
-                  if (reservation.property == id && (reservation.status == 'terminated' || reservation.status == 'completed')) {
+                  if (reservation.prop == id && (reservation.status == 'terminated' || reservation.status == 'completed')) {
                       setCanComment(true)
                   }
                 }
