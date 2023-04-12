@@ -16,6 +16,8 @@ function ProfileView(props) {
     const [comments, setComments] = useState([])
     const [canComment, setCanComment] = useState(false)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [comment, setComment] = useState()
+    const [trigger, setTrigger] = useState(0)
     // const [avatar, setAvatar] = useState() 
  
     
@@ -52,7 +54,7 @@ function ProfileView(props) {
           setIsLoggedIn(true);
           
         }
-      }, []);
+      }, [trigger]);
 
       useEffect(()=>{
         if (isLoggedIn == true) {
@@ -76,7 +78,23 @@ function ProfileView(props) {
         }, [firstName])
 
         
-
+        const postComment = () => {
+      
+          var bodyd = new FormData();
+                      bodyd.append("content", comment);
+          axios({
+            method: "POST",
+            url: `http://localhost:8000/accounts/guest/${id}/comments/`,
+            headers: { 
+              'Content-type': 'multipart/form-data',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            data: bodyd,
+            }).then((response) => {
+              let temp = trigger
+                setTrigger(temp + 1)
+            });
+        }
 
     return (
         <>
@@ -106,7 +124,25 @@ function ProfileView(props) {
                  
               </div>}
               {console.log(canComment)}
-              {canComment && <button class='btn btn-primary'>Comment</button>}
+              {canComment && <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#commentModal">Comment</button>}
+              
+              <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h1 className="modal-title fs-5" id="commentModalLabel">Comment</h1>
+                          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                          <textarea type="text" placeholder="Comment..." className="form-control shadow-none mb-1" onChange={(e) => setComment(e.target.value)}></textarea>
+
+                        </div>
+                        <div className="modal-footer">
+                          <button type="button"  className="btn btn-primary " data-bs-dismiss="modal" onClick={() => postComment()}>Comment</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </div>
                 </div>
 

@@ -47,19 +47,19 @@ class GuestCommentView(ListCreateAPIView):
         if request.user.id == self.kwargs['pk']:
             return Response({'Cannot leave a review on yourself'}, status=status.HTTP_401_UNAUTHORIZED)
         
-        try:
-            users_properties = Property.objects.get(owner=request.user.id)
-        except:
-            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
+        # try:
+        #     users_properties = Property.objects.get(owner=request.user.id)
+        # except:
+        #     return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        reservations = users_properties.reservation_set.all()
-        guests = reservations.filter(user=self.kwargs['pk'])
-        if not guests:
-            return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
+        # reservations = users_properties.reservation_set.all()
+        # guests = reservations.filter(user=self.kwargs['pk'])
+        # if not guests:
+        #     return Response({"Cannot leave a review on someone that hasn't stayed at your property"}, status=status.HTTP_401_UNAUTHORIZED)
         
-        guests = guests.filter(status='completed')
-        if not guests:
-            return Response({"Cannot leave a review until reservation is complete"}, status=status.HTTP_401_UNAUTHORIZED)
+        # guests = guests.filter(status='completed')
+        # if not guests:
+        #     return Response({"Cannot leave a review until reservation is complete"}, status=status.HTTP_401_UNAUTHORIZED)
         
 
         
