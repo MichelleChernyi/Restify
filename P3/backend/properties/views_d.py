@@ -142,8 +142,7 @@ class CreateReservationView(CreateAPIView):
     # c   leared = models.BooleanField(default=False)
         notif = Notification.objects.create(
         belongs_to=prop.owner,
-        content=f'User {request.user.email} reserved Your Property with id:{kwargs["pk"]} and name: {prop.title}',
-        link=kwargs["pk"])
+        content=f'User {request.user.email} reserved Your Property with id:{kwargs["pk"]} and name: {prop.title}')
        
 
 
@@ -162,15 +161,15 @@ class ChangeStatusReservationView(UpdateAPIView):
         if instance.status == 'approved':
             notif = Notification.objects.create(
             belongs_to=instance.user,
-            content=f'User {instance.property.owner} approved reservation for Property with id:{instance.property.id}')
+            content=f'User {instance.property.owner.email} approved reservation for Property with id:{instance.property.id} and name: {instance.property.title}')
         if instance.status == 'canceled':
             notif = Notification.objects.create(
             belongs_to=instance.property.owner,
-            content=f'User {instance.user} cancelled reservation for Property with id:{instance.property.id}')
+            content=f'User {instance.user.email} cancelled reservation for Property with id:{instance.property.id} and name: {instance.property.title}')
         if instance.status == 'terminated':
             notif = Notification.objects.create(
             belongs_to=instance.user,
-            content=f'User {instance.property.owner} terminated reservation for Property with id:{instance.property.id}')
+            content=f'User {instance.property.owner.email} terminated reservation for Property with id:{instance.property.id} and name: {instance.property.title}')
         return super().patch(request, *args, **kwargs)
         
 class DeleteReservationView(DestroyAPIView):
@@ -228,7 +227,7 @@ class ListReservationView(ListAPIView):
                 return Response(data={'authorization': 'You are not authorized.'}, status=403)
         q = self.get_queryset()
 
-        resp = {'results': [{'pk': x.pk, 'user': x.user.email, 'status': x.status, 'start_date': x.start_date, 'end_date': x.end_date, 'prop': x.property.pk} for x in q]}
+        resp = {'results': [{'pk': x.pk, 'user': x.user.email, 'status': x.status, 'start_date': x.start_date, 'end_date': x.end_date, 'prop': x.property.pk, 'prop_owner': x.property.owner.id} for x in q]}
 
         return Response(data=resp)
         # return super().get(request, *args, **kwargs)

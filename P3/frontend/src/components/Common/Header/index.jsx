@@ -11,6 +11,7 @@ function Header(props) {
   const [numGuests, setNumGuests] = useState(0)
   const [numBaths, setNumBaths] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [canComment, setCanComment] = useState(false)
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("token");
@@ -19,7 +20,7 @@ function Header(props) {
       setIsLoggedIn(true);
     }
   }, []);
-  
+
   const search = () => {
     let state = {}
     if (location !== '') {
@@ -80,6 +81,15 @@ function Header(props) {
     window.location.assign("http://localhost:3000/notifications/");
     
   }
+  const reserve = () => {
+    window.location.assign("http://localhost:3000/reservations/");
+    
+  }
+
+  const host = () => {
+    window.location.assign("http://localhost:3000/host/");
+    
+  }
   
   return (
         <>
@@ -129,9 +139,9 @@ function Header(props) {
                     <i className="bi bi-person-fill m-4 w-150 fs-3"></i>
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end me-1">
-                    <li><a className="dropdown-item" href="add-new-property.html">My Properties</a></li>
+                    <li><a className="dropdown-item" onClick={host}>My Properties</a></li>
                   <li><hr className="dropdown-divider"/></li>
-                  <li><a className="dropdown-item" href="no-reservations.html">My Reservations</a></li>
+                  <li><a className="dropdown-item" onClick={reserve}>My Reservations</a></li>
                   <li><hr className="dropdown-divider"/></li>
                   <li><a className="dropdown-item" onClick={profile}>My Profile</a></li>
                   <li><hr className="dropdown-divider"/></li>

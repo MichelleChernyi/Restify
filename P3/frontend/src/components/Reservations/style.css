@@ -1,0 +1,46 @@
+.e-card-img-top{
+    width: 200px;
+    height: 200px;
+    margin-left:auto ;
+    margin-right: auto;
+    margin-bottom: -30px;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.e-card-body{
+    margin-top:auto;
+    margin-bottom: auto;
+    margin-left:auto ;
+    margin-right: auto;
+    align-items: center;
+    text-align: center;
+    color: black;
+}
+
+
+.e-card-img-top {
+    margin: 0;
+    width: 100% !important;
+}
+
+.e-card {
+    margin: 1em;
+    max-width: 250px;
+}
+
+.e-card-body {
+    margin: 0;
+    text-align: left;
+
+}
+
+.card-body p {
+    margin-bottom: 0.25em;
+    color: black;
+}

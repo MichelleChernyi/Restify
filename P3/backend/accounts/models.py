@@ -23,7 +23,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Notification(models.Model):
     # property = models.ForeignKey(Property, on_delete=models.SET_NULL)
     content = models.TextField()
-    link =  models.TextField(null=True, blank=True)
     belongs_to = models.ForeignKey(CustomUser, on_delete=models.CASCADE, db_constraint=False)
     cleared = models.BooleanField(default=False)
 
@@ -33,7 +32,7 @@ class Comment(models.Model):
     # to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.TextField()
     reply_to = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name="replies")
-    # data = models.DateField(auto_now_add=True)
+    data = models.DateField(auto_now_add=True)
     class Meta:
         abstract = True
     
