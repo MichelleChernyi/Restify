@@ -1,0 +1,19 @@
+.card-img-top {
+    margin: 0;
+    width: 100%;
+}
+
+.card {
+    position: relative;
+    margin: 1em;
+    max-width: 250px;
+}
+
+.card-body {
+    margin: 0;
+    text-align: left;
+}
+
+.card-body p {
+    margin-bottom: 0.25em;
+}

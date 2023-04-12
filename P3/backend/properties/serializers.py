@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer, SerializerMethodField, ListField, CharField, ImageField
 from .models import Property, PropertyComment
 from rest_framework.serializers import ModelSerializer, ValidationError
 from .models import Property, Amenities, Image, Reservation, Availability
@@ -6,9 +6,15 @@ from rest_framework import serializers
 from datetime import datetime, date
 
 class PropertyListSerializer(ModelSerializer):
+    images = ListField()
     class Meta:
         model = Property
-        fields = ['title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price']
+        fields = ['title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images']
+    
+    # def get_image_url(self, image):
+    #     request = self.context.get('request')
+    #     photo_url = car.photo.url
+    #     return request.build_absolute_uri(photo_url)
 
 class PropertyCommentCreateSerializer(ModelSerializer):
     class Meta:

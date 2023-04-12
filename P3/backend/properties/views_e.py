@@ -4,7 +4,7 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 # from rest_framework import filters
 from accounts.models import CustomUser
-from .models import Property, PropertyComment
+from .models import Property, PropertyComment, Image
 from .serializers import PropertyListSerializer, PropertyCommentSerializer, PropertyCommentCreateSerializer
 from .paginations import PropertiesList
 from rest_framework.response import Response
@@ -112,4 +112,10 @@ class PropertyListView(ListAPIView):
         elif price_low_to_high:
             if price_low_to_high.lower() == 'true':
                 queryset = queryset.order_by('price')
+
+        for property in queryset:
+            images = Image.objects.filter(my_property=property)
+            property.images = []
+            for image in images:
+                property.images.append(self.request.build_absolute_uri(image.image.url))
         return queryset
