@@ -1,8 +1,29 @@
 import './style.css'
 import logo from '../../../assets/logo.png'
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 function Header(props) {
-    return (
+  let navigate = useNavigate(); 
+  const [location, setLocation] = useState('')
+  const [maxPrice, setMaxPrice] = useState(0)
+  const [numGuests, setNumGuests] = useState(0)
+  const search = () => {
+    let state = {}
+    if (location !== '') {
+      state['location'] = location
+    }
+    if (maxPrice > 0) {
+      state['maxPrice'] = maxPrice
+    }
+    if (numGuests > 0) {
+      state['numGuests'] = numGuests
+    }
+    
+    navigate('/', {state})
+  }
+  
+  return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
               <div className="d-flex justify-content-between w-100 align-items-center">
@@ -11,16 +32,15 @@ function Header(props) {
                   <a className="navbar-brand" href="index.html">Restify</a>
                 </div>
                 <div className="shadow-sm search-filter bg-white d-flex align-items-center p-1">
-                  <input type="text" placeholder="Location" className="form-control shadow-none border-0 large-search"/>
-                  <input type="text" placeholder="Check In" onBlur={(e) => e.target.type = 'text'} onFocus={(e) => e.target.type = 'date'} className="form-control shadow-none border-0 large-search"/>
-                  <input type="text" placeholder="Check Out" onBlur={(e) => e.target.type = 'text'} onFocus={(e) => e.target.type = 'date'} className="form-control shadow-none border-0 large-search"/>
-                  <input type="number" step="1" placeholder="Add Guests" className="form-control shadow-none border-0 large-search"/>
+                  <input type="text" placeholder="Location" className="form-control shadow-none border-0 large-search" onChange={(e) => setLocation(e.target.value)}/>
+                  <input type="number" step="1" placeholder="Max Price" className="form-control shadow-none border-0 large-search" onChange={(e) => setMaxPrice(e.target.value)}/>
+                  <input type="number" step="1" placeholder="Add Guests" className="form-control shadow-none border-0 large-search" onChange={(e) => setNumGuests(e.target.value)}/>
 
                   <button type="button" className="btn btn-outline-secondary border-0 small-search" data-bs-toggle="modal" data-bs-target="#searchModal">
                     Search...
                   </button>
                   
-                  <div className="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+                  <div className="modal fade" id="searchModal" tabIndex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
                       <div className="modal-content">
                         <div className="modal-header">
@@ -28,19 +48,18 @@ function Header(props) {
                           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                          <input type="text" placeholder="Location" className="form-control shadow-none mb-1"/>
-                          <input type="text" placeholder="Check In" onBlur={() => this.type = 'text'} onFocus={() => this.type = 'date'} className="form-control shadow-none mb-1"/>
-                          <input type="text" placeholder="Check Out"  onBlur={() => this.type = 'text'} onFocus={() => this.type = 'date'} className="form-control shadow-none mb-1"/>
-                        <input type="number" step="1" placeholder="Add Guests" className="form-control shadow-none mb-1"/>
+                          <input type="text" placeholder="Location" className="form-control shadow-none mb-1" onChange={(e) => setLocation(e.target.value)}/>
+                          <input type="number" step="1" placeholder="Max Price" className="form-control shadow-none mb-1" onChange={(e) => setMaxPrice(e.target.value)}/>
+                        <input type="number" step="1" placeholder="Add Guests" className="form-control shadow-none mb-1" onChange={(e) => setNumGuests(e.target.value)}/>
                         </div>
                         <div className="modal-footer">
-                          <button type="button" onClick="location.href='search.html'"  className="btn btn-primary ">Search</button>
+                          <button type="button" onClick={search}  className="btn btn-primary ">Search</button>
                         </div>
                       </div>
                     </div>
                   </div>
     
-                  <div><a href="search.html" className="btn btn-primary m-1 rounded-circle search-button" type="submit"><i className="bi bi-search"></i></a></div>
+                  <div><button type="button" onClick={search} className="btn btn-primary m-1 rounded-circle search-button"><i className="bi bi-search"></i></button></div>
                 </div>
                 {props.isLoggedIn ?
                     <div class="d-flex align-items-center">
