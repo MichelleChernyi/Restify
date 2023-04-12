@@ -2,7 +2,7 @@ import React, { Component, useState} from 'react';
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import axios from 'axios';
 // import signupCSS from './signup.css';
-// import style from './style.css';
+import style from './style.css';
 import {Link, useParams, Navigate, useNavigate, Route} from "react-router-dom";
 import Header from '../Common/Header';
 // import Parse from 'parse/dist/parse.min.js';
@@ -30,13 +30,21 @@ class Profile extends Component {
     constructor(props){
       super(props);
       this.state = {
-        email: "",first_name: "", last_name: "", phone_num: "", avatar: "", email_error: "", first_name_error: "", last_name_error: "", phone_num_error: "", avatar_error: "",
+        email: "",first_name: "", last_name: "", phone_num: "", avatar: "", email_error: "", first_name_error: "", last_name_error: "", phone_num_error: "", avatar_error: "", new_image: ""
         
       };
     }
 
     onChange = e => {
-      this.setState({ [e.target.name]: e.target.value });
+        if (e.target.name == 'avatar'){
+            console.log("entered if")
+            console.log(e.target.files[0])
+            this.setState({ avatar:e.target.files[0]});
+              
+        }else{
+            this.setState({ [e.target.name]: e.target.value });
+        }
+      
     };
 
     componentDidMount(){
@@ -48,6 +56,9 @@ class Profile extends Component {
           this.setState({ first_name: res.data.first_name }); 
           this.setState({ last_name: res.data.last_name}); 
           this.setState({ phone_num: res.data.phone_num }); 
+          if(res.data.avatar !== null && res.data.avatar !== ""){
+            this.setState({ new_image: res.data.avatar}); 
+          }
   
           
         })
@@ -95,7 +106,14 @@ class Profile extends Component {
       });
       }
        onSubmit = async () => {
-        await axios.put("http://127.0.0.1:8000/accounts/profile/", {email: this.state.email, first_name: this.state.first_name, last_name: this.state.last_name, phone_num: this.state.phone_num},{headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        var formData = new FormData();
+        formData.append('email', this.state.email)
+        formData.append('first_name', this.state.first_name)
+        formData.append('last_name', this.state.last_name)
+        formData.append('phone_num', this.state.phone_num)
+        formData.append('avatar', this.state.avatar)
+
+        await axios.put("http://127.0.0.1:8000/accounts/profile/", formData,{headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
         .then(res => {
           console.log(res);
           console.log(res.data);
@@ -103,6 +121,8 @@ class Profile extends Component {
           this.setState({ first_name: res.data.first_name }); 
           this.setState({ last_name: res.data.last_name }); 
           this.setState({ phone_num: res.data.phone_num }); 
+          this.setState({ avatar: res.data.avatar }); 
+          console.log('avatar: ',this.state.avatar )
   
           
         })
@@ -148,7 +168,6 @@ class Profile extends Component {
     };
 
 
-
     render() {
       return (
         <>
@@ -158,6 +177,8 @@ class Profile extends Component {
         <div className="card w-500 log-stuff register">
         <div className="card-body logs">
         <h5 className="card-title card-t">Profile</h5>
+        {/* <img src={"http://127.0.0.1:8000/" + this.state.avatar}></img> */}
+        <i class="bi bi-person-circle"></i>
         <Form onSubmit={this.onSubmit} noValidate>
           <FormGroup>
             <Label for="name">First Name:</Label>
@@ -198,6 +219,16 @@ class Profile extends Component {
               name="phone_num"
               onChange={this.onChange}
               value={this.state.phone_num}
+            />
+             {/* <p>{this.state.phone_num_error[0]}</p> */}
+          </FormGroup>
+          <FormGroup>
+            <Label for="avatar">Avatar:</Label>
+            <Input
+              type="file"
+              name="avatar"
+              onChange={this.onChange}
+              
             />
              {/* <p>{this.state.phone_num_error[0]}</p> */}
           </FormGroup>
