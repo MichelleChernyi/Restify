@@ -12,6 +12,26 @@ from accounts.models import Notification
 from rest_framework.decorators import api_view
 
 @api_view(('GET',))
+def get_user_reservations(request):
+    if not request.user.is_authenticated:
+        return Response(data={'authorization': 'You are not authorized.'}, status=403)
+    resv = Reservation.objects.filter(user=request.user)
+    data = []
+    for res in resv:
+        allimages = Image.objects.all().filter(my_property=res.property)
+        images = [request.build_absolute_uri(image.image.url) for image in allimages]
+        if len(images) == 0: images = ['']
+        data.append({'image': images[0],
+                     'name': res.property.title,
+                     'host': res.property.owner.first_name,
+                     'checkin': res.start_date,
+                     'checkout': res.end_date,
+                     'status': res.status,
+                     'location': res.property.location,
+                     'pk': res.pk})
+    return Response({'reservations': data})
+
+@api_view(('GET',))
 def get_user_properties(request):
     if not request.user.is_authenticated:
         return Response(data={'authorization': 'You are not authorized.'}, status=403)
@@ -177,10 +197,14 @@ class ListReservationView(ListAPIView):
 
     def get_queryset(self):
         prop_pk = self.request.query_params.get('property')
+        all_flag = self.request.query_params.get('all')
         state = self.request.query_params.get('state')
         if prop_pk is not None:
             prop = Property.objects.get(pk=prop_pk)
             qset = Reservation.objects.filter(property=prop)
+        elif all_flag is not None:
+            allqset = Reservation.objects.all()
+            qset = [q for q in allqset if q.property.owner == self.request.user]
         else:
             qset = Reservation.objects.filter(user=self.request.user)
         if state is not None:

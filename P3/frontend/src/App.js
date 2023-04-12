@@ -9,6 +9,7 @@ import Logout from './components/Logout';
 import Profile from './components/Profile';
 import Notification from './components/Notification';
 import ProfileView from './components/ProfileView';
+import Reservations from './components/Reservations';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/notifications" element={<Notification />} />
       <Route path="/profile/:id" element={<ProfileView />} />
+      <Route path="/reservations" element={<Reservations />} />
     </Routes>
   </BrowserRouter>
    
