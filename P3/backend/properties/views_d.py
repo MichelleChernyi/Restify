@@ -142,7 +142,10 @@ class CreateReservationView(CreateAPIView):
     # c   leared = models.BooleanField(default=False)
         notif = Notification.objects.create(
         belongs_to=prop.owner,
-        content=f'User {request.user} reserved Property with id:{kwargs["pk"]}')
+        content=f'User {request.user.email} reserved Your Property with id:{kwargs["pk"]} and name: {prop.title}',
+        link=kwargs["pk"])
+       
+
 
         return Response({'id': instance.pk, 'data': serializer.data})
     

@@ -53,40 +53,7 @@ class Notification extends Component {
         .catch(err => {
           console.log(err.response.data)
           console.log(err.response.data)
-        //   this.setState({ email_error: "" }); 
-        //   this.setState({ first_name_error: "" }); 
-        //   this.setState({ last_name_error: "" }); 
-        //   this.setState({ password_error:"" });
-        //   this.setState({ password2_error: ""}); 
-        //   this.setState({ phone_num_error: ""}); 
-        //   for (var key in err.response.data) {
-        //     if( key === 'email'){
-        //       this.setState({ email_error: err.response.data[key] }); 
-        //     }
-        //     if( key === 'first_name'){
-        //       // this.setState({ email_error: err.response.data[key]});
-        //       this.setState({ first_name_error: err.response.data[key] }); 
-        //     }
-        //     if( key === 'last_name'){
-        //       // this.setState({ email_error: err.response.data[key]});
-        //       this.setState({ last_name_error: err.response.data[key] }); 
-        //     }
-        //     if( key === 'password' || key === 'non_field_errors'){
-        //       // this.setState({ email_error: err.response.data[key]});
-        //       this.setState({ password_error: err.response.data[key] }); 
-        //     }
-        //     if( key === 'password2'){
-        //       // this.setState({ email_error: err.response.data[key]});
-        //       this.setState({ password2_error: err.response.data[key] }); 
-        //     }
-        //     if( key === 'phone_num'){
-        //       // this.setState({ email_error: err.response.data[key]});
-        //       this.setState({ phone_num_error: err.response.data[key] }); 
-        //     }
-  
-        //     console.log("Key:" + key);
-        //     console.log("Value:" + err.response.data[key]);
-        //   }
+       
   
     
   
@@ -94,6 +61,39 @@ class Notification extends Component {
       });
       }
 
+      Delete = e => {
+        e.preventDefault();
+        this.setState({ errors: "",  counter: 1  }, () => {
+            axios.post(`http://127.0.0.1:8000/accounts/notification/delete/`,{}, {headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        .then(res => {
+            console.log("in here")
+          console.log(res);
+        //   console.log(res.data);
+        //   console.log(res.data.results)
+
+        //   this.setState({ notifications: res.data.results }); 
+        //   var loopData = ''
+        //   for (var key in  res.data.results) {
+        //     loopData += `<p>${res.data.results[key].content}</p> <hr className="line"/>`
+        //     // console.log(res.data.results[key].content)
+        //   }
+           this.setState({ notifications: "" }); 
+        //   this.setState({ first_name: res.data.first_name }); 
+        //   this.setState({ last_name: res.data.last_name}); 
+        //   this.setState({ phone_num: res.data.phone_num }); 
+  
+          
+        })
+        .catch(err => {
+            
+            // this.setState({ errors: "No more pages.", counter: this.state.counter -1}); 
+    
+  
+      });
+          }); 
+        // this.setState({ counter: this.state.counter +1 }); 
+        
+      };
       Next = e => {
         e.preventDefault();
         this.setState({ errors: "",  counter: this.state.counter +1  }, () => {
@@ -201,7 +201,7 @@ class Notification extends Component {
       return (
         <>
         < Header/>
-        <Button className="btn btn-primary erase-btn" onClick={this.Prev}>Erase all notifications</Button> <br></br>
+        <Button className="btn btn-primary erase-btn" onClick={this.Delete}>Erase all notifications</Button> <br></br>
         <ul dangerouslySetInnerHTML={{__html: this.state.notifications}}></ul>
         <Button className="btn btn-primary notif-btn" onClick={this.Next}>Next Page</Button>
         <Button className="btn btn-primary notif2-btn" onClick={this.Prev}>Previous Page</Button>
