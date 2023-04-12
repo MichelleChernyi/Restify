@@ -58,8 +58,8 @@ function PropertyDetails(props) {
         <h1 className="">
             {property.title}
         </h1>
-        <div id="carouselExample" className="carousel slide">
-            <div className="carousel-inner">
+        <div id="carouselExample" className="carousel slide e-carousel">
+            <div className="carousel-inner e-carousel-inner">
                 <div className="carousel-item active">
                 <img src={property.images[0]} className="d-block carousel-img w-100" alt="..."/>
                 </div>

@@ -27,9 +27,18 @@
     width: 80vw;
 }
 
-.carousel-img {
+/* .carousel-img {
     width: auto;
     height: 600px;
+} */
+
+.e-carousel-inner img{
+    width: auto;
+    height: 600px;
+}
+
+.e-carousel {
+    width: auto;
 }
 
 #book-property {
@@ -45,4 +54,8 @@
     width: 75px;
     height: 75px;
     margin-bottom: 0.5em;
+}
+
+.profile-comment .comment-date {
+    font-size: small;
 }

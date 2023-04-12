@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from .managers import CustomUserManager
 from django.contrib.auth.models import PermissionsMixin
+from datetime import date
 # # Create your models here.
 
 #for profile
@@ -31,7 +32,7 @@ class Comment(models.Model):
     # to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.TextField()
     reply_to = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name="replies")
-
+    data = models.DateField(auto_now_add=True)
     class Meta:
         abstract = True
     

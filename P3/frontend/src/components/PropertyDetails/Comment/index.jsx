@@ -9,20 +9,28 @@ function Comment(props) {
         let curr = props.comment
         var thread = []
         while (curr.reply !== null) {
-            thread.push(<p >{curr.content}</p>)
+            thread.push(<div className='border p-3'>
+                <div className='d-flex justify-content-between'>
+                <h6>{curr.user_name} says:</h6>
+                </div>
+                <p >{curr.content}</p>
+                <p className="comment-date">{curr.date}</p>
+            </div>)
+            curr = curr.reply
         }
         thread.push(<div className="host-response m-0 p-3">
         <h6>
-          Edward's response:
+          {curr.user_name} says:
         </h6>
         <p>{curr.content}</p>
+        <p className="comment-date">{curr.date}</p>
       </div>)
       setThreads(thread)
     }
         return (
         <>
-            <div className="profile-comment mb-3 p-0">
-            <div className="border-bottom p-3">
+            <div className="profile-comment mb-3 p-0 mt-2">
+            <div className="border-bottom">
                 {threads != [] && threads.map((thread)=> thread)}
                 
             </div>
