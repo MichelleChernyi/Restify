@@ -33,7 +33,7 @@ class Comment(models.Model):
     # to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     content = models.TextField()
     reply_to = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name="replies")
-    # data = models.DateField(auto_now_add=True)
+    data = models.DateField(auto_now_add=True)
     class Meta:
         abstract = True
     

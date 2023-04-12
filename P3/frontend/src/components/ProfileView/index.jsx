@@ -21,7 +21,7 @@ function ProfileView(props) {
     
     useEffect(()=>{
         console.log(id)
-        fetch(`http://localhost:8000/accounts/profile/?id=${id}`, {headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+        fetch(`http://localhost:8000/accounts/profile/${id}`, {headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
           .then(response => response.json())
           .then(body => {
             console.log(id)
@@ -94,7 +94,7 @@ function ProfileView(props) {
                   <p>{phone}</p>
                   
                   <div>
-                {comments.length > 0 && <div className="row mt-3 border-bottom">
+                {comments.length > 0 && <div className="row mt-3">
                   <h4>Comments</h4>
                   {/* <Comment comment={comments[0]} /> */}
             
@@ -106,7 +106,7 @@ function ProfileView(props) {
                  
               </div>}
               {console.log(canComment)}
-              {canComment && <button class='btn btn-primary'>comment</button>}
+              {canComment && <button class='btn btn-primary'>Comment</button>}
               </div>
                 </div>
 

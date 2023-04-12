@@ -29,7 +29,7 @@ function ProfileComment(props) {
         return (
         <>
             <div className="profile-comment mb-3 p-0 mt-2">
-            <div className="border-bottom">
+            <div className="">
                 {threads != [] && threads.map((thread)=> thread)}
             </div>
             </div>
