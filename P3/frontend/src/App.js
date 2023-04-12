@@ -5,6 +5,7 @@ import PropertyList from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import PropertyDetails from './components/PropertyDetails';
+import Logout from './components/Logout';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/register" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/property/:id" element={<PropertyDetails />} />
+      <Route path="/logout" element={<Logout />} />
     </Routes>
   </BrowserRouter>
    

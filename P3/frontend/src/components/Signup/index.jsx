@@ -3,8 +3,7 @@ import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import axios from 'axios';
 // import style from './style.css';
 import {Link, useParams, Navigate, useNavigate, Route} from "react-router-dom";
-
-
+import Header from '../Common/Header';
 
 // States for registration
 // const [firstName, setFirstName] = useState('');
@@ -41,7 +40,7 @@ class Signup extends Component {
         console.log(res);
         console.log(res.data);
 
-        window.location.assign("http://localhost:3000/");
+        window.location.assign("http://localhost:3000/login/");
       })
       .catch(err => {
         console.log(err.response.data)
@@ -114,6 +113,7 @@ class Signup extends Component {
     render() {
       return (
         <>
+        <Header/>
         <div className="page">
           <main>
         <div className="card w-500 log-stuff register">
