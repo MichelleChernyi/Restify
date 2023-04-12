@@ -8,7 +8,6 @@ import Header from './components/Common/Header';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Header isLoggedIn='True'/>
     <App />
   </React.StrictMode>
 );
