@@ -6,6 +6,12 @@ import './style.css'
 function PropertyDetails(props) {
     const {id} = useParams()
     const [property, setProperty] = useState()
+    const [checkIn, setCheckIn] = useState()
+    const [checkOut, setCheckOut] = useState()
+    const [price, setPrice] = useState()
+    const [tax, setTax] = useState()
+    const [total, setTotal] = useState()
+    const [numDays, setNumDays] = useState()
     
     useEffect(()=>{
         console.log(id)
@@ -17,6 +23,22 @@ function PropertyDetails(props) {
             })
         console.log(property)
         }, [])
+
+    useEffect(() => {
+        setPrice(0)
+        if (checkIn !== undefined && checkOut !== undefined) {
+            setNumDays((new Date(checkOut) - new Date(checkIn)) / (1000*60*60*24))
+            let days = (new Date(checkOut) - new Date(checkIn)) / (1000*60*60*24)
+            let priceTemp = days * property.price
+            let taxTemp = priceTemp * 0.13
+            let totalTemp = priceTemp + taxTemp
+            setPrice(priceTemp)
+            setTax(taxTemp)
+            setTotal(totalTemp)
+        }
+
+    }, [checkIn, checkOut])
+
     return (
         <>
             <Header/>
@@ -52,7 +74,7 @@ function PropertyDetails(props) {
                   <div class="col d-flex ">
                     <div class="d-flex flex-column">
                       <h3 class="">
-                        Entire house hosted by {property.owner_details[0]}
+                        Stay hosted by {property.owner_details[0]}
                       </h3>
                       <p class=" mb-0">
                         {property.num_guests} guests • {property.num_bed} bedrooms • {property.num_bath} bathrooms
@@ -112,40 +134,28 @@ function PropertyDetails(props) {
               </div>
               <div class=""  id="checkin-checkout">
                 <div class="d-flex">
-                  <input type="text" placeholder="Check In" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control shadow-none" id="book-input-left"/>
-                  <input type="text" placeholder="Check Out" onblur="(this.type='text')" onfocus="(this.type='date')" class="form-control shadow-none" id="book-input-right"/>
+                  <input type="text" placeholder="Check In" onBlur={(e) => e.target.type = 'text'} onFocus={(e) => e.target.type = 'date'} class="form-control shadow-none" id="book-input-left" onChange={(e) => setCheckIn(e.target.value)}/>
+                  <input type="text" placeholder="Check Out" onBlur={(e) => e.target.type = 'text'} onFocus={(e) => e.target.type = 'date'} class="form-control shadow-none" id="book-input-right" onChange={(e) => setCheckOut(e.target.value)}/>
                 </div>
                 <input type="number" step="1" placeholder="Number of Guests" class="form-control shadow-none" id="book-input-bottom"/>
               </div>
               <div class="d-flex justify-content-between mt-3">
                 <p>
-                  $1000 x 5 nights
+                ${property.price} x {numDays} nights
                 </p>
-                <p>$5000</p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <p>
-                  Cleaning fee
-                </p>
-                <p>$250</p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <p>
-                  Service fee
-                </p>
-                <p>$200</p>
+                <p>${price}</p>
               </div>
               <div class="d-flex justify-content-between border-bottom">
                 <p>
                   Taxes
                 </p>
-                <p>$250</p>
+                <p>${tax}</p>
               </div>
               <div class="d-flex justify-content-between align-items-center mt-1">
                 <h4>
                   Total
                 </h4>
-                <p class="text-center">$5700</p>
+                <p class="text-center">${total}</p>
               </div>
               
               <a href="log-in-to-reserve.html" class="btn btn-primary mt-3">
