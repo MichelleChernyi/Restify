@@ -75,6 +75,11 @@ function Header(props) {
     window.location.assign("http://localhost:3000/profile/");
     
   }
+
+  const notifs = () => {
+    window.location.assign("http://localhost:3000/notifications/");
+    
+  }
   
   return (
         <>
@@ -118,7 +123,7 @@ function Header(props) {
                 </div>
                 {isLoggedIn ?
                     <div className="d-flex align-items-center">
-                    <i className="bi bi-bell-fill m-1 w-150 fs-3"></i>
+                    <i className="bi bi-bell-fill m-1 w-150 fs-3" onClick={notifs}></i>
                   <div className="dropdown">
                   <a className="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                     <i className="bi bi-person-fill m-4 w-150 fs-3"></i>
