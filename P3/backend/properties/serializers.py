@@ -5,11 +5,25 @@ from .models import Property, Amenities, Image, Reservation, Availability
 from rest_framework import serializers
 from datetime import datetime, date
 
-class PropertyListSerializer(ModelSerializer):
+class AllPropertySerializer(ModelSerializer):
     images = ListField()
     class Meta:
         model = Property
-        fields = ['id', 'title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images']
+        fields = ['id', 'title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images', 'owner', 'amenities']
+
+    def validate(self, data):
+        super().validate(data)
+       
+        data['images'] = self.context['images']
+
+        return data
+
+class PropertyListSerializer(ModelSerializer):
+    images = ListField()
+    owner_details = ListField()
+    class Meta:
+        model = Property
+        fields = ['id', 'title', 'description', 'location', 'num_bed', 'num_bath', 'num_guests', 'price', 'images', 'owner', 'amenities', 'owner_details']
 
 class PropertyCommentCreateSerializer(ModelSerializer):
     class Meta:
@@ -18,9 +32,10 @@ class PropertyCommentCreateSerializer(ModelSerializer):
 
 class PropertyCommentSerializer(ModelSerializer):
     reply = SerializerMethodField()
+    user_name = CharField
     class Meta:
         model = PropertyComment
-        fields = ['from_user', 'content', 'reply']
+        fields = ['from_user', 'content', 'reply', 'user_name']
     
     def get_reply(self, obj):
         replies = obj.replies.all()

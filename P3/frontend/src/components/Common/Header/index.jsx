@@ -1,7 +1,8 @@
-import './style.css'
+import style from './style.css'
 import logo from '../../../assets/logo.png'
 import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 function Header(props) {
   let navigate = useNavigate(); 
@@ -26,14 +27,55 @@ function Header(props) {
     console.log(state)
     navigate('/', {state})
   }
+
+  const logOut = () => {
+    axios.post("http://127.0.0.1:8000/accounts/logout/", {refresh_token: localStorage.getItem('refresh_token')}, {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+    .then(res => {
+      console.log(res);
+      console.log(res.data.access);
+      // const token  = res.data.access;
+      // localStorage.setItem('token',  token);
+
+      // window.location.assign("http://localhost:3000/");
+    })
+    .catch(err => {
+      console.log(err.response.data)
+      console.log(err.response.data)
+      this.setState({ email_error: "" }); 
+      this.setState({ password_error:"" });
+      for (var key in err.response.data) {
+          console.log("Key:" + key);
+        console.log("Value:" + err.response.data[key]);
+        if( key === 'email'){
+          this.setState({ email_error: err.response.data[key][0] }); 
+        }
+        if(key === 'detail'){
+          this.setState({ password_error: err.response.data[key] }); 
+        }
+
+        if( key === 'password'){
+          // this.setState({ email_error: err.response.data[key]});
+          this.setState({ password_error: err.response.data[key][0] }); 
+        }
+
+        
+      }
+
+
+
+    
+    
+  });
+  }
   
   return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
               <div className="d-flex justify-content-between w-100 align-items-center">
                 <div className="d-flex align-items-center">
-                  <a className="nav-link active" href="index.html" ><img id="home" src={logo} alt="Logo"/></a>
-                  <a className="navbar-brand" href="index.html">Restify</a>
+                  <a className="nav-link active" onClick={() => navigate('/')}><img id="home" src={logo} alt="Logo"/></a>
+                  <a className="navbar-brand" onClick={() => navigate('/')}>Restify</a>
                 </div>
                 <div className="shadow-sm search-filter bg-white d-flex align-items-center p-1">
                   <input type="text" placeholder="Location" className="form-control shadow-none border-0 large-search" onChange={(e) => setLocation(e.target.value)}/>
@@ -68,20 +110,21 @@ function Header(props) {
                   <div><button type="button" onClick={search} className="btn btn-primary m-1 rounded-circle search-button"><i className="bi bi-search"></i></button></div>
                 </div>
                 {props.isLoggedIn ?
-                    <div class="d-flex align-items-center">
-                    <i class="bi bi-bell-fill m-1 w-150 fs-3"></i>
-                  <div class="dropdown">
-                  <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                    <i class="bi bi-person-fill m-4 w-150 fs-3"></i>
+                    <div className="d-flex align-items-center">
+                    <i className="bi bi-bell-fill m-1 w-150 fs-3"></i>
+                  <div className="dropdown">
+                  <a className="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                    <i className="bi bi-person-fill m-4 w-150 fs-3"></i>
                   </a>
-                  <ul class="dropdown-menu dropdown-menu-end me-1">
-                    <li><a class="dropdown-item" href="add-new-property.html">My Properties</a></li>
-                  <li><hr class="dropdown-divider"/></li>
-                  <li><a class="dropdown-item" href="no-reservations.html">My Reservations</a></li>
-                  <li><hr class="dropdown-divider"/></li>
-                  <li><a class="dropdown-item" href="profile.html">My Profile</a></li>
-                  <li><hr class="dropdown-divider"/></li>
-                  <li><a class="dropdown-item" href="signed-out.html">Log Out</a></li>
+                  <ul className="dropdown-menu dropdown-menu-end me-1">
+                    <li><a className="dropdown-item" href="add-new-property.html">My Properties</a></li>
+                  <li><hr className="dropdown-divider"/></li>
+                  <li><a className="dropdown-item" href="no-reservations.html">My Reservations</a></li>
+                  <li><hr className="dropdown-divider"/></li>
+                  <li><a className="dropdown-item" href="profile.html">My Profile</a></li>
+                  <li><hr className="dropdown-divider"/></li>
+                  <li><a className="dropdown-item" onClick={logOut}>Log Out</a></li> 
+                  {/* href="signed-out.html"  */}
                   </ul>
                   </div> 
                 </div> :

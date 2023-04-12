@@ -1,0 +1,48 @@
+
+.bedroom {
+    border-radius: 10px;
+    width: 152px;
+}
+
+.property-amenity {
+    width: 50%;
+    margin-bottom: 0.5em;
+}
+
+.thin-font {
+    font-weight: 400;
+}
+
+.contact-button {
+    width: 20%;
+}
+
+.host-response {
+    background-color: rgb(231, 229, 229);
+    border-radius: 0 0 10px 10px;
+}
+
+.property-main {
+    margin: auto;
+    width: 80vw;
+}
+
+.carousel-img {
+    width: auto;
+    height: 600px;
+}
+
+#book-property {
+    border-radius: 15px;
+    margin: 5em 0 0 3em !important;
+    padding: 2em;
+    flex-direction: column;
+    height: 475px;
+}
+
+#host {
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+    margin-bottom: 0.5em;
+}

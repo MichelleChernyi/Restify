@@ -1,23 +1,27 @@
-main {
+/* main {
     padding: 1.5em;
-}
+    justify-content: left;
+    align-items: left;
+} */
 
 .search-filter {
     border-radius: 25px;
     width: 40vw;
 }
 
+.e-main {
+    padding: 1.5em;
+}
 
 
 .search-filter .form-control {
     width: 60% !important;
 }
 
-.submit {
+/* .submit {
     margin-left: auto;
-}
+} */
 
 .dropdown-title {
     color: white;
-    margin: 1em;
 }

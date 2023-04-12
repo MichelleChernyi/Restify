@@ -35,6 +35,7 @@ function PropertyList(props) {
         .then(body => {
           setProperties([...body.results])
           })
+          console.log(properties)
       }, [state])
 
     const findQueryParams = () => {
@@ -88,11 +89,11 @@ function PropertyList(props) {
     return (
         <>
         <Header isLoggedIn='true'/>
-        <main>
+        <main class="e-main">
         {/* <button class="dropdown-title" onClick={() => filterLowToHigh()}>Price Low to High</button> */}
         {/* <button class="dropdown-title" onClick={() => filterHighToLow()}>Price High to Low</button> */}
         <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle dropdown-title" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class='btn btn-primary dropdown-toggle dropdown-title' type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Price Filters
           </button>
           <ul class="dropdown-menu">
@@ -101,9 +102,10 @@ function PropertyList(props) {
           </ul>
         </div>
         <div className='search-results d-flex flex-wrap'>
-          {properties.map(property =>
-            <PropertyCard property={property}/>
+          {properties && properties.map((property, index) =>
+            <PropertyCard property={property} key={index}/>
             )}
+          
         </div>
           
         </main>
