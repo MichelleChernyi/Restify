@@ -11,6 +11,7 @@ function Header(props) {
   const [numGuests, setNumGuests] = useState(0)
   const [numBaths, setNumBaths] = useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [canComment, setCanComment] = useState(false)
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("token");
@@ -19,7 +20,7 @@ function Header(props) {
       setIsLoggedIn(true);
     }
   }, []);
-  
+
   const search = () => {
     let state = {}
     if (location !== '') {

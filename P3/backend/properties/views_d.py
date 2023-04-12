@@ -201,7 +201,7 @@ class ListReservationView(ListAPIView):
                 return Response(data={'authorization': 'You are not authorized.'}, status=403)
         q = self.get_queryset()
 
-        resp = {'results': [{'pk': x.pk, 'user': x.user.email, 'status': x.status, 'start_date': x.start_date, 'end_date': x.end_date, 'prop': x.property.pk} for x in q]}
+        resp = {'results': [{'pk': x.pk, 'user': x.user.email, 'status': x.status, 'start_date': x.start_date, 'end_date': x.end_date, 'prop': x.property.pk, 'prop_owner': x.property.owner.id} for x in q]}
 
         return Response(data=resp)
         # return super().get(request, *args, **kwargs)

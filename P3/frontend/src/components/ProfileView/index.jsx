@@ -14,6 +14,8 @@ function ProfileView(props) {
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState()
     const [comments, setComments] = useState([])
+    const [canComment, setCanComment] = useState(false)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     // const [avatar, setAvatar] = useState() 
  
     
@@ -22,6 +24,7 @@ function ProfileView(props) {
         fetch(`http://localhost:8000/accounts/profile/?id=${id}`, {headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
           .then(response => response.json())
           .then(body => {
+            console.log(id)
             console.log(body)
             console.log(body.phone_num)
             setFirstName(body.first_name)
@@ -34,13 +37,45 @@ function ProfileView(props) {
         }, [])
 
     useEffect(()=>{
-      fetch(`http://localhost:8000/accounts/guest/1/comments/`, {headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+      fetch(`http://localhost:8000/accounts/guest/${id}/comments/`, {headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
       .then(response => response.json())
       .then(body => {
         // console.log(body)
         setComments([...body.results])
         })
       }, [])
+
+      useEffect(() => {
+        const loggedInUser = localStorage.getItem("token");
+        if (loggedInUser) {
+          // const foundUser = JSON.parse(loggedInUser);
+          setIsLoggedIn(true);
+          
+        }
+      }, []);
+
+      useEffect(()=>{
+        if (isLoggedIn == true) {
+          axios({
+            method: "GET",
+            url: "http://127.0.0.1:8000/properties/reservations/list/",
+            headers: { 
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+            }).then((response) => {
+                if (response.data.results.length > 0) {
+                  for (var reservation of response.data.results) {
+                    if (reservation.prop_owner == id && (reservation.status == 'terminated' || reservation.status == 'completed')) {
+                        setCanComment(true)
+                    }
+                  }
+                }
+            });
+        }
+        
+        }, [firstName])
+
+        
 
 
     return (
@@ -67,8 +102,11 @@ function ProfileView(props) {
                  
                     <ProfileComment comment={comment} key={index}/>
                   )}
+                  
                  
               </div>}
+              {console.log(canComment)}
+              {canComment && <button class='btn btn-primary'>comment</button>}
               </div>
                 </div>
 
