@@ -1,4 +1,4 @@
-.card-img-top{
+.e-card-img-top{
     width: 200px;
     height: 200px;
     margin-left:auto ;
@@ -12,37 +12,35 @@
     align-items: center;
     position: relative;
 }
-.card {
-    position: absolute;
-    top: 50%;
-    /* transform: translateY(-50%); */
-}
-.card-body{
+
+.e-card-body{
     margin-top:auto;
     margin-bottom: auto;
     margin-left:auto ;
     margin-right: auto;
     align-items: center;
     text-align: center;
+    color: black;
 }
 
 
-.card-img-top {
+.e-card-img-top {
     margin: 0;
     width: 100%;
 }
 
-.card {
-    position: relative;
+.e-card {
     margin: 1em;
     max-width: 250px;
 }
 
-.card-body {
+.e-card-body {
     margin: 0;
     text-align: left;
+
 }
 
 .card-body p {
     margin-bottom: 0.25em;
+    color: black;
 }
