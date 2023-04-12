@@ -60,12 +60,12 @@ class PropertyCommentView(ListCreateAPIView):
 
         reservations = property.reservation_set.all()
         guests = reservations.filter(user=self.request.user)
-        if not guests:
-            return Response({"Cannot leave a review if you haven't stayed on this property"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if not guests:
+        #     return Response({"Cannot leave a review if you haven't stayed on this property"}, status=status.HTTP_401_UNAUTHORIZED)
         
-        guests = guests.filter(status__in=['completed', 'terminated'])
-        if not guests:
-            return Response({"Cannot leave a review until reservation is complete or reservation has been terminated"}, status=status.HTTP_401_UNAUTHORIZED)
+        # guests = guests.filter(status__in=['completed', 'terminated'])
+        # if not guests:
+        #     return Response({"Cannot leave a review until reservation is complete or reservation has been terminated"}, status=status.HTTP_401_UNAUTHORIZED)
         
         comment = PropertyComment.objects.create(
             from_user=request.user,
@@ -85,13 +85,13 @@ class ReplyView(CreateAPIView):
                 serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         original_comment = PropertyComment.objects.get(id=self.kwargs['pk'])
-        if original_comment.replies.all():
-            return Response({"This comment already has a reply"}, status=status.HTTP_400_BAD_REQUEST)
-        if (original_comment.property.owner == original_comment.from_user):
-            if (original_comment.reply_to.from_user != self.request.user):
-                return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
-        elif self.request.user == original_comment.from_user and self.request.user != original_comment.property.owner:
-            return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
+        # if original_comment.replies.all():
+        #     return Response({"This comment already has a reply"}, status=status.HTTP_400_BAD_REQUEST)
+        # if (original_comment.property.owner == original_comment.from_user):
+        #     if (original_comment.reply_to.from_user != self.request.user):
+        #         return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
+        # elif self.request.user == original_comment.from_user and self.request.user != original_comment.property.owner:
+        #     return Response({"Cannot reply to thread that you are not a part of or it is not your turn to comment"}, status=status.HTTP_401_UNAUTHORIZED)
         
         comment = PropertyComment.objects.create(
             from_user=request.user,

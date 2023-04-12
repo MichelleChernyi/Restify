@@ -110,7 +110,7 @@ function PropertyDetails(props) {
                   bodyd.append("content", comment);
       axios({
         method: "POST",
-        url: "http://localhost:8000/properties/2/comments/",
+        url: `http://localhost:8000/properties/${id}/comments/`,
         headers: { 
           'Content-type': 'multipart/form-data',
           'Authorization': `Bearer ${localStorage.getItem('token')}`

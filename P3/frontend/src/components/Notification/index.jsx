@@ -40,7 +40,13 @@ class Notification extends Component {
           this.setState({ notifications: res.data.results }); 
           var loopData = ''
           for (var key in  res.data.results) {
-            loopData += `<p>${res.data.results[key].content}</p> <hr className="line"/>`
+
+            if(res.data.results[key].content.includes("Host")){
+                loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/host">Go to property.</a><hr className="line"/>`
+            }else{
+                loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/reservations">Go to reservation.</a><hr className="line"/>`
+            }
+            
             console.log(res.data.results[key].content)
           }
           this.setState({ notifications: loopData }); 
@@ -107,7 +113,12 @@ class Notification extends Component {
           this.setState({ notifications: res.data.results }); 
           var loopData = ''
           for (var key in  res.data.results) {
-            loopData += `<p>${res.data.results[key].content}</p> <hr className="line"/>`
+
+            if(res.data.results[key].content.includes("Host")){
+                loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/host">Go to property.</a><hr className="line"/>`
+            }else{
+                loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/reservations">Go to reservation.</a><hr className="line"/>`
+            }
             // console.log(res.data.results[key].content)
           }
           this.setState({ notifications: loopData }); 
@@ -143,7 +154,11 @@ class Notification extends Component {
                 this.setState({ notifications: res.data.results }); 
                 var loopData = ''
                 for (var key in  res.data.results) {
-                    loopData += `<p>${res.data.results[key].content}</p> <hr className="line"/>`
+                    if(res.data.results[key].content.includes("Host")){
+                        loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/host">Go to property.</a><hr className="line"/>`
+                    }else{
+                        loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/reservations">Go to reservation.</a><hr className="line"/>`
+                    }
                     // console.log(res.data.results[key].content)
                 }
                 this.setState({ notifications: loopData }); 
@@ -171,7 +186,11 @@ class Notification extends Component {
               this.setState({ notifications: res.data.results }); 
               var loopData = ''
               for (var key in  res.data.results) {
-                loopData += `<p>${res.data.results[key].content}</p> <hr className="line"/>`
+                if(res.data.results[key].content.includes("Host")){
+                    loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/host">Go to property.</a><hr className="line"/>`
+                }else{
+                    loopData += `<p>${res.data.results[key].content}</p><a href="http://localhost:3000/reservations">Go to reservation.</a><hr className="line"/>`
+                }
                 // console.log(res.data.results[key].content)
               }
               this.setState({ notifications: loopData }); 
