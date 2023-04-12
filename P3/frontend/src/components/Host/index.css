@@ -1,0 +1,182 @@
+/* ============ RESERVATIONS CSS ~ Devan ============ */
+#collapse-sidebar {
+    max-width: 500px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.full-collapse-list {
+    max-width: 500px;
+    min-width: 400px;
+    padding-top: 5px;
+}
+
+#properties-mgr-title {
+    text-align: left;
+    align-self: center;
+    padding: 0px 0px 0px 7px;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+#sidebar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+#collapse-sidebar a {
+    text-align: center;
+    border-radius: 0;
+}
+
+#sidebar-header a {
+    border-radius: 7px;
+}
+
+#v-bar {
+    margin-left: 0.5rem;
+    visibility: visible;
+}
+
+.property-mgr-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+#property-info-wrapper {
+    padding-left: 0.5rem;
+    text-align: left;
+    width: 100%;
+}
+
+#property-info-wrapper form, hr, .list-group {
+    max-width: 800px;
+}
+
+#property-info-wrapper .list-group p {
+    font-size: x-small;
+    margin: 0;
+    height: 10px;
+}
+
+#requests-manager .list-group .btn-group {
+    column-gap: 2px;
+}
+
+#requests-manager .list-group span {
+    margin-left: 12px;
+}
+
+.form-small-grid {
+    width: 300px;
+}
+
+.form-small-grid-item {
+    width: 50%;
+}
+
+.short-input {
+    width: 75px;
+}
+
+.submit-btn {
+    margin-top: 4px;
+}
+
+#request-custom {
+    margin-top: 5px;
+}
+
+#req-custom-date-picker {
+    width: 50%;
+}
+
+#custom-existing-change {
+    font-size: x-small;
+    height: 30px;
+}
+
+.photo-name-display {
+    display: flex;
+    column-gap: 5px;
+}
+
+.photo-name-display .short-input{
+    width: 50px;
+}
+
+#photos {
+    max-width: 800px;
+    display: flex;
+    justify-content: flex-start;
+    text-align: left;
+    
+}
+
+#photo-order {
+    width: 250px;
+    margin-right: 5px;
+}
+
+#photo-order input[type="file"] {
+    display: none;
+}
+
+.carousel-inner img{
+    width: 100%;
+    height: 225px;
+}
+
+.carousel {
+    width: 285px;
+}
+
+#hide-me, #hide-me-2 {
+    visibility: hidden;
+}
+
+
+
+@media only screen and (max-width: 450px) {
+    #property-info-wrapper .list-group li .request-card-info {
+        height: 75px;
+    }
+
+    #property-info-wrapper .list-group li .request-card-info span {
+        font-size: x-small;
+    }
+}
+
+@media only screen and (max-width: 580px) {
+    #photos {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 1030px) {
+
+    #collapse-sidebar {
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    #v-bar {
+        visibility: hidden;
+    }
+
+    .property-mgr-wrapper {
+        flex-direction: column;
+    }
+
+    #property-info-wrapper {
+        padding-left: 0;
+    }
+}
+
+/* ============ RESERVATIONS CSS ~ Devan ============ */

@@ -16,5 +16,5 @@ urlpatterns = [
     path('reservations/cancel/<int:pk>/', views_d.DeleteReservationView.as_view(), name='terminate_reservation'),  
     path('reservations/list/', views_d.ListReservationView.as_view(), name='list_reservation'),  
     path('<int:pk>', views_e.PropertyView.as_view(), name='property')  ,
-    path('get_user_properties', views_d.get_user_properties, name='bl'),
+    path('get_user_properties/', views_d.get_user_properties, name='bl'),
 ]   

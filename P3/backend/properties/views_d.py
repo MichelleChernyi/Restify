@@ -9,28 +9,31 @@ from rest_framework import status
 from .paginations import PropertiesList
 from django.shortcuts import get_object_or_404
 from accounts.models import Notification
+from rest_framework.decorators import api_view
 
+@api_view(('GET',))
 def get_user_properties(request):
     if not request.user.is_authenticated:
         return Response(data={'authorization': 'You are not authorized.'}, status=403)
     properties = Property.objects.all().filter(owner=request.user)
-    data = {}
+    data = []
     for p in properties:
-        data[p.pk] = {
+        data.append({
+            'id': p.pk,
             'title': p.title,
-            'descriptionn': p.description,
+            'description': p.description,
             'location': p.location,
             'num_bed': p.num_bed,
             'num_bath': p.num_bath,
             'num_guests': p.num_guests,
             'price': p.price,
-        }
+        })
     return Response({'properties': data})
 
 # CRUD PROPERTIES
 class CreatePropertyView(CreateAPIView):
     serializer_class = PropertySerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -193,4 +196,7 @@ class ListReservationView(ListAPIView):
                 return Response(data={'property': 'not found'}, status=404)
             if p.owner != request.user:
                 return Response(data={'authorization': 'You are not authorized.'}, status=403)
-        return super().get(request, *args, **kwargs)
+        q = self.get_queryset()
+        resp = {'results': [{'pk': x.pk, 'user': x.user.email, 'status': x.status, 'start_date': x.start_date, 'end_date': x.end_date} for x in q]}
+        return Response(data=resp)
+        # return super().get(request, *args, **kwargs)
