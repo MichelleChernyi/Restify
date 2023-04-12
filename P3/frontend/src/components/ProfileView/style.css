@@ -1,0 +1,27 @@
+.profile-card{
+    width: 500px;
+    margin-left: 50px;
+    align-items: center;
+}
+.profile-body{
+    align-items: center;
+
+}
+
+@media (max-width: 750px) {
+    .profile-card{
+        align-items: center !important;
+        top: 50%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        max-width:300px;
+    }
+    .profile-body{
+        width: 100%;
+        max-width:300px;
+        align-items: center;
+    }
+   
+
+}
