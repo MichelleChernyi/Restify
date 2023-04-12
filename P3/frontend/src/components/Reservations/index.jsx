@@ -34,8 +34,8 @@ class Reservations extends React.Component {
                     <img style={{width: '100px'}} class="card-img-top e-card-img-top" src={item.image} alt="no image provided"></img>  
                     <div class="card-body e-card-body">  
                     <span class="badge text-bg-warning">{item.status}</span>  
-                        <h5 class="card-title">{item.location}</h5>  
-                        <p class="card-text">{item.checkin} to {item.checkout}</p>  
+                        <h5 class="card-title">{item.name}</h5>  
+                        <p class="card-text">{item.location} | {item.checkin} to {item.checkout}</p>  
                         <p class="card-text font-weight-bold">Hosted by {item.host}</p>  
                         <button class="btn btn-danger mt-1" onClick={() => {  
                             axios({  

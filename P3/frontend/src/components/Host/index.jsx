@@ -28,6 +28,13 @@ class HostIndex extends React.Component {
             update_num_bath: -1,
             update_num_guests: -1,
             update_price: -1,
+            add_name: -1,
+            add_location: -1,
+            add_description: -1,
+            add_num_bed: -1,
+            add_num_bath: -1,
+            add_num_guests: -1,
+            add_price: -1,
             error: '',
             add_image: -1,
             sidebar_header_width: '0%',
@@ -63,6 +70,7 @@ class HostIndex extends React.Component {
       }
 
     submitCreateForm() {
+        console.log(this.state);
         var bodyd = new FormData();
         bodyd.append('title', this.state.add_name);
         bodyd.append('description', this.state.add_description);
@@ -167,16 +175,28 @@ class HostIndex extends React.Component {
         });
     }
 
-    fillInfo() {
-        this.setState({
-                update_name: this.state.properties[this.state.curr_prop_id].title,
-                update_location: this.state.properties[this.state.curr_prop_id].location,
-                update_description: this.state.properties[this.state.curr_prop_id].description,
-                update_num_bed: this.state.properties[this.state.curr_prop_id].num_bed,
-                update_num_bath: this.state.properties[this.state.curr_prop_id].num_bath,
-                update_num_guests: this.state.properties[this.state.curr_prop_id].num_guests,
-                update_price: this.state.properties[this.state.curr_prop_id].price
-        })
+    fillInfo(empty) {
+        if (!empty) {
+            this.setState({
+                    update_name: this.state.properties[this.state.curr_prop_id].title,
+                    update_location: this.state.properties[this.state.curr_prop_id].location,
+                    update_description: this.state.properties[this.state.curr_prop_id].description,
+                    update_num_bed: this.state.properties[this.state.curr_prop_id].num_bed,
+                    update_num_bath: this.state.properties[this.state.curr_prop_id].num_bath,
+                    update_num_guests: this.state.properties[this.state.curr_prop_id].num_guests,
+                    update_price: this.state.properties[this.state.curr_prop_id].price,
+            });
+        } else {
+            this.setState({
+                add_name: '',
+                add_location: '',
+                add_description: '',
+                add_num_bed: '',
+                add_num_bath: '',
+                add_num_guests: '',
+                add_price: '',
+            });
+        }
     }
 
     refresh(prop_id) {
@@ -212,6 +232,7 @@ class HostIndex extends React.Component {
 
     setCreate() {
         this.setState({create: true});
+        this.fillInfo(true);
     }
 
     changeStatus(pk, status) {
@@ -253,7 +274,7 @@ class HostIndex extends React.Component {
         const sidebarvals = this.state.properties.map((item, i) =>
                 <a key={i} href="#" class="list-group-item list-group-item-action"  aria-current="true" onClick={() => {
                     this.setState({curr_prop_id: i,
-                                    create: false}, this.fillInfo);
+                                    create: false}, ()=> this.fillInfo(false));
                                 }}>{item.title}</a>)
         
         var prop_res = <></>;
@@ -556,33 +577,33 @@ class HostIndex extends React.Component {
                                 <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Property Name</label>
-                                    <input name="add_name" type="text" class="form-control" id="name" placeholder="Property Name" defaultValue="" onChange={this.handleInputChange}></input>
+                                    <input name="add_name" type="text" class="form-control" id="name" placeholder="Property Name" value={this.state.add_name} onChange={this.handleInputChange}></input>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="Address">Address</label>
-                                    <input name="add_location" type="text" class="form-control" id="address" placeholder="(we won't share this)" defaultValue=""  onChange={this.handleInputChange}></input>
+                                    <input name="add_location" type="text" class="form-control" id="address" placeholder="(we won't share this)" value={this.state.add_location}  onChange={this.handleInputChange}></input>
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label for="about">About</label>
-                                <textarea name="add_description" type="text" class="form-control" id="about" placeholder="Tell us about the place!" defaultValue=""  onChange={this.handleInputChange}></textarea>
+                                <textarea name="add_description" type="text" class="form-control" id="about" placeholder="Tell us about the place!" value={this.state.add_description}  onChange={this.handleInputChange}></textarea>
                                 </div>
                                 <div class="row form-small-grid">
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="bedrooms">Bedrooms</label>
-                                    <input name="add_num_bed" type="text" class="form-control short-input" id="bedrooms" defaultValue=""  onChange={this.handleInputChange}></input>
+                                    <input name="add_num_bed" type="text" class="form-control short-input" id="bedrooms" value={this.state.add_num_bed}  onChange={this.handleInputChange}></input>
                                 </div>
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="bathrooms">Bathrooms</label>
-                                    <input name="add_num_bath" type="text" class="form-control short-input" id="bathrooms" defaultValue=""  onChange={this.handleInputChange}></input>
+                                    <input name="add_num_bath" type="text" class="form-control short-input" id="bathrooms" value={this.state.add_num_bath} onChange={this.handleInputChange}></input>
                                 </div>
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="guests">Guests</label>
-                                    <input name="add_num_guests" type="text" class="form-control short-input" id="guests" defaultValue=""  onChange={this.handleInputChange}></input>
+                                    <input name="add_num_guests" type="text" class="form-control short-input" id="guests" value={this.state.add_num_guests}  onChange={this.handleInputChange}></input>
                                 </div>
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="prive">Price</label>
-                                    <input name="add_price" type="text" class="form-control short-input" id="price" defaultValue=""  onChange={this.handleInputChange}></input>
+                                    <input name="add_price" type="text" class="form-control short-input" id="price" value={this.state.add_price}  onChange={this.handleInputChange}></input>
                                 </div>
                                 </div>
                                 <button type="submit" class="btn btn-success submit-btn" onClick={this.submitCreateForm}>Create</button>
