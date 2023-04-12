@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Property, Availability, Image, Reservation, Amenities
 from rest_framework.generics import CreateAPIView, RetrieveAPIView, \
     ListAPIView, DestroyAPIView, UpdateAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializers import PropertySerializer, ReservationSerializer
 from rest_framework.response import Response
 from rest_framework import status
@@ -10,10 +10,27 @@ from .paginations import PropertiesList
 from django.shortcuts import get_object_or_404
 from accounts.models import Notification
 
+def get_user_properties(request):
+    if not request.user.is_authenticated:
+        return Response(data={'authorization': 'You are not authorized.'}, status=403)
+    properties = Property.objects.all().filter(owner=request.user)
+    data = {}
+    for p in properties:
+        data[p.pk] = {
+            'title': p.title,
+            'descriptionn': p.description,
+            'location': p.location,
+            'num_bed': p.num_bed,
+            'num_bath': p.num_bath,
+            'num_guests': p.num_guests,
+            'price': p.price,
+        }
+    return Response({'properties': data})
+
 # CRUD PROPERTIES
 class CreatePropertyView(CreateAPIView):
     serializer_class = PropertySerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
