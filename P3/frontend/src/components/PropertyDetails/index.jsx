@@ -282,7 +282,9 @@ function PropertyDetails(props) {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`
                     }
                   }).then((response) => {
-                      console.log(response);
+                      if (response.status == 200) {
+                        alert("success");
+                      }
                   })
                 }} 
               className="btn btn-primary mt-3">

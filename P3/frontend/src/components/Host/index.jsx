@@ -1,6 +1,7 @@
 import React from 'react'
 import './index.css'
 import axios from 'axios'
+import Header from '../Common/Header';  
 
 class HostIndex extends React.Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class HostIndex extends React.Component {
         this.refresh_reservations = this.refresh_reservations.bind(this);
         this.collapseSidebarHeader = this.collapseSidebarHeader.bind(this);
         this.afterSubmission = this.afterSubmission.bind(this);
+        this.fillInfo = this.fillInfo.bind(this);
         this.refresh(0);
     } 
 
@@ -151,8 +153,30 @@ class HostIndex extends React.Component {
             for (let i = 0; i < response.data.results.length; i++){
                 x[mapping[response.data.results[i].prop]].push(response.data.results[i]);
             }
-            this.setState({reservations: x});
+            this.setState({
+                reservations: x,
+                
+                update_name: this.state.properties[this.state.curr_prop_id].title,
+                update_location: this.state.properties[this.state.curr_prop_id].location,
+                update_description: this.state.properties[this.state.curr_prop_id].description,
+                update_num_bed: this.state.properties[this.state.curr_prop_id].num_bed,
+                update_num_bath: this.state.properties[this.state.curr_prop_id].num_bath,
+                update_num_guests: this.state.properties[this.state.curr_prop_id].num_guests,
+                update_price: this.state.properties[this.state.curr_prop_id].price
+            });
         });
+    }
+
+    fillInfo() {
+        this.setState({
+                update_name: this.state.properties[this.state.curr_prop_id].title,
+                update_location: this.state.properties[this.state.curr_prop_id].location,
+                update_description: this.state.properties[this.state.curr_prop_id].description,
+                update_num_bed: this.state.properties[this.state.curr_prop_id].num_bed,
+                update_num_bath: this.state.properties[this.state.curr_prop_id].num_bath,
+                update_num_guests: this.state.properties[this.state.curr_prop_id].num_guests,
+                update_price: this.state.properties[this.state.curr_prop_id].price
+        })
     }
 
     refresh(prop_id) {
@@ -226,7 +250,10 @@ class HostIndex extends React.Component {
 
     render() {
         const sidebarvals = this.state.properties.map((item, i) =>
-                <a key={i} href="#" class="list-group-item list-group-item-action"  aria-current="true" onClick={() => {this.setState({curr_prop_id: i}); this.setState({create: false})}}>{item.title}</a>)
+                <a key={i} href="#" class="list-group-item list-group-item-action"  aria-current="true" onClick={() => {
+                    this.setState({curr_prop_id: i,
+                                    create: false}, this.fillInfo);
+                                }}>{item.title}</a>)
         
         var prop_res = <></>;
         var prop_images = <></>;
@@ -237,6 +264,7 @@ class HostIndex extends React.Component {
                 prop_res = this.state.reservations[this.state.curr_prop_id].map((item, i) => {
                     if (this.state.filter.length == 0 || (this.state.filter.length > 0 && item.status == this.state.filter)) {
                         return (
+                            
                             <>
                                 <li key={`${this.state.curr_prop_id},${i}`} class="list-group-item d-flex justify-content-between align-items-start">
                 
@@ -278,6 +306,8 @@ class HostIndex extends React.Component {
                 prop_image_elements = <></>;
             }
             return (
+                <>
+                <Header />  
                 <div class="content">
                     <main>
                         <div class="property-mgr-wrapper">
@@ -312,33 +342,33 @@ class HostIndex extends React.Component {
                                 <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="name">Property Name</label>
-                                    <input type="text" class="form-control" id="name" value={this.state.properties[this.state.curr_prop_id].title} onChange={this.handleInputChange} name="update_name"></input>
+                                    <input type="text" class="form-control" id="name" value={this.state.update_name} onChange={this.handleInputChange} name="update_name"></input>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="Address">Address</label>
-                                    <input type="text" class="form-control" id="address" defaultValue={this.state.properties[this.state.curr_prop_id].location} onChange={this.handleInputChange} name="update_location"></input>
+                                    <input type="text" class="form-control" id="address" value={this.state.update_location} onChange={this.handleInputChange} name="update_location"></input>
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label for="about">About</label>
-                                <textarea type="text" class="form-control" id="about" defaultValue={this.state.properties[this.state.curr_prop_id].description} onChange={this.handleInputChange} name="update_description"></textarea>
+                                <textarea type="text" class="form-control" id="about" value={this.state.update_description} onChange={this.handleInputChange} name="update_description"></textarea>
                                 </div>
                                 <div class="row form-small-grid">
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="bedrooms">Bedrooms</label>
-                                    <input type="text" class="form-control short-input" id="bedrooms" defaultValue={this.state.properties[this.state.curr_prop_id].num_bed} onChange={this.handleInputChange} name="update_num_bed"></input>
+                                    <input type="text" class="form-control short-input" id="bedrooms" value={this.state.update_num_bed} onChange={this.handleInputChange} name="update_num_bed"></input>
                                 </div>
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="bathrooms">Bathrooms</label>
-                                    <input type="text" class="form-control short-input" id="bathrooms" defaultValue={this.state.properties[this.state.curr_prop_id].num_bath} onChange={this.handleInputChange} name="update_num_bath"></input>
+                                    <input type="text" class="form-control short-input" id="bathrooms" value={this.state.update_num_bath} onChange={this.handleInputChange} name="update_num_bath"></input>
                                 </div>
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="guests">Guests</label>
-                                    <input type="text" class="form-control short-input" id="guests" defaultValue={this.state.properties[this.state.curr_prop_id].num_guests} onChange={this.handleInputChange} name="update_num_guests"></input>
+                                    <input type="text" class="form-control short-input" id="guests" value={this.state.update_num_guests} onChange={this.handleInputChange} name="update_num_guests"></input>
                                 </div>
                                 <div class="form-group col-md-6 form-small-grid-item">
                                     <label for="price">Price</label>
-                                    <input type="text" class="form-control short-input" id="price" defaultValue={this.state.properties[this.state.curr_prop_id].price} onChange={this.handleInputChange} name="update_price"></input>
+                                    <input type="text" class="form-control short-input" id="price" value={this.state.update_price} onChange={this.handleInputChange} name="update_price"></input>
                                 </div>
                                 </div>
                                 <button type="submit" class="btn btn-success submit-btn" onClick={this.submitUpdateForm}>Update</button>
@@ -453,9 +483,11 @@ class HostIndex extends React.Component {
                         </div>
                     </main>
                 </div>
+                </>
             );
         } else {
             return (
+                <>
                 <div class="content">
                     <main>
                         <div class="property-mgr-wrapper">
@@ -559,6 +591,7 @@ class HostIndex extends React.Component {
                         </div>
                     </main>
                 </div>
+                </>
             );
         }
         
