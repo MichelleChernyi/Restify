@@ -48,7 +48,7 @@ class Notification extends Component {
         //   this.setState({ last_name: res.data.last_name}); 
         //   this.setState({ phone_num: res.data.phone_num }); 
   
-          
+           
         })
         .catch(err => {
           console.log(err.response.data)
