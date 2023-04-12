@@ -268,9 +268,10 @@ function PropertyDetails(props) {
                   var bodyd = new FormData();
                   bodyd.append("start_date", checkIn);
                   bodyd.append("end_date", checkOut);
+                  console.log(checkIn);
                   axios({
                     method: "POST",
-                    url: `http://127.0.0.1:8000/properties/reservations/create/${id}/`,
+                    url: `http://127.0.0.1:8000/properties/reservations/create/${property.id}/`,
                     data: bodyd,
                     headers: { 
                         'Content-type': 'multipart/form-data',
