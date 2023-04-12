@@ -122,9 +122,11 @@ class Profile extends Component {
           this.setState({ last_name: res.data.last_name }); 
           this.setState({ phone_num: res.data.phone_num }); 
           this.setState({ avatar: res.data.avatar }); 
-          this.setState({ new_image: res.data.avatar }); 
+          if(res.data.avatar !== null && res.data.avatar !== ""){
+            this.setState({ new_image: res.data.avatar}); 
+          }
           console.log('avatar: ',this.state.avatar )
-  
+        //   console.log('new_iamge: ',"http://127.0.0.1:8000" + this.state.new_image )
           
         })
         .catch(err => {
@@ -179,7 +181,7 @@ class Profile extends Component {
         <div className="card-body logs">
         <h5 className="card-title card-t">Profile</h5>
         
-        <img src= {this.state.new_image}/>
+        <img className='abcd' src= {"http://127.0.0.1:8000" + this.state.new_image}/>
         {/* <i class="bi bi-person-circle"></i> */}
         <Form onSubmit={this.onSubmit} noValidate>
           <FormGroup>
