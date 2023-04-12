@@ -129,7 +129,7 @@ class HostIndex extends React.Component {
     refresh_reservations() {
         axios({
             method: "GET",
-            url: `http://127.0.0.1:8000/properties/reservations/list/`,
+            url: `http://127.0.0.1:8000/properties/reservations/list/?all=true`,
             headers: { 
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -350,27 +350,6 @@ class HostIndex extends React.Component {
                                 {
                                     prop_images
                                 }
-                                {/* <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
-                                    cabin.jpg
-                                    <div class="photo-name-display">
-                                    <input class="short-input form-control" type="number" required value="1"></input>
-                                    <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
-                                    interior.jpg
-                                    <div class="photo-name-display">
-                                    <input class="short-input form-control" type="number" required value="2"></input>
-                                    <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center" id="photo-order">
-                                    living-room.jpg
-                                    <div class="photo-name-display">
-                                    <input class="short-input form-control" type="number" required value="3"></input>
-                                    <button class="btn p-0" type="button"><i class="bi bi-trash"></i></button>
-                                    </div>
-                                </li> */}
                                 </ul>
                             </div>
                             <div>
