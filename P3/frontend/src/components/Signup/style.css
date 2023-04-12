@@ -1,0 +1,85 @@
+.card {
+    position: absolute;
+    top: 50%;
+    /* transform: translateY(-50%); */
+}
+
+/* .log-stuff{
+    margin-left: auto;
+    margin-right: auto;
+    max-width:600px;
+} */
+
+.card-body{
+    margin-top:auto;
+    margin-bottom: auto;
+    margin-left:auto ;
+    margin-right: auto;
+    align-items: center;
+    text-align: center;
+}
+.log-stuff{
+    margin-left: auto;
+    margin-right: auto;
+    max-width:600px;
+    width: 600px;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+main {
+    padding: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+
+
+.card-body {
+    margin: 0;
+    text-align: left;
+}
+
+.card-title{
+    text-align: center;
+}
+
+.sign-btn{
+    background-color: #0d6efd;
+    
+  
+}
+
+p{
+    color: red;
+}
+
+
+
+
+@media (max-width: 750px) {
+    .card{
+        align-items: center !important;
+        top: 50%;
+        margin: 0 auto;
+        display: flex;
+    }
+    /* .card{
+        display: flex;
+        flex-direction: column;
+    } */
+    .log-stuff{
+        width: 100%;
+        max-width:390px;
+        align-items: center;
+    }
+   
+
+}
