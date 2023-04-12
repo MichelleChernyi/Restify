@@ -1,7 +1,7 @@
 import React, { Component, useState} from 'react';
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import axios from 'axios';
-import './style.css';
+import signupCSS from './signup.css';
 import {Link, useParams, Navigate, useNavigate, Route} from "react-router-dom";
 import Header from '../Common/Header';
 
@@ -115,10 +115,10 @@ class Signup extends Component {
         <>
         <Header/>
         <div className="page">
-          <main>
+          <main className='mainy'>
         <div className="card w-500 log-stuff register">
         <div className="card-body logs">
-        <h5 className="card-title">Welcome to Restify</h5>
+        <h5 className="card-title card-t">Welcome to Restify</h5>
         <Form onSubmit={this.signUp} noValidate>
           <FormGroup>
             <Label for="name">First Name:</Label>
@@ -184,7 +184,7 @@ class Signup extends Component {
           </FormGroup>
           <Button className="btn btn-primary sign-btn" >Sign Up</Button>
         </Form>
-       <Link to='/'>Already have an account?</Link>
+       <Link to='/login'>Already have an account?</Link>
             
         </div>
         </div>

@@ -1,6 +1,6 @@
 import './style.css'
 import logo from '../../../assets/logo.png'
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,6 +10,15 @@ function Header(props) {
   const [maxPrice, setMaxPrice] = useState(0)
   const [numGuests, setNumGuests] = useState(0)
   const [numBaths, setNumBaths] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("token");
+    if (loggedInUser) {
+      // const foundUser = JSON.parse(loggedInUser);
+      setIsLoggedIn(true);
+    }
+  }, []);
   const search = () => {
     let state = {}
     if (location !== '') {
@@ -32,41 +41,33 @@ function Header(props) {
     axios.post("http://127.0.0.1:8000/accounts/logout/", {refresh_token: localStorage.getItem('refresh_token')}, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
     .then(res => {
+      
+      localStorage.clear();
       console.log(res);
       console.log(res.data.access);
-      // const token  = res.data.access;
-      // localStorage.setItem('token',  token);
+      window.location.assign("http://localhost:3000/logout/");
 
-      // window.location.assign("http://localhost:3000/");
     })
     .catch(err => {
       console.log(err.response.data)
       console.log(err.response.data)
-      this.setState({ email_error: "" }); 
-      this.setState({ password_error:"" });
-      for (var key in err.response.data) {
-          console.log("Key:" + key);
-        console.log("Value:" + err.response.data[key]);
-        if( key === 'email'){
-          this.setState({ email_error: err.response.data[key][0] }); 
-        }
-        if(key === 'detail'){
-          this.setState({ password_error: err.response.data[key] }); 
-        }
-
-        if( key === 'password'){
-          // this.setState({ email_error: err.response.data[key]});
-          this.setState({ password_error: err.response.data[key][0] }); 
-        }
-
-        
-      }
+  
 
 
 
     
     
   });
+  }
+
+  const logIn = () => {
+    window.location.assign("http://localhost:3000/login/");
+    
+  }
+
+  const signUp = () => {
+    window.location.assign("http://localhost:3000/register/");
+    
   }
   
   return (
@@ -109,7 +110,7 @@ function Header(props) {
     
                   <div><button type="button" onClick={search} className="btn btn-primary m-1 rounded-circle search-button"><i className="bi bi-search"></i></button></div>
                 </div>
-                {props.isLoggedIn ?
+                {isLoggedIn ?
                     <div className="d-flex align-items-center">
                     <i className="bi bi-bell-fill m-1 w-150 fs-3"></i>
                   <div className="dropdown">
@@ -134,9 +135,9 @@ function Header(props) {
                       <i className="bi bi-person-fill m-4 w-150 fs-3"></i>
                     </a>
                     <ul className="dropdown-menu dropdown-menu-end me-1">
-                      <li><a className="dropdown-item" href="login.html">Log In</a></li>
+                      <li><a className="dropdown-item" onClick={logIn}>Log In</a></li>
                       <li><hr className="dropdown-divider"/></li>
-                      <li><a className="dropdown-item" href="sign-up.html">Sign Up</a></li>
+                      <li><a className="dropdown-item" onClick={signUp}>Sign Up</a></li>
                     </ul>
                   </div> 
                   </div>

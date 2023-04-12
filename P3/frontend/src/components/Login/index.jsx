@@ -46,7 +46,7 @@ class Login extends Component {
         const refresh_token  = res.data.refresh;
         localStorage.setItem('refresh_token',  refresh_token);
 
-        // window.location.assign("http://localhost:3000/");
+        window.location.assign("http://localhost:3000/");
       })
       .catch(err => {
         console.log(err.response.data)
@@ -81,7 +81,7 @@ class Login extends Component {
     render() {
       return (
         <>
-        < Header isLoggedIn='true'/>
+        < Header/>
         <div className="page">
           <main>
         <div className="card w-500 log-stuff register">
