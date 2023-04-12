@@ -112,9 +112,27 @@ class Profile extends Component {
         formData.append('last_name', this.state.last_name)
         formData.append('phone_num', this.state.phone_num)
         formData.append('avatar', this.state.avatar)
+         axios.put("http://127.0.0.1:8000/accounts/profile/", { email: this.state.email,first_name: this.state.first_name, last_name: this.state.last_name, phone_num: this.state.phone_num},{headers: {  'Authorization': `Bearer ${localStorage.getItem('token')}`}}) // 'Content-Type': 'multipart/form-data',
+      .then(res => {
+          console.log("HERE")
+        console.log(res);
+        console.log(res.data);
+        this.setState({ email: res.data.email }); 
+        this.setState({ first_name: res.data.first_name }); 
+        this.setState({ last_name: res.data.last_name }); 
+        this.setState({ phone_num: res.data.phone_num }); 
+        this.setState({ avatar: res.data.avatar }); 
+        if(res.data.avatar !== null && res.data.avatar !== ""){
+          this.setState({ new_image: res.data.avatar}); 
+        }
+        console.log('avatar: ',this.state.avatar )
+      //   console.log('new_iamge: ',"http://127.0.0.1:8000" + this.state.new_image )
+        
+      });
 
-        await axios.put("http://127.0.0.1:8000/accounts/profile/", formData,{headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${localStorage.getItem('token')}`}})
+         axios.put("http://127.0.0.1:8000/accounts/profile/", formData,{headers: {  'Authorization': `Bearer ${localStorage.getItem('token')}`}}) // 'Content-Type': 'multipart/form-data',
         .then(res => {
+            console.log("HERE")
           console.log(res);
           console.log(res.data);
           this.setState({ email: res.data.email }); 
@@ -168,6 +186,8 @@ class Profile extends Component {
     
        
       });
+
+      
     };
 
 
