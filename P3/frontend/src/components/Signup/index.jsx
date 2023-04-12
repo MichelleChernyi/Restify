@@ -2,6 +2,7 @@ import React, { Component, useState} from 'react';
 import { Button, Form, FormGroup, Input, Label } from "reactstrap";
 import axios from 'axios';
 import signupCSS from './signup.css';
+// import style from './style.css';
 import {Link, useParams, Navigate, useNavigate, Route} from "react-router-dom";
 import Header from '../Common/Header';
 

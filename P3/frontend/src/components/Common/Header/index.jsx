@@ -1,4 +1,4 @@
-import './style.css'
+import style from './style.css'
 import logo from '../../../assets/logo.png'
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -75,8 +75,8 @@ function Header(props) {
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
               <div className="d-flex justify-content-between w-100 align-items-center">
                 <div className="d-flex align-items-center">
-                  <a className="nav-link active" href="index.html" ><img id="home" src={logo} alt="Logo"/></a>
-                  <a className="navbar-brand" href="index.html">Restify</a>
+                  <a className="nav-link active" onClick={() => navigate('/')}><img id="home" src={logo} alt="Logo"/></a>
+                  <a className="navbar-brand" onClick={() => navigate('/')}>Restify</a>
                 </div>
                 <div className="shadow-sm search-filter bg-white d-flex align-items-center p-1">
                   <input type="text" placeholder="Location" className="form-control shadow-none border-0 large-search" onChange={(e) => setLocation(e.target.value)}/>
