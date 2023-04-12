@@ -8,6 +8,7 @@ function Header(props) {
   const [location, setLocation] = useState('')
   const [maxPrice, setMaxPrice] = useState(0)
   const [numGuests, setNumGuests] = useState(0)
+  const [numBaths, setNumBaths] = useState(0)
   const search = () => {
     let state = {}
     if (location !== '') {
@@ -19,7 +20,10 @@ function Header(props) {
     if (numGuests > 0) {
       state['numGuests'] = numGuests
     }
-    
+    if (numBaths > 0) {
+      state['numBaths'] = numBaths
+    }
+    console.log(state)
     navigate('/', {state})
   }
   
@@ -35,6 +39,7 @@ function Header(props) {
                   <input type="text" placeholder="Location" className="form-control shadow-none border-0 large-search" onChange={(e) => setLocation(e.target.value)}/>
                   <input type="number" step="1" placeholder="Max Price" className="form-control shadow-none border-0 large-search" onChange={(e) => setMaxPrice(e.target.value)}/>
                   <input type="number" step="1" placeholder="Add Guests" className="form-control shadow-none border-0 large-search" onChange={(e) => setNumGuests(e.target.value)}/>
+                  <input type="number" step="1" placeholder="Bathrooms" className="form-control shadow-none border-0 large-search" onChange={(e) => setNumBaths(e.target.value)}/>
 
                   <button type="button" className="btn btn-outline-secondary border-0 small-search" data-bs-toggle="modal" data-bs-target="#searchModal">
                     Search...
@@ -51,6 +56,7 @@ function Header(props) {
                           <input type="text" placeholder="Location" className="form-control shadow-none mb-1" onChange={(e) => setLocation(e.target.value)}/>
                           <input type="number" step="1" placeholder="Max Price" className="form-control shadow-none mb-1" onChange={(e) => setMaxPrice(e.target.value)}/>
                         <input type="number" step="1" placeholder="Add Guests" className="form-control shadow-none mb-1" onChange={(e) => setNumGuests(e.target.value)}/>
+                        <input type="number" step="1" placeholder="Bathrooms" className="form-control shadow-none mb-1" onChange={(e) => setNumBaths(e.target.value)}/>
                         </div>
                         <div className="modal-footer">
                           <button type="button" onClick={search}  className="btn btn-primary ">Search</button>

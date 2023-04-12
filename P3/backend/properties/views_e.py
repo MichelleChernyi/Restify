@@ -97,8 +97,11 @@ class PropertyListView(ListAPIView):
         price_low_to_high = self.request.query_params.get('price_low_to_high')
         price_high_to_low = self.request.query_params.get('price_high_to_low')
         price_less_than = self.request.query_params.get('price_less_than')
+        num_baths = self.request.query_params.get('num_baths')
         if num_guests is not None:
             queryset = queryset.filter(num_guests=num_guests)
+        if num_baths is not None:
+            queryset = queryset.filter(num_bath__gte=num_baths)
         if location is not None:
             queryset = queryset.filter(location__iexact=location)
         if amenities is not None:

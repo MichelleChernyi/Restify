@@ -22,6 +22,9 @@ function PropertyList(props) {
         if (state.numGuests !== undefined) {
           query = query + `num_guests=${state.numGuests}`
         }
+        if (state.numBaths !== undefined) {
+          query = query + `num_baths=${state.numBaths}`
+        }
         
       }
       if (query === '?') {
@@ -46,6 +49,9 @@ function PropertyList(props) {
         }
         if (state.numGuests !== undefined) {
           query = query + `num_guests=${state.numGuests}`
+        }
+        if (state.numBaths !== undefined) {
+          query = query + `num_baths=${state.numBaths}`
         }
         
       }
