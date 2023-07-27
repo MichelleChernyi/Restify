@@ -26,19 +26,19 @@ pip3 install djangorestframework-simplejwt
 
 pip3 install django-cors-headers
 
-
+<br />
 in backend directory:
 
 python3 manage.py makemigrations
 
 python3 manage.py migrate
 
-
+<br />
 in frontend directory:
 
 npm install
 
-
+<br />
 run the following commands to start the program:
 
 in backend directory: python3 manage.py runserver
