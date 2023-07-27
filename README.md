@@ -10,7 +10,7 @@ run ./startup.sh and ./run.sh
 
 ### on MacOS (using Homebrew): 
 
-run the following commands in root directory to get the necessary dependencies:
+##### Run the following commands in root directory to get the necessary dependencies:
 
 brew install python3
 
@@ -39,7 +39,7 @@ in frontend directory:
 npm install
 
 <br />
-run the following commands to start the program:
+##### Run the following commands to start the program:
 
 in backend directory: python3 manage.py runserver
 
